@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Moderation | Civic Accountability Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #2c3437;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Risk Badges */
+        .risk-badge-critical {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-badge-high {
+            background-color: #fff7ed;
+            color: #ea580c;
+            border: 1px solid #fed7aa;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-badge-medium {
+            background-color: #fefce8;
+            color: #ca8a04;
+            border: 1px solid #fde68a;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-badge-low {
+            background-color: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            border-bottom: 1px solid #e3e9ed;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .header-icons span {
+            cursor: pointer;
+            color: #596064;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background-color: #f7f9fb;
+            border-right: 1px solid #dce4e8;
+            padding-top: 6rem;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            padding: 1rem 0;
+            border-top: 1px solid #dce4e8;
+        }
+
+        .nav-section:first-child {
+            border-top: none;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: #596064;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .nav-item:hover {
+            background-color: #eaeff2;
+        }
+
+        .nav-item.active {
+            background-color: #e3e9ed;
+            color: #415aab;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            color: #596064;
+        }
+
+        .breadcrumb a {
+            color: #415aab;
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2c3437;
+        }
+
+        .comment-summary {
+            font-size: 0.95rem;
+            color: #596064;
+            margin-bottom: 2rem;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .toolbar button, .toolbar a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid #dce4e8;
+            background-color: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: #596064;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .toolbar button:hover, .toolbar a:hover {
+            background-color: #f0f4f7;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #dce4e8;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #596064;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            color: #415aab;
+            border-bottom-color: #415aab;
+        }
+
+        /* Table */
+        .comments-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border: 1px solid #dce4e8;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .comments-table thead {
+            background-color: #f0f4f7;
+            border-bottom: 1px solid #dce4e8;
+        }
+
+        .comments-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #596064;
+            text-transform: uppercase;
+        }
+
+        .comments-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #dce4e8;
+            font-size: 0.875rem;
+        }
+
+        .comments-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comments-table tbody tr:hover {
+            background-color: #f7f9fb;
+        }
+
+        .author-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .record-link {
+            color: #415aab;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .record-link:hover {
+            text-decoration: underline;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background-color: #fff7ed;
+            color: #ea580c;
+            border: 1px solid #fed7aa;
+        }
+
+        .status-approved {
+            background-color: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-rejected {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .status-flagged {
+            background-color: #fefce8;
+            color: #ca8a04;
+            border: 1px solid #fde68a;
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #415aab;
+            font-size: 1.25rem;
+            padding: 0;
+        }
+
+        .action-button:hover {
+            color: #344e9e;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .pagination button, .pagination span {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #dce4e8;
+            background-color: white;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .pagination button.active {
+            background-color: #415aab;
+            color: white;
+            border-color: #415aab;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: flex-end;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 500px;
+            height: 100%;
+            overflow-y: auto;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #dce4e8;
+        }
+
+        .modal-body {
+            padding: 2rem 1.5rem;
+        }
+
+        .comment-preview {
+            background-color: #f0f4f7;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .comment-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: #596064;
+        }
+
+        .comment-text {
+            color: #2c3437;
+            line-height: 1.6;
+        }
+
+        .moderator-note {
+            margin-top: 2rem;
+        }
+
+        .moderator-note label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .moderator-note textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.75rem;
+            border: 1px solid #dce4e8;
+            border-radius: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+        }
+
+        .note-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-top: 1px solid #dce4e8;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-cancel {
+            background-color: white;
+            border: 1px solid #dce4e8;
+            color: #596064;
+        }
+
+        .btn-cancel:hover {
+            background-color: #f0f4f7;
+        }
+
+        .btn-approve {
+            background-color: #16a34a;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background-color: #15803d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <div class="logo">
+                <span class="material-symbols-outlined">shield</span>
+                Civic Accountability Platform
+            </div>
+            <input type="text" placeholder="search" style="padding: 0.5rem; border: 1px solid #dce4e8; border-radius: 0.25rem; width: 250px;">
+        </div>
+        <div class="header-icons">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="material-symbols-outlined">help</span>
+            <div class="user-menu">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDJI6IXz2rtyq1zKgIi74J2Vy1vd_G-Pw-V_KQCZibw08Y5IOrfFoPAoxSAUUkGX750mKtEvPzioMOVm7dFbLhLkuU55z0a3LzqWxb4Zwqz9lbTyIb30cXqhCySv_eVGrKsr-L7J1AdjuxiZ44OokH2ug2z3QZsapndrlBrOQv6ROTD2PqGyZsMtp6LOzGV-t6dqw-XagPYbTdXXDWSmDLPC2euW1454UGEqWZlP6_y3HWZRNvdREbL1Z9EOh60MgcPIL-9n3QVc8" alt="User avatar" class="user-avatar">
+                <div style="text-align: left;">
+                    <div style="font-weight: 600; font-size: 0.875rem;">Admin User</div>
+                    <div style="font-size: 0.75rem; color: #596064;">Moderator</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="nav-section">
+            <a href="#" class="nav-item">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span>Overview</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="material-symbols-outlined">description</span>
+                <span>Contracts</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="material-symbols-outlined">store</span>
+                <span>Vendors</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="material-symbols-outlined">gavel</span>
+                <span>Audits</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="material-symbols-outlined">business</span>
+                <span>Departments</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <div style="padding: 0.75rem 1.5rem; font-weight: 600; font-size: 0.75rem; color: #596064; text-transform: uppercase;">Public Portal</div>
+            <a href="#" class="nav-item">
+                <span class="material-symbols-outlined">public</span>
+                <span>Public Portal</span>
+            </a>
+            <a href="#" class="nav-item active">
+                <span class="material-symbols-outlined">forum</span>
+                <span>Comments</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="material-symbols-outlined">admin_panel_settings</span>
+                <span>Administration</span>
+            </a>
+        </div>
+
+        <div class="nav-section">
+            <a href="#" class="nav-item">
+                <span class="material-symbols-outlined">settings</span>
+                <span>Settings</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="material-symbols-outlined">logout</span>
+                <span>Logout</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="breadcrumb">
+            <a href="#">Home</a>
+            <span class="material-symbols-outlined" style="font-size: 1rem;">chevron_right</span>
+            <a href="#">Public Portal</a>
+            <span class="material-symbols-outlined" style="font-size: 1rem;">chevron_right</span>
+            <span>Comments</span>
+        </div>
+
+        <h1>Comment Moderation</h1>
+        <p class="comment-summary">18 comments — 12 pending review</p>
+
+        <div class="toolbar">
+            <button>
+                <span class="material-symbols-outlined">filter_list</span>
+                Filter
+            </button>
+            <button>
+                <span class="material-symbols-outlined">download</span>
+                Export Report
+            </button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active">All</button>
+            <button class="tab">Pending</button>
+            <button class="tab">Approved</button>
+            <button class="tab">Rejected</button>
+            <button class="tab">Flagged</button>
+        </div>
+
+        <table class="comments-table">
+            <thead>
+                <tr>
+                    <th>Author</th>
+                    <th>Record</th>
+                    <th>Content</th>
+                    <th>Whistleblower</th>
+                    <th>Flagged</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="author-cell">
+                            <span class="material-symbols-outlined">person</span>
+                            <span>Anonymous</span>
+                        </div>
+                    </td>
+                    <td><a href="#" class="record-link">CONT-2024-0082</a></td>
+                    <td>Vendor invoicing exceeds contract limits by 15% without prior approval...</td>
+                    <td><span class="material-symbols-outlined">lock</span></td>
+                    <td>—</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>Oct 24, 2024</td>
+                    <td><button class="action-button" onclick="openModal()"><span class="material-symbols-outlined">rate_review</span></button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="author-cell">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiZ2zwdyhJlDkFr3nWi_znkJcPV0lbnKjVjzXuu6HvvHItJZor7_hWTPF0CFsQ6-Woo9LIYv11YMcHYYU28hkrSuJ8amQpIxjfFtNq_Wp0hIAPm9JgeaVHsmM9dmr2BUAHcPq3GeyCfu4t_3fjpgBKa_DdZsTN4M5BagDZDZKGol2jkqrIXmHvcuiF2-JINYMl6oZoYb8f1waYIG3V41jQsm2elMdVBn3iJohpMEATdCWUDCRew7TARE6isnfvCiiXSMGjf7pBxEY" alt="Sarah Jenkins" class="author-avatar">
+                            <span>Sarah Jenkins</span>
+                        </div>
+                    </td>
+                    <td><a href="#" class="record-link">AUD-2023-99</a></td>
+                    <td>The audit fails to address the missing documentation for the Q3 transport budget.</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>Oct 23, 2024</td>
+                    <td><button class="action-button"><span class="material-symbols-outlined">rate_review</span></button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="author-cell">
+                            <span class="material-symbols-outlined">person</span>
+                            <span>David Miller</span>
+                        </div>
+                    </td>
+                    <td><a href="#" class="record-link">VND-4451</a></td>
+                    <td>Excellent transparency in the vendor selection process. Great improvement from last year.</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>Oct 23, 2024</td>
+                    <td><button class="action-button"><span class="material-symbols-outlined">rate_review</span></button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="author-cell">
+                            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: #e3e9ed; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem;">EL</div>
+                            <span>Evelyn L.</span>
+                        </div>
+                    </td>
+                    <td><a href="#" class="record-link">CONT-2024-0012</a></td>
+                    <td>Public accessibility to these documents is vital for democracy. Thank you for this portal.</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>Oct 22, 2024</td>
+                    <td><button class="action-button"><span class="material-symbols-outlined">rate_review</span></button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="author-cell">
+                            <span class="material-symbols-outlined">person</span>
+                            <span>Anonymous</span>
+                        </div>
+                    </td>
+                    <td><a href="#" class="record-link">CONT-2024-0082</a></td>
+                    <td>[REDACTED]... and this department manager is clearly taking kickbacks from [REDACTED].</td>
+                    <td><span class="material-symbols-outlined">lock</span></td>
+                    <td><span class="material-symbols-outlined" style="color: #ea580c;">warning</span></td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td>Oct 22, 2024</td>
+                    <td><button class="action-button"><span class="material-symbols-outlined">rate_review</span></button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="font-size: 0.875rem; color: #596064; margin-top: 1.5rem;">
+            Showing 1 to 5 of 18 comments
+        </div>
+
+        <div class="pagination">
+            <button><span class="material-symbols-outlined">chevron_left</span></button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button><span class="material-symbols-outlined">chevron_right</span></button>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="approveModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Approve Comment</h2>
+                <button style="background: none; border: none; cursor: pointer; color: #596064; font-size: 1.5rem;" onclick="closeModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="comment-preview">
+                    <div class="comment-meta">
+                        <span class="material-symbols-outlined">person</span>
+                        <span>Anonymous Author</span>
+                        <span>Oct 24, 2024 &bull; RECORD: CONT-2024-0082</span>
+                    </div>
+                    <div style="margin-bottom: 0.75rem;">
+                        <span class="material-symbols-outlined">lock</span>
+                    </div>
+                    <div class="comment-text">
+                        "Vendor invoicing exceeds contract limits by 15% without prior approval. Internal audit has been notified but no public disclosure has been made yet. Please review the linked budget PDF."
+                    </div>
+                </div>
+
+                <div class="moderator-note">
+                    <label for="note">Moderator Note (Optional)</label>
+                    <textarea id="note" placeholder="Add a note..."></textarea>
+                    <div class="note-checkbox">
+                        <input type="checkbox" id="postNote">
+                        <label for="postNote">Post note publicly as moderator response</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-approve">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Approve Comment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('approveModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('approveModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

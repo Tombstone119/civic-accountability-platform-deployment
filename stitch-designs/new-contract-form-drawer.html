@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Contract - Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#473157",
+                        "on-surface-variant": "#596064",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "inverse-on-surface": "#9a9d9f",
+                        "on-primary-container": "#002474",
+                        "secondary-container": "#89f5e7",
+                        "primary": "#1e3a8a", /* Overriding with platform navy for brand consistency */
+                        "primary-light": "#3b5fc0",
+                        "error": "#dc2626",
+                        "on-primary-fixed": "#000c36",
+                        "surface-container-low": "#f0f4f7",
+                        "on-secondary-fixed-variant": "#00675e",
+                        "surface-dim": "#d4dbdf",
+                        "inverse-primary": "#8fa7fe",
+                        "background": "#f8fafc",
+                        "tertiary-container": "#edcfff",
+                        "on-tertiary-container": "#5a446a",
+                        "secondary-fixed-dim": "#7ae7d8",
+                        "primary-fixed": "#8fa7fe",
+                        "on-error-container": "#6e0523",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary-container": "#005c54",
+                        "on-tertiary-fixed-variant": "#644d75",
+                        "tertiary": "#6e567e",
+                        "error-container": "#fef2f2",
+                        "tertiary-fixed": "#edcfff",
+                        "on-surface": "#0f172a",
+                        "tertiary-dim": "#614a71",
+                        "surface-tint": "#1e3a8a",
+                        "surface-container-high": "#e3e9ed",
+                        "on-secondary": "#e2fff9",
+                        "on-error": "#fff7f7",
+                        "secondary-dim": "#005e56",
+                        "secondary": "#006b62",
+                        "inverse-surface": "#0b0f10",
+                        "surface-variant": "#dce4e8",
+                        "outline": "#e2e8f0",
+                        "outline-variant": "#acb3b7",
+                        "secondary-fixed": "#89f5e7",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#fff6fd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-active {
+            background-color: #eff3ff;
+            border-left: 3px solid #1e3a8a;
+            color: #1e3a8a;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-full overflow-hidden">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-6 w-full fixed top-0 z-50 bg-[#1e3a8a] text-white font-['Inter'] text-sm antialiased shadow-lg h-16">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-white" data-icon="shield">shield</span>
+<span class="text-xl font-bold text-white">Civic Accountability Platform</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<input class="bg-blue-800 border-none text-white placeholder-blue-300 text-xs rounded-lg px-4 py-2 w-64 focus:ring-2 focus:ring-white/20" placeholder="Search contracts..." type="text"/>
+</div>
+<div class="flex gap-4 items-center">
+<span class="material-symbols-outlined cursor-pointer hover:bg-blue-800 p-2 rounded-full transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-blue-800 p-2 rounded-full transition-colors" data-icon="help">help</span>
+<div class="flex items-center gap-3 pl-4 border-l border-blue-700">
+<div class="text-right">
+<p class="text-xs font-semibold leading-none">Admin User</p>
+<p class="text-[10px] text-blue-200">Procurement Officer</p>
+</div>
+<img alt="User avatar" class="w-8 h-8 rounded-full border border-blue-400" data-alt="professional headshot of a government official in a blue suit with neutral office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUO7I9C01hJDHxzrRuF4S0dP_PXdHhlxLxLZS4E1mwRO8P9B6-5qP_tQoYdcdYTIZuB3hchhanoMWqiq4yEm1ytJ3Mamj93_zwxZh0CXlylGRbE9mLMyueU7CHNNTipTdDt9_phR-lclRD2_Dg0riaM8kGbdu_I6OCp4-0fSEDOSwZxybn_NV9qwKFMA6scQX_rZQOTFYGCQp_u1twtzhzex9BMETRuhkkvqyUdCED7ez_7rBaClXM9GOSyOisGOzIa7l-rnaaXNE"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] z-40 flex flex-col pt-4 bg-white border-r border-slate-200 w-[240px] font-['Inter'] text-[14px] font-medium">
+<div class="px-6 mb-6">
+<h2 class="text-[#1e3a8a] font-bold text-xs uppercase tracking-wider">Admin Portal</h2>
+<p class="text-slate-400 text-[10px]">Management Suite</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span> Overview
+            </a>
+<a class="flex items-center px-6 py-3 bg-[#eff3ff] border-l-[3px] border-[#1e3a8a] text-[#1e3a8a] transition-all translate-x-1" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="description">description</span> Contracts
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="store">store</span> Vendors
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="gavel">gavel</span> Audits
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="business">business</span> Departments
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="public">public</span> Public Portal
+            </a>
+<a class="flex items-center px-6 py-3 text-slate-600 hover:bg-slate-50 hover:text-[#1e3a8a] transition-all" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span> Administration
+            </a>
+</nav>
+</aside>
+<!-- Main Content Background (Government Contracts List) -->
+<main class="pl-[240px] pt-16 h-full bg-[#f8fafc]">
+<div class="p-8">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h1 class="text-[32px] font-bold text-slate-900 leading-tight">Contracts Management</h1>
+<p class="text-slate-500">Overview of all active and pending civic agreements.</p>
+</div>
+<button class="bg-[#1e3a8a] text-white px-4 py-2.5 rounded-lg font-semibold text-sm flex items-center gap-2 shadow-md hover:bg-blue-800 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    New Contract
+                </button>
+</div>
+<!-- Bento Stats -->
+<div class="grid grid-cols-4 gap-6 mb-8">
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+<span class="material-symbols-outlined text-[#1e3a8a] mb-2" data-icon="account_balance_wallet">account_balance_wallet</span>
+<p class="text-[36px] font-bold text-[#1e3a8a]">$14.2M</p>
+<p class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Total Contract Value</p>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+<span class="material-symbols-outlined text-teal-600 mb-2" data-icon="check_circle">check_circle</span>
+<p class="text-[36px] font-bold text-[#0d9488]">128</p>
+<p class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Active Contracts</p>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+<span class="material-symbols-outlined text-amber-500 mb-2" data-icon="warning">warning</span>
+<p class="text-[36px] font-bold text-amber-600">12</p>
+<p class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">High Risk Items</p>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+<span class="material-symbols-outlined text-blue-500 mb-2" data-icon="pending_actions">pending_actions</span>
+<p class="text-[36px] font-bold text-blue-600">08</p>
+<p class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Awaiting Audit</p>
+</div>
+</div>
+<!-- Table Placeholder -->
+<div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+<div class="bg-[#f1f5f9] px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+<span class="text-[12px] font-bold text-slate-600 uppercase tracking-wider">Recent Contracts</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer" data-icon="filter_list">filter_list</span>
+</div>
+<div class="divide-y divide-slate-100">
+<div class="flex items-center px-6 py-4 bg-white">
+<div class="w-1/4 font-medium text-slate-900">CON-2023-0012</div>
+<div class="w-1/4 text-slate-600">Smart City Lighting Phase II</div>
+<div class="w-1/4">
+<span class="bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0] text-[11px] font-bold px-2 py-0.5 rounded uppercase">Low Risk</span>
+</div>
+<div class="w-1/4 text-right font-bold text-slate-900">$2,450,000</div>
+</div>
+<div class="flex items-center px-6 py-4 bg-slate-50">
+<div class="w-1/4 font-medium text-slate-900">CON-2023-0045</div>
+<div class="w-1/4 text-slate-600">Waste Management System Upgrade</div>
+<div class="w-1/4">
+<span class="bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] text-[11px] font-bold px-2 py-0.5 rounded uppercase">Critical Risk</span>
+</div>
+<div class="w-1/4 text-right font-bold text-slate-900">$8,120,000</div>
+</div>
+<div class="flex items-center px-6 py-4 bg-white opacity-50">
+<div class="w-1/4 font-medium text-slate-900">CON-2024-0001</div>
+<div class="w-1/4 text-slate-600">Public Transit Fleet Maintenance</div>
+<div class="w-1/4">
+<span class="bg-[#fefce8] text-[#ca8a04] border border-[#fde68a] text-[11px] font-bold px-2 py-0.5 rounded uppercase">Medium Risk</span>
+</div>
+<div class="w-1/4 text-right font-bold text-slate-900">$1,200,000</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Overlay Backdrop -->
+<div class="fixed inset-0 bg-black/40 z-[60]"></div>
+<!-- Drawer Panel: New Contract -->
+<div class="fixed top-0 right-0 h-full w-[480px] bg-white z-[70] shadow-[-4px_0_20px_rgba(0,0,0,0.12)] flex flex-col transform transition-transform duration-300">
+<!-- Header -->
+<div class="p-[20px_24px] border-b border-slate-200 flex justify-between items-center">
+<h2 class="text-[18px] font-semibold text-[#0f172a]">New Contract</h2>
+<button class="text-[#475569] hover:bg-slate-100 p-1 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+</div>
+<!-- Body -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Row 1 -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Contract Number <span class="text-[#dc2626]">*</span></label>
+<input class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm focus:ring-1 focus:ring-[#1e3a8a] focus:border-[#1e3a8a] outline-none" type="text" value="CON-2024-"/>
+</div>
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Title <span class="text-[#dc2626]">*</span></label>
+<input class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm focus:ring-1 focus:ring-[#1e3a8a] focus:border-[#1e3a8a] outline-none" placeholder="Contract title" type="text"/>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Vendor <span class="text-[#dc2626]">*</span></label>
+<div class="relative">
+<select class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm appearance-none focus:ring-1 focus:ring-[#1e3a8a] focus:border-[#1e3a8a] outline-none bg-white">
+<option value="">Select vendor...</option>
+<option>Metro Logistics Co.</option>
+<option>Global Infra Tech</option>
+<option>Urban Services Ltd.</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 pointer-events-none text-sm" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Department <span class="text-[#dc2626]">*</span></label>
+<div class="relative">
+<select class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm appearance-none focus:ring-1 focus:ring-[#1e3a8a] focus:border-[#1e3a8a] outline-none bg-white">
+<option value="">Select department...</option>
+<option>Public Works</option>
+<option>Transportation</option>
+<option>Health &amp; Human Services</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 pointer-events-none text-sm" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Contract Value ($) <span class="text-[#dc2626]">*</span></label>
+<input class="w-full border-[#dc2626] border rounded-lg p-[8px_12px] text-sm focus:ring-1 focus:ring-[#dc2626] outline-none" type="number" value="-5000"/>
+<p class="text-[12px] text-[#dc2626] mt-1">Contract value must be a positive number</p>
+</div>
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Procurement Method <span class="text-[#dc2626]">*</span></label>
+<div class="relative">
+<select class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm appearance-none focus:ring-1 focus:ring-[#1e3a8a] focus:border-[#1e3a8a] outline-none bg-white">
+<option value="direct">Direct Award</option>
+<option>Open Tender</option>
+<option>Restricted Tender</option>
+<option>Quotation</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 pointer-events-none text-sm" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Warning Message -->
+<div class="bg-[#fef2f2] text-[#dc2626] text-[12px] rounded p-2 flex items-start gap-2 border border-[#fecaca]">
+<span class="material-symbols-outlined text-[14px] mt-0.5" data-icon="warning">warning</span>
+<span>Direct Award requires documented justification and may trigger audit review.</span>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Start Date <span class="text-[#dc2626]">*</span></label>
+<input class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm focus:ring-1 focus:ring-[#1e3a8a] outline-none" type="date"/>
+</div>
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">End Date <span class="text-[#dc2626]">*</span></label>
+<input class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm focus:ring-1 focus:ring-[#1e3a8a] outline-none" type="date"/>
+</div>
+</div>
+<!-- Row 5 -->
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Status</label>
+<div class="relative">
+<select class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm appearance-none focus:ring-1 focus:ring-[#1e3a8a] outline-none bg-white">
+<option>Draft</option>
+<option>Active</option>
+<option>Pending Review</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 pointer-events-none text-sm" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Row 6 -->
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Description</label>
+<textarea class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm focus:ring-1 focus:ring-[#1e3a8a] outline-none resize-none" placeholder="Provide a detailed scope of work..." rows="4"></textarea>
+</div>
+<!-- Row 7 -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Category</label>
+<input class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm focus:ring-1 focus:ring-[#1e3a8a] outline-none" placeholder="e.g. IT Equipment" type="text"/>
+</div>
+<div>
+<label class="block text-[12px] font-semibold text-[#475569] uppercase mb-1.5 tracking-wide">Tags</label>
+<input class="w-full border border-slate-200 rounded-lg p-[8px_12px] text-sm focus:ring-1 focus:ring-[#1e3a8a] outline-none" placeholder="comma-separated tags" type="text"/>
+</div>
+</div>
+<!-- Row 8 -->
+<div class="flex items-start gap-3 pt-2">
+<input class="mt-1 w-4 h-4 text-[#1e3a8a] border-slate-300 rounded focus:ring-[#1e3a8a]" id="publish" type="checkbox"/>
+<div>
+<label class="block text-sm font-medium text-slate-700" for="publish">Publish immediately to public portal</label>
+<p class="text-[12px] text-[#94a3b8]">This will create a public record visible to citizens.</p>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="p-[16px_24px] border-t border-slate-200 flex justify-between items-center bg-slate-50/50">
+<button class="px-6 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-200 transition-colors">
+                Cancel
+            </button>
+<button class="px-6 py-2 rounded-lg text-sm font-semibold text-white bg-[#1e3a8a] hover:bg-blue-800 transition-colors shadow-sm">
+                Create Contract
+            </button>
+</div>
+</div>
+</body></html>

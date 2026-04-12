@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payment Records | Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "primary": "#415aab",
+                  "surface-container": "#eaeff2",
+                  "primary-container": "#8fa7fe",
+                  "on-tertiary-container": "#5a446a",
+                  "on-primary-container": "#002474",
+                  "tertiary-fixed": "#edcfff",
+                  "primary-dim": "#344e9e",
+                  "inverse-primary": "#8fa7fe",
+                  "inverse-surface": "#0b0f10",
+                  "secondary": "#006b62",
+                  "surface-container-lowest": "#ffffff",
+                  "on-tertiary-fixed-variant": "#644d75",
+                  "tertiary-dim": "#614a71",
+                  "tertiary": "#6e567e",
+                  "secondary-fixed": "#89f5e7",
+                  "on-primary-fixed-variant": "#0e2e7f",
+                  "on-secondary-container": "#005c54",
+                  "secondary-fixed-dim": "#7ae7d8",
+                  "primary-fixed": "#8fa7fe",
+                  "surface-bright": "#f7f9fb",
+                  "on-error-container": "#6e0523",
+                  "surface-container-low": "#f0f4f7",
+                  "error-container": "#f97386",
+                  "error": "#a8364b",
+                  "on-background": "#2c3437",
+                  "outline": "#747c80",
+                  "outline-variant": "#acb3b7",
+                  "surface-variant": "#dce4e8",
+                  "surface-container-high": "#e3e9ed",
+                  "on-error": "#fff7f7",
+                  "on-tertiary-fixed": "#473157",
+                  "on-secondary": "#e2fff9",
+                  "tertiary-container": "#edcfff",
+                  "inverse-on-surface": "#9a9d9f",
+                  "surface-container-highest": "#dce4e8",
+                  "on-surface-variant": "#596064",
+                  "surface": "#f7f9fb",
+                  "background": "#f7f9fb",
+                  "on-primary": "#faf8ff",
+                  "on-secondary-fixed": "#004841",
+                  "primary-fixed-dim": "#829aef",
+                  "surface-dim": "#d4dbdf",
+                  "on-tertiary": "#fff6fd",
+                  "on-surface": "#2c3437",
+                  "tertiary-fixed-dim": "#dfc1f0",
+                  "on-secondary-fixed-variant": "#00675e",
+                  "error-dim": "#6b0221",
+                  "secondary-container": "#89f5e7",
+                  "surface-tint": "#415aab",
+                  "secondary-dim": "#005e56",
+                  "on-primary-fixed": "#000c36"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "fontFamily": {
+                  "headline": ["Inter"],
+                  "body": ["Inter"],
+                  "label": ["Inter"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .table-row-alt:nth-child(even) { background-color: #f8fafc; }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-[#0f172a] antialiased">
+<!-- TopNavBar Implementation from JSON -->
+<header class="bg-blue-900 dark:bg-slate-950 h-16 w-full fixed top-0 z-50 flex items-center justify-between px-6 shadow-sm font-['Inter'] text-sm antialiased text-white">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-2xl" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="text-lg font-bold text-white tracking-tight">Civic Accountability Platform</span>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search on Right logic from JSON -->
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-blue-100/60" data-icon="search">search</span>
+<input class="bg-blue-800 dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-1.5 w-64 text-xs placeholder-blue-200/50 focus:ring-1 focus:ring-blue-400" placeholder="Global search..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="hover:bg-blue-800 dark:hover:bg-slate-800 transition-colors p-2 rounded-full cursor-pointer active:opacity-90">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-blue-800 dark:hover:bg-slate-800 transition-colors p-2 rounded-full cursor-pointer active:opacity-90">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-px bg-blue-700/50 mx-1"></div>
+<div class="flex items-center gap-3 cursor-pointer">
+<div class="text-right hidden sm:block">
+<p class="text-[11px] font-semibold text-blue-200/80 uppercase tracking-wider">Admin Officer</p>
+<p class="text-xs font-medium">John Admin</p>
+</div>
+<img alt="User avatar with dropdown" class="w-8 h-8 rounded-full border border-blue-400/30" data-alt="Close-up portrait of a professional male administrator in a modern office environment with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3kSQdkBUhwxwTx1DWLG5HxnKCvYnql4Pedr8o2GYCql_tfNyXwDINVeG86qnkSrprnBuEyqnxvkHTh1Y-cCkSMV2avkxwsn8MlX94t896xPFrrOwxCAgnlMdJu4TQy-p3I6tFTH-4YEuklmxVAxNpTohxvUndplh-L_vYpPhc6-v0xda0EnMwIpfCXNiIZK1DqV6xRK4kmMw44yvKjonZeSYYjwzHscppB9q9IYJVbEQzQe5tffvYcHKmCbYYuQjNo-lKWigGM8c"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar Implementation from JSON -->
+<aside class="w-[240px] h-screen fixed left-0 top-16 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-40 flex flex-col py-4 gap-1 font-['Inter'] text-[14px] font-medium">
+<div class="px-6 mb-6">
+<h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Main Menu</h3>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<div class="pt-2 pb-1 px-3">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Operations</span>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-300 border-l-[3px] border-blue-900 dark:border-blue-500 font-semibold transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span>Contracts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="store">store</span>
+<span>Vendors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="gavel">gavel</span>
+<span>Audits</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_balance">account_balance</span>
+<span>Departments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="public">public</span>
+<span>Public Portal</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all mt-auto" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span>Administration</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[240px] mt-16 p-8 min-h-[calc(100vh-64px)]">
+<!-- Breadcrumb -->
+<nav class="flex items-center gap-2 text-xs text-[#475569] mb-4">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+<span class="font-medium text-primary">Payments</span>
+</nav>
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h1 class="text-[32px] font-bold text-[#0f172a] leading-tight">Payment Records</h1>
+<p class="text-sm text-[#475569] mt-1 font-medium">89 payment records in total</p>
+</div>
+<button class="bg-[#1e3a8a] hover:bg-[#3b5fc0] text-white px-5 py-2.5 rounded-lg font-semibold flex items-center gap-2 shadow-sm transition-all text-sm">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+        Record Payment
+      </button>
+</div>
+<!-- Search and Actions Bar -->
+<div class="flex flex-wrap items-center justify-between mb-6 gap-4">
+<div class="relative w-full max-w-[360px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" placeholder="Search by reference number or contract..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg bg-white text-sm font-medium text-slate-700 hover:bg-slate-50 transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="file_download">file_download</span>
+          Export
+        </button>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex items-center gap-2 mb-6 flex-wrap">
+<div class="flex items-center gap-1.5 bg-primary-surface text-primary border border-primary/20 px-3 py-1 rounded-full text-xs font-medium">
+        Status: Pending
+        <button class="hover:text-primary-dim"><span class="material-symbols-outlined text-sm leading-none" data-icon="close">close</span></button>
+</div>
+<div class="flex items-center gap-1.5 bg-primary-surface text-primary border border-primary/20 px-3 py-1 rounded-full text-xs font-medium">
+        Status: Processing
+        <button class="hover:text-primary-dim"><span class="material-symbols-outlined text-sm leading-none" data-icon="close">close</span></button>
+</div>
+<button class="text-xs font-semibold text-primary hover:underline ml-2">Clear all</button>
+</div>
+<div class="flex flex-col lg:flex-row gap-6">
+<!-- Left Filter Panel -->
+<aside class="w-full lg:w-[260px] bg-white border border-slate-200 rounded-xl p-6 h-fit sticky top-24">
+<h2 class="text-[12px] font-bold text-slate-500 uppercase tracking-wider mb-6">Filters</h2>
+<div class="space-y-6">
+<!-- Status Filters -->
+<div>
+<label class="block text-xs font-semibold text-slate-700 uppercase tracking-tight mb-3">Status</label>
+<div class="space-y-2">
+<label class="flex items-center gap-2.5 text-sm text-slate-600 cursor-pointer">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+                Pending
+              </label>
+<label class="flex items-center gap-2.5 text-sm text-slate-600 cursor-pointer">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+                Processing
+              </label>
+<label class="flex items-center gap-2.5 text-sm text-slate-600 cursor-pointer">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+                Completed
+              </label>
+<label class="flex items-center gap-2.5 text-sm text-slate-600 cursor-pointer">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+                Failed
+              </label>
+<label class="flex items-center gap-2.5 text-sm text-slate-600 cursor-pointer">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+                Reversed
+              </label>
+</div>
+</div>
+<!-- Contract Search -->
+<div>
+<label class="block text-xs font-semibold text-slate-700 uppercase tracking-tight mb-3">Contract</label>
+<input class="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary/10" placeholder="Search contract..." type="text"/>
+</div>
+<!-- Date Range -->
+<div>
+<label class="block text-xs font-semibold text-slate-700 uppercase tracking-tight mb-3">Date Range</label>
+<div class="space-y-2">
+<div class="relative">
+<span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">From</span>
+<input class="w-full pl-12 pr-3 py-2 text-sm border border-slate-200 rounded-lg" type="date"/>
+</div>
+<div class="relative">
+<span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">To</span>
+<input class="w-full pl-12 pr-3 py-2 text-sm border border-slate-200 rounded-lg" type="date"/>
+</div>
+</div>
+</div>
+<!-- Overpayment Radio -->
+<div>
+<label class="block text-xs font-semibold text-slate-700 uppercase tracking-tight mb-3">Overpayment</label>
+<div class="space-y-2">
+<label class="flex items-center gap-2.5 text-sm text-slate-600 cursor-pointer">
+<input checked="" class="text-primary focus:ring-primary border-slate-300" name="overpayment" type="radio"/>
+                All
+              </label>
+<label class="flex items-center gap-2.5 text-sm text-slate-600 cursor-pointer">
+<input class="text-primary focus:ring-primary border-slate-300" name="overpayment" type="radio"/>
+                Overpayments Only
+              </label>
+<label class="flex items-center gap-2.5 text-sm text-slate-600 cursor-pointer">
+<input class="text-primary focus:ring-primary border-slate-300" name="overpayment" type="radio"/>
+                No Overpayments
+              </label>
+</div>
+</div>
+<div class="pt-4 space-y-3">
+<button class="w-full bg-[#1e3a8a] text-white py-2.5 rounded-lg font-semibold text-sm shadow-sm hover:bg-primary-dim transition-all">Apply Filters</button>
+<button class="w-full text-slate-500 font-semibold text-sm hover:text-slate-700 transition-all">Reset</button>
+</div>
+</div>
+</aside>
+<!-- Data Table Card -->
+<section class="flex-1 min-w-0 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto scrollbar-hide">
+<table class="w-full text-left border-collapse min-w-[1000px]">
+<thead class="bg-[#f1f5f9] border-b border-slate-200">
+<tr>
+<th class="px-4 py-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">
+<div class="flex items-center gap-1 cursor-pointer hover:text-primary">
+                    Ref No.
+                    <span class="material-symbols-outlined text-[16px]" data-icon="unfold_more">unfold_more</span>
+</div>
+</th>
+<th class="px-4 py-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">Contract</th>
+<th class="px-4 py-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">Vendor</th>
+<th class="px-4 py-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider text-right">
+<div class="flex items-center justify-end gap-1 cursor-pointer hover:text-primary">
+                    Amount
+                    <span class="material-symbols-outlined text-[16px]" data-icon="unfold_more">unfold_more</span>
+</div>
+</th>
+<th class="px-4 py-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">
+<div class="flex items-center gap-1 cursor-pointer hover:text-primary">
+                    Date
+                    <span class="material-symbols-outlined text-[16px]" data-icon="unfold_more">unfold_more</span>
+</div>
+</th>
+<th class="px-4 py-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">Method</th>
+<th class="px-4 py-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">Status</th>
+<th class="px-4 py-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">Overpayment</th>
+<th class="px-4 py-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">Processed By</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="table-row-alt hover:bg-primary-surface/40 transition-colors group">
+<td class="px-4 py-4 text-sm font-semibold text-slate-700">PAY-2024-001</td>
+<td class="px-4 py-4 text-sm"><a class="text-primary font-medium hover:underline" href="#">CON-2024-001</a></td>
+<td class="px-4 py-4 text-sm text-slate-600">Tech Corp Ltd</td>
+<td class="px-4 py-4 text-sm font-mono font-medium text-right text-slate-900">$75,000.00</td>
+<td class="px-4 py-4 text-sm text-slate-500">Mar 1, 2024</td>
+<td class="px-4 py-4 text-sm text-slate-600">Bank Transfer</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0] rounded text-[11px] font-bold uppercase">Completed</span>
+</td>
+<td class="px-4 py-4 text-sm text-slate-400">—</td>
+<td class="px-4 py-4 text-sm text-slate-600">John Admin</td>
+</tr>
+<!-- Row 2 -->
+<tr class="table-row-alt hover:bg-primary-surface/40 transition-colors group">
+<td class="px-4 py-4 text-sm font-semibold text-slate-700">PAY-2024-002</td>
+<td class="px-4 py-4 text-sm"><a class="text-primary font-medium hover:underline" href="#">CON-2024-001</a></td>
+<td class="px-4 py-4 text-sm text-slate-600">Tech Corp Ltd</td>
+<td class="px-4 py-4 text-sm font-mono font-medium text-right text-slate-900">$50,000.00</td>
+<td class="px-4 py-4 text-sm text-slate-500">Jun 15, 2024</td>
+<td class="px-4 py-4 text-sm text-slate-600">Bank Transfer</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-[#eff6ff] text-[#2563eb] border border-blue-200 rounded text-[11px] font-bold uppercase">Processing</span>
+</td>
+<td class="px-4 py-4 text-sm text-slate-400">—</td>
+<td class="px-4 py-4 text-sm text-slate-600">John Admin</td>
+</tr>
+<!-- Row 3 -->
+<tr class="table-row-alt hover:bg-primary-surface/40 transition-colors group">
+<td class="px-4 py-4 text-sm font-semibold text-slate-700">PAY-2024-003</td>
+<td class="px-4 py-4 text-sm"><a class="text-primary font-medium hover:underline" href="#">CON-2024-002</a></td>
+<td class="px-4 py-4 text-sm text-slate-600">MedTech Solutions</td>
+<td class="px-4 py-4 text-sm font-mono font-medium text-right text-slate-900">$800,000.00</td>
+<td class="px-4 py-4 text-sm text-slate-500">Apr 5, 2024</td>
+<td class="px-4 py-4 text-sm text-slate-600">Wire Transfer</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0] rounded text-[11px] font-bold uppercase">Completed</span>
+</td>
+<td class="px-4 py-4 text-sm text-slate-400">—</td>
+<td class="px-4 py-4 text-sm text-slate-600">Sarah Officer</td>
+</tr>
+<!-- Row 4 -->
+<tr class="table-row-alt hover:bg-primary-surface/40 transition-colors group">
+<td class="px-4 py-4 text-sm font-semibold text-slate-700">PAY-2024-004</td>
+<td class="px-4 py-4 text-sm"><a class="text-primary font-medium hover:underline" href="#">CON-2024-002</a></td>
+<td class="px-4 py-4 text-sm text-slate-600">MedTech Solutions</td>
+<td class="px-4 py-4 text-sm font-mono font-medium text-right text-slate-900">$450,000.00</td>
+<td class="px-4 py-4 text-sm text-slate-500">Jul 20, 2024</td>
+<td class="px-4 py-4 text-sm text-slate-600">Wire Transfer</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0] rounded text-[11px] font-bold uppercase">Completed</span>
+</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-[#fff7ed] text-[#ea580c] border border-[#fed7aa] rounded text-[11px] font-bold uppercase flex items-center gap-1 w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span>
+                    Overpayment
+                  </span>
+</td>
+<td class="px-4 py-4 text-sm text-slate-600">Sarah Officer</td>
+</tr>
+<!-- Row 5 -->
+<tr class="table-row-alt hover:bg-primary-surface/40 transition-colors group">
+<td class="px-4 py-4 text-sm font-semibold text-slate-700">PAY-2024-005</td>
+<td class="px-4 py-4 text-sm"><a class="text-primary font-medium hover:underline" href="#">CON-2024-003</a></td>
+<td class="px-4 py-4 text-sm text-slate-600">BuildRight Ltd</td>
+<td class="px-4 py-4 text-sm font-mono font-medium text-right text-slate-900">$1,700,000.00</td>
+<td class="px-4 py-4 text-sm text-slate-500">May 10, 2024</td>
+<td class="px-4 py-4 text-sm text-slate-600">Bank Transfer</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0] rounded text-[11px] font-bold uppercase">Completed</span>
+</td>
+<td class="px-4 py-4 text-sm text-slate-400">—</td>
+<td class="px-4 py-4 text-sm text-slate-600">John Admin</td>
+</tr>
+<!-- Row 6 -->
+<tr class="table-row-alt hover:bg-primary-surface/40 transition-colors group">
+<td class="px-4 py-4 text-sm font-semibold text-slate-700">PAY-2024-006</td>
+<td class="px-4 py-4 text-sm"><a class="text-primary font-medium hover:underline" href="#">CON-2024-005</a></td>
+<td class="px-4 py-4 text-sm text-slate-600">SafeGuard Inc</td>
+<td class="px-4 py-4 text-sm font-mono font-medium text-right text-slate-900">$200,000.00</td>
+<td class="px-4 py-4 text-sm text-slate-500">Aug 1, 2024</td>
+<td class="px-4 py-4 text-sm text-slate-600">Cheque</td>
+<td class="px-4 py-4">
+<span class="px-2 py-1 bg-[#fefce8] text-[#ca8a04] border border-[#fde68a] rounded text-[11px] font-bold uppercase">Pending</span>
+</td>
+<td class="px-4 py-4 text-sm text-slate-400">—</td>
+<td class="px-4 py-4 text-sm text-slate-600">Sarah Officer</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
+<p class="text-sm text-slate-500">Showing <span class="font-semibold text-slate-700">1–10</span> of <span class="font-semibold text-slate-700">89</span> results</p>
+<div class="flex items-center gap-1">
+<button class="px-3 py-1.5 text-sm font-medium text-slate-400 cursor-not-allowed">← Prev</button>
+<button class="px-3.5 py-1.5 bg-primary text-white rounded text-sm font-bold">1</button>
+<button class="px-3.5 py-1.5 hover:bg-slate-50 text-slate-600 rounded text-sm font-medium">2</button>
+<span class="px-2 text-slate-400">...</span>
+<button class="px-3.5 py-1.5 hover:bg-slate-50 text-slate-600 rounded text-sm font-medium">9</button>
+<button class="px-3 py-1.5 text-sm font-medium text-primary hover:bg-primary-surface rounded transition-colors">Next →</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Quick Action FAB (Hidden as per Contextual Rules on Details/Transactional) -->
+</body></html>

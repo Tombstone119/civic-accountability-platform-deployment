@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit Detail: AUD-004 | Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#d4dbdf",
+                      "on-surface": "#2c3437",
+                      "primary": "#1e3a8a",
+                      "tertiary": "#6e567e",
+                      "primary-fixed": "#8fa7fe",
+                      "on-secondary-fixed": "#004841",
+                      "outline": "#747c80",
+                      "error": "#dc2626",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-surface": "#0b0f10",
+                      "secondary-fixed": "#89f5e7",
+                      "on-secondary-fixed-variant": "#00675e",
+                      "surface-container-low": "#f0f4f7",
+                      "on-secondary": "#e2fff9",
+                      "on-primary-container": "#002474",
+                      "on-primary-fixed": "#000c36",
+                      "on-tertiary-container": "#5a446a",
+                      "surface-container-highest": "#dce4e8",
+                      "on-tertiary": "#fff6fd",
+                      "surface-container-high": "#e3e9ed",
+                      "background": "#f8fafc",
+                      "secondary-dim": "#005e56",
+                      "on-tertiary-fixed-variant": "#644d75",
+                      "secondary-fixed-dim": "#7ae7d8",
+                      "inverse-on-surface": "#9a9d9f",
+                      "on-primary": "#faf8ff",
+                      "primary-fixed-dim": "#829aef",
+                      "secondary-container": "#89f5e7",
+                      "inverse-primary": "#8fa7fe",
+                      "surface-tint": "#415aab",
+                      "on-error-container": "#6e0523",
+                      "primary-container": "#8fa7fe",
+                      "tertiary-fixed-dim": "#dfc1f0",
+                      "on-error": "#fff7f7",
+                      "on-secondary-container": "#005c54",
+                      "surface": "#ffffff",
+                      "on-primary-fixed-variant": "#0e2e7f",
+                      "on-background": "#0f172a",
+                      "error-container": "#fef2f2",
+                      "primary-dim": "#344e9e",
+                      "error-dim": "#6b0221",
+                      "tertiary-fixed": "#edcfff",
+                      "tertiary-container": "#edcfff",
+                      "surface-bright": "#f7f9fb",
+                      "on-tertiary-fixed": "#473157",
+                      "tertiary-dim": "#614a71",
+                      "on-surface-variant": "#475569",
+                      "surface-container": "#eaeff2",
+                      "secondary": "#0d9488",
+                      "outline-variant": "#acb3b7",
+                      "surface-variant": "#e2e8f0"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Inter"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full h-16 flex items-center justify-between px-6 bg-[#1e3a8a] dark:bg-slate-950 text-white dark:text-slate-100 font-['Inter'] font-semibold shadow-sm z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="text-xl font-bold text-white">Civic Accountability Platform</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center bg-white/10 px-3 py-1.5 rounded-lg border border-white/20">
+<span class="material-symbols-outlined text-sm mr-2">search</span>
+<input class="bg-transparent border-none text-sm text-white placeholder-white/60 focus:ring-0 p-0 w-48" placeholder="Search records..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined cursor-pointer hover:bg-[#3b5fc0] transition-colors p-2 rounded-full">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-[#3b5fc0] transition-colors p-2 rounded-full">help</span>
+<div class="h-8 w-8 rounded-full overflow-hidden border-2 border-white/20 cursor-pointer active:opacity-80">
+<img alt="User avatar" data-alt="professional male auditor portrait in a clean corporate office environment with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUp9IBiiW3KeQUG7-GzO6Yn9W5U-9dQlWQG62JMjedeWode4AUIWqD-h_XXXtn22AA0kGPlYMQvv29Mx4OL0H6WrQeWmGwoQt6J3UMEgXWzmjN7nxbSVamztXj-WxDfYeB2qF52a8lYOd9tc3C_u4OzkfZ-iiRGz6ol0mHLRiFbu9nAOl4miS60mvtwOHReL8FRsP0M00ATBX8hJC73hYP0L6WmHvUst4QhtICHD8K6ke1LmyEmpP0Jc9U4JnUIomrYhPZBg4mJsc"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-60 flex flex-col py-4 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 font-['Inter'] text-sm font-medium z-40">
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Contracts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">store</span>
+<span>Vendors</span>
+</a>
+<!-- Active Tab: Audit Reports -->
+<a class="flex items-center gap-3 px-4 py-2.5 bg-[#eff3ff] dark:bg-[#1e3a8a]/20 border-l-[3px] border-[#1e3a8a] text-[#1e3a8a] dark:text-[#3b5fc0] font-semibold transition-all duration-200" href="#">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span>Audit Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">domain</span>
+<span>Departments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">public</span>
+<span>Public Portal</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Administration</span>
+</a>
+</nav>
+<div class="px-6 py-4 mt-auto border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 bg-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-lg" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<p class="text-xs font-bold uppercase tracking-wider text-on-surface">Civic Platform</p>
+<p class="text-[10px] text-on-surface-variant">Admin Dashboard</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-60 pt-16 min-h-screen">
+<div class="max-w-6xl mx-auto px-8 py-8">
+<!-- Breadcrumb -->
+<nav class="flex items-center gap-2 text-xs font-medium text-on-surface-variant mb-6">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary" href="#">Audits</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-semibold">AUD-004</span>
+</nav>
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<h1 class="text-[32px] font-bold text-on-background leading-tight">Forensic Audit — AUD-004</h1>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0] text-[11px] font-bold uppercase rounded">Completed</span>
+<span class="px-2 py-0.5 bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] text-[11px] font-bold uppercase rounded">CRITICAL</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-primary text-primary font-semibold text-sm rounded-lg hover:bg-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                        Edit Audit
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 border border-error text-error font-semibold text-sm rounded-lg hover:bg-error-container/50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+                        Delete Audit
+                    </button>
+</div>
+</div>
+<!-- Audit Information Card -->
+<div class="bg-white border border-slate-200 rounded-xl mb-12 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+<h2 class="text-lg font-bold text-on-background">Audit Information</h2>
+<span class="material-symbols-outlined text-on-surface-variant">info</span>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-12">
+<!-- Info Pair 1 -->
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-1">Contract</p>
+<a class="text-sm font-semibold text-primary underline decoration-primary-fixed hover:text-primary-dim transition-colors" href="#">CON-2024-002 – Medical Equipment Supply</a>
+</div>
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-1">Auditor</p>
+<p class="text-sm font-semibold text-on-background">Jane Auditor</p>
+</div>
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-1">Audit Type</p>
+<p class="text-sm font-semibold text-on-background">Forensic</p>
+</div>
+<!-- Info Pair 2 -->
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-1">Status</p>
+<span class="px-2 py-0.5 bg-[#f0fdf4] text-[#16a34a] text-[11px] font-bold uppercase rounded">Completed</span>
+</div>
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-1">Start Date</p>
+<p class="text-sm font-semibold text-on-background">April 2, 2024</p>
+</div>
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-1">End Date</p>
+<p class="text-sm font-semibold text-on-background">May 28, 2024</p>
+</div>
+<!-- Info Pair 3 -->
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-1">Risk Rating</p>
+<span class="px-2 py-0.5 bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] text-[11px] font-bold uppercase rounded">CRITICAL</span>
+</div>
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-1">Is Compliant</p>
+<p class="text-sm font-semibold text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">close</span>
+                                Non-Compliant
+                            </p>
+</div>
+</div>
+<!-- Summary & Recommendations -->
+<div class="mt-8 pt-8 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-12">
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-3">Summary</p>
+<p class="text-sm text-on-surface leading-relaxed">Forensic review of procurement and billing procedures. Multiple irregularities found including inflated pricing and missing documentation.</p>
+</div>
+<div>
+<p class="text-[11px] font-bold uppercase text-on-surface-variant mb-3">Recommendations</p>
+<ul class="text-sm text-on-surface space-y-2">
+<li class="flex gap-2">
+<span class="font-bold text-primary">1.</span> Suspend further payments.
+                                </li>
+<li class="flex gap-2">
+<span class="font-bold text-primary">2.</span> Refer to anti-corruption authority.
+                                </li>
+<li class="flex gap-2">
+<span class="font-bold text-primary">3.</span> Require re-tendering.
+                                </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Findings Section -->
+<div class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-2xl font-bold text-on-background">Findings (3)</h2>
+<button class="flex items-center gap-2 px-3 py-1.5 border border-primary text-primary font-semibold text-xs rounded-lg hover:bg-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Add Finding
+                    </button>
+</div>
+<div class="space-y-6">
+<!-- Finding Card 1 -->
+<div class="bg-white border-l-4 border-l-error border border-slate-200 rounded-lg shadow-sm p-6">
+<div class="flex items-start justify-between gap-4 mb-4">
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] text-[10px] font-bold uppercase rounded">CRITICAL</span>
+<span class="px-2 py-0.5 bg-[#fefce8] text-[#ca8a04] text-[10px] font-bold uppercase rounded-full">overpricing</span>
+</div>
+<span class="text-xs text-on-surface-variant font-medium">Recorded: May 12, 2024</span>
+</div>
+<p class="text-[15px] text-on-background font-semibold mb-3">Medical equipment prices inflated by 340% above market rate</p>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-6">Detailed analysis of invoice #INV-9902 shows unit costs for ventilators listed at $42,000 against a verified market ceiling of $9,500. Documentation supporting the markup was non-existent.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 p-4 bg-slate-50 rounded-lg border border-slate-100">
+<div>
+<p class="text-[10px] font-bold uppercase text-on-surface-variant mb-2">Evidence</p>
+<div class="flex items-center gap-2 text-primary text-xs font-medium cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">attach_file</span>
+                                    market_comparison_report.pdf
+                                </div>
+</div>
+<div>
+<p class="text-[10px] font-bold uppercase text-on-surface-variant mb-2">Specific Recommendation</p>
+<p class="text-xs text-on-surface italic leading-relaxed">Immediate clawback procedure for excess payments made on Invoice #INV-9902.</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-100">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-on-surface-variant uppercase">Resolved:</span>
+<p class="text-xs font-bold text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">close</span>
+                                    Not Resolved
+                                </p>
+</div>
+<button class="px-4 py-1.5 border border-secondary text-secondary font-bold text-xs rounded uppercase hover:bg-secondary/5 transition-colors">
+                                Mark Resolved
+                            </button>
+</div>
+</div>
+<!-- Finding Card 2 -->
+<div class="bg-white border-l-4 border-l-[#ea580c] border border-slate-200 rounded-lg shadow-sm p-6">
+<div class="flex items-start justify-between gap-4 mb-4">
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 bg-[#fff7ed] text-[#ea580c] border border-[#fed7aa] text-[10px] font-bold uppercase rounded">HIGH</span>
+<span class="px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase rounded-full">missing_documents</span>
+</div>
+<span class="text-xs text-on-surface-variant font-medium">Recorded: May 15, 2024</span>
+</div>
+<p class="text-[15px] text-on-background font-semibold mb-3">7 of 12 required compliance certificates absent</p>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-6">Vendor failed to provide valid quality assurance certifications for technical medical apparatus during the procurement stage. Despite this, the tender was awarded.</p>
+<div class="flex items-center justify-between pt-4 border-t border-slate-100">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-on-surface-variant uppercase">Resolved:</span>
+<p class="text-xs font-bold text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">close</span>
+                                    Not Resolved
+                                </p>
+</div>
+<button class="px-4 py-1.5 border border-secondary text-secondary font-bold text-xs rounded uppercase hover:bg-secondary/5 transition-colors">
+                                Mark Resolved
+                            </button>
+</div>
+</div>
+<!-- Finding Card 3 -->
+<div class="bg-white border-l-4 border-l-[#ca8a04] border border-slate-200 rounded-lg shadow-sm p-6 opacity-80">
+<div class="flex items-start justify-between gap-4 mb-4">
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 bg-[#fefce8] text-[#ca8a04] border border-[#fde68a] text-[10px] font-bold uppercase rounded">MEDIUM</span>
+<span class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase rounded-full">delay</span>
+</div>
+<span class="text-xs text-on-surface-variant font-medium">Recorded: May 18, 2024</span>
+</div>
+<p class="text-[15px] text-on-background font-semibold mb-3">Equipment delivery delayed 45 days</p>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-6">Standard operational delays observed in the logistics chain. Contractual penalty clauses for late delivery were not triggered by the procurement department.</p>
+<div class="flex items-center justify-between pt-4 border-t border-slate-100">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-on-surface-variant uppercase">Resolved:</span>
+<p class="text-xs font-bold text-[#16a34a] flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                    May 30, 2024 by John Admin
+                                </p>
+</div>
+<button class="px-4 py-1.5 border border-slate-200 text-slate-400 font-bold text-xs rounded uppercase cursor-not-allowed">
+                                Already Resolved
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="flex items-center justify-end gap-4 py-8 border-t border-slate-200 mt-12 mb-24">
+<button class="px-6 py-2 border border-slate-300 text-slate-600 font-bold text-sm rounded-lg hover:bg-slate-50 transition-all">Cancel</button>
+<button class="px-6 py-2 bg-primary text-white font-bold text-sm rounded-lg hover:bg-primary-dim shadow-sm transition-all">Download Full Report (PDF)</button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around py-3 z-50">
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-[10px] font-medium">Overview</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#1e3a8a]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">assignment_turned_in</span>
+<span class="text-[10px] font-bold">Audits</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">store</span>
+<span class="text-[10px] font-medium">Vendors</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-[10px] font-medium">Admin</span>
+</div>
+</nav>
+</body></html>

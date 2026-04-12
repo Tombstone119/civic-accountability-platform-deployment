@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard | Civic Accountability Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "tertiary": "#6e567e",
+                "on-primary": "#faf8ff",
+                "on-secondary-container": "#005c54",
+                "tertiary-fixed": "#edcfff",
+                "on-primary-fixed-variant": "#0e2e7f",
+                "surface-container-highest": "#dce4e8",
+                "secondary-container": "#89f5e7",
+                "inverse-surface": "#0b0f10",
+                "surface-container-low": "#f0f4f7",
+                "surface-container-high": "#e3e9ed",
+                "secondary-fixed": "#89f5e7",
+                "on-background": "#2c3437",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-fixed": "#000c36",
+                "on-error-container": "#6e0523",
+                "background": "#f7f9fb",
+                "primary": "#415aab",
+                "primary-fixed": "#8fa7fe",
+                "on-secondary": "#e2fff9",
+                "secondary-dim": "#005e56",
+                "on-secondary-fixed": "#004841",
+                "secondary": "#006b62",
+                "error-container": "#f97386",
+                "outline": "#747c80",
+                "on-secondary-fixed-variant": "#00675e",
+                "tertiary-container": "#edcfff",
+                "on-tertiary": "#fff6fd",
+                "on-tertiary-fixed-variant": "#644d75",
+                "inverse-on-surface": "#9a9d9f",
+                "on-surface-variant": "#596064",
+                "on-tertiary-container": "#5a446a",
+                "on-surface": "#2c3437",
+                "inverse-primary": "#8fa7fe",
+                "tertiary-fixed-dim": "#dfc1f0",
+                "on-tertiary-fixed": "#473157",
+                "primary-fixed-dim": "#829aef",
+                "primary-container": "#8fa7fe",
+                "on-primary-container": "#002474",
+                "surface": "#f7f9fb",
+                "surface-tint": "#415aab",
+                "surface-container": "#eaeff2",
+                "surface-bright": "#f7f9fb",
+                "primary-dim": "#344e9e",
+                "error": "#a8364b",
+                "surface-variant": "#dce4e8",
+                "secondary-fixed-dim": "#7ae7d8",
+                "error-dim": "#6b0221",
+                "on-error": "#fff7f7",
+                "outline-variant": "#acb3b7",
+                "tertiary-dim": "#614a71",
+                "surface-dim": "#d4dbdf"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "fontFamily": {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .risk-critical { background-color: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+        .risk-high { background-color: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; }
+        .risk-medium { background-color: #fefce8; color: #ca8a04; border: 1px solid #fde68a; }
+        .risk-low { background-color: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+        .badge { font-size: 11px; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+        .status-active { background-color: #eff6ff; color: #2563eb; }
+        .status-completed { background-color: #f0fdf4; color: #16a34a; }
+        .status-draft { background-color: #f1f5f9; color: #64748b; }
+        .status-under_review { background-color: #fefce8; color: #ca8a04; }
+        .direct-award-highlight { color: #dc2626; font-weight: 600; }
+    </style>
+</head>
+<body class="bg-background">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full h-16 z-50 bg-[#1e3a8a] dark:bg-slate-900 border-b border-blue-800 dark:border-slate-800 shadow-sm flex justify-between items-center px-6 antialiased">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white text-2xl" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="text-lg font-bold text-white tracking-tight">Civic Accountability Platform</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="bg-[#0d9488] text-white text-[10px] font-bold px-2 py-0.5 rounded tracking-wider">ADMIN</span>
+<div class="flex items-center gap-3 text-white border-l border-blue-700 pl-6 cursor-pointer hover:opacity-90 transition-opacity">
+<div class="text-right">
+<p class="text-sm font-semibold leading-none">John Admin</p>
+<p class="text-[11px] text-blue-200/70 mt-1">Super Administrator</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold text-sm border-2 border-blue-400 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a senior government administrator with friendly expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCnjglH_2_cqAhDOdV6z7DXoQVjdM0YuYzSuyfHbHnD61Xv5lIckCi7a4lTfwPmd90JJdbn_H3CAW4SSYQH4pqRYBlqbqR_BgVp2b_GwALlgaKWWrIRniGuPiXz7OHqBrTE0aIHdho7bIEZPnyUlUB7kOnTtm2ARGXCpQL7i_h_ChvGm37AanBl8BDvGPf7U9PwupaOZrVzVHFoZ0C7hiFSFMVKvMP6EQtWtNl_Y311DwMwNQm-Wf92-GSaOU4qKxRuCI7R0z5h_M"/>
+</div>
+</div>
+<div class="flex gap-2 border-l border-blue-700 pl-4">
+<button class="p-2 text-blue-100 hover:bg-blue-700/50 rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-[#1e3a8a]"></span>
+</button>
+<button class="p-2 text-blue-100 hover:bg-blue-700/50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-[240px] z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col py-4">
+<nav class="flex-1 space-y-1">
+<div class="px-6 mb-4">
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em]">Main Menu</p>
+</div>
+<!-- OVERVIEW Group -->
+<div class="group cursor-pointer bg-[#eff3ff] dark:bg-blue-900/30 text-[#1e3a8a] dark:text-blue-300 border-l-[3px] border-[#1e3a8a] dark:border-blue-500 py-3 px-6 flex items-center gap-3 text-sm font-medium">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span>Overview</span>
+</div>
+<!-- CONTRACTS Group -->
+<div class="py-2">
+<div class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all py-2.5 px-6 flex items-center justify-between text-sm font-medium cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Contracts</span>
+</div>
+<span class="material-symbols-outlined text-xs" data-icon="expand_more">expand_more</span>
+</div>
+<!-- Submenu -->
+<div class="pl-14 space-y-2 mt-1">
+<div class="text-xs text-slate-500 hover:text-[#1e3a8a] cursor-pointer">All Contracts</div>
+<div class="text-xs text-slate-500 hover:text-[#1e3a8a] cursor-pointer">Payments</div>
+</div>
+</div>
+<div class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all py-2.5 px-6 flex items-center gap-3 text-sm font-medium cursor-pointer">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span>Vendors</span>
+</div>
+<div class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all py-2.5 px-6 flex items-center gap-3 text-sm font-medium cursor-pointer">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span>Audits</span>
+</div>
+<div class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all py-2.5 px-6 flex items-center gap-3 text-sm font-medium cursor-pointer">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+<span>Departments</span>
+</div>
+<div class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all py-2.5 px-6 flex items-center gap-3 text-sm font-medium cursor-pointer">
+<span class="material-symbols-outlined" data-icon="public">public</span>
+<span>Public Portal</span>
+</div>
+<div class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all py-2.5 px-6 flex items-center gap-3 text-sm font-medium cursor-pointer">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span>Administration</span>
+</div>
+</nav>
+<div class="mt-auto border-t border-slate-100 pt-4 px-6 space-y-4">
+<div class="text-slate-600 hover:text-red-600 transition-all flex items-center gap-3 text-sm font-medium cursor-pointer">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Help Center</span>
+</div>
+<div class="text-slate-600 hover:text-red-600 transition-all flex items-center gap-3 text-sm font-medium cursor-pointer">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-[240px] mt-16 p-8 min-h-screen">
+<!-- Breadcrumb & Title -->
+<nav class="flex text-sm text-slate-500 mb-2 gap-2 items-center">
+<span class="hover:underline cursor-pointer">Home</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="text-[#1e3a8a] font-medium">Dashboard</span>
+</nav>
+<header class="mb-8">
+<h1 class="text-[32px] font-bold text-[#1e3a8a] tracking-tight">Dashboard</h1>
+<p class="text-slate-500 text-sm mt-1">Overview of public spending and accountability across all civic departments.</p>
+</header>
+<!-- Stat Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Total Contracts</span>
+<span class="material-symbols-outlined text-[#1e3a8a]" data-icon="contract">description</span>
+</div>
+<p class="text-[36px] font-bold text-[#1e3a8a]">247</p>
+<div class="flex items-center gap-1 mt-2 text-green-600 text-[11px] font-semibold">
+<span class="material-symbols-outlined text-xs" data-icon="trending_up">trending_up</span>
+<span>12% from last quarter</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Total Spend</span>
+<span class="material-symbols-outlined text-[#1e3a8a]" data-icon="payments">payments</span>
+</div>
+<p class="text-[36px] font-bold text-[#1e3a8a]">$18.4M</p>
+<div class="flex items-center gap-1 mt-2 text-amber-600 text-[11px] font-semibold">
+<span class="material-symbols-outlined text-xs" data-icon="horizontal_rule">horizontal_rule</span>
+<span>Stable spending trend</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Active Vendors</span>
+<span class="material-symbols-outlined text-[#1e3a8a]" data-icon="group">group</span>
+</div>
+<p class="text-[36px] font-bold text-[#1e3a8a]">38</p>
+<div class="flex items-center gap-1 mt-2 text-green-600 text-[11px] font-semibold">
+<span class="material-symbols-outlined text-xs" data-icon="add">add</span>
+<span>3 new this month</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Open Audits</span>
+<span class="material-symbols-outlined text-[#1e3a8a]" data-icon="inventory">inventory</span>
+</div>
+<p class="text-[36px] font-bold text-[#1e3a8a]">5</p>
+<div class="flex items-center gap-1 mt-2 text-red-600 text-[11px] font-semibold">
+<span class="material-symbols-outlined text-xs" data-icon="priority_high">priority_high</span>
+<span>Requires immediate action</span>
+</div>
+</div>
+</div>
+<!-- Critical Alert -->
+<div class="bg-white border-l-4 border-red-600 p-4 mb-8 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-red-600" data-icon="warning">warning</span>
+<span class="text-sm font-semibold text-red-900">3 critical audit findings detected in Department of Transport</span>
+</div>
+<a class="text-sm font-bold text-red-600 hover:underline flex items-center gap-1" href="#">
+                View Audits 
+                <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Charts Row -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- Spend by Department (Vertical Bar) -->
+<div class="lg:col-span-2 bg-white border border-slate-200 rounded-lg p-6">
+<h3 class="text-sm font-bold text-slate-700 uppercase tracking-wide mb-6">Spend by Department ($M)</h3>
+<div class="h-64 flex items-end justify-between px-4 gap-4">
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-[#1e3a8a]/20 rounded-t-sm h-[60%] hover:bg-[#1e3a8a]/40 transition-colors"></div>
+<p class="text-[10px] font-semibold mt-3 text-slate-500 uppercase">Health</p>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-[#1e3a8a]/20 rounded-t-sm h-[85%] hover:bg-[#1e3a8a]/40 transition-colors"></div>
+<p class="text-[10px] font-semibold mt-3 text-slate-500 uppercase">Education</p>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-[#1e3a8a]/20 rounded-t-sm h-[45%] hover:bg-[#1e3a8a]/40 transition-colors"></div>
+<p class="text-[10px] font-semibold mt-3 text-slate-500 uppercase">Transport</p>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-[#1e3a8a]/20 rounded-t-sm h-[95%] hover:bg-[#1e3a8a]/40 transition-colors"></div>
+<p class="text-[10px] font-semibold mt-3 text-slate-500 uppercase">Defence</p>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-[#1e3a8a]/20 rounded-t-sm h-[30%] hover:bg-[#1e3a8a]/40 transition-colors"></div>
+<p class="text-[10px] font-semibold mt-3 text-slate-500 uppercase">Finance</p>
+</div>
+</div>
+</div>
+<!-- Procurement Methods (Donut) -->
+<div class="bg-white border border-slate-200 rounded-lg p-6">
+<h3 class="text-sm font-bold text-slate-700 uppercase tracking-wide mb-6">Procurement Methods</h3>
+<div class="relative w-40 h-40 mx-auto">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-slate-100" cx="18" cy="18" fill="none" r="16" stroke-width="4"></circle>
+<!-- Open Tender 45% -->
+<circle class="stroke-blue-600" cx="18" cy="18" fill="none" r="16" stroke-dasharray="45 100" stroke-dashoffset="0" stroke-width="4"></circle>
+<!-- Restricted 25% -->
+<circle class="stroke-blue-400" cx="18" cy="18" fill="none" r="16" stroke-dasharray="25 100" stroke-dashoffset="-45" stroke-width="4"></circle>
+<!-- Direct Award 20% (Red) -->
+<circle class="stroke-red-500" cx="18" cy="18" fill="none" r="16" stroke-dasharray="20 100" stroke-dashoffset="-70" stroke-width="4"></circle>
+<!-- Quotation 10% -->
+<circle class="stroke-slate-300" cx="18" cy="18" fill="none" r="16" stroke-dasharray="10 100" stroke-dashoffset="-90" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="text-2xl font-bold text-slate-800">100%</span>
+</div>
+</div>
+<div class="mt-6 space-y-2">
+<div class="flex justify-between items-center text-[11px]">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-600"></span> Open Tender</span>
+<span class="font-bold">45%</span>
+</div>
+<div class="flex justify-between items-center text-[11px]">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-400"></span> Restricted</span>
+<span class="font-bold">25%</span>
+</div>
+<div class="flex justify-between items-center text-[11px] text-red-600 font-semibold">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-red-500"></span> Direct Award</span>
+<span class="font-bold">20%</span>
+</div>
+<div class="flex justify-between items-center text-[11px]">
+<span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-slate-300"></span> Quotation</span>
+<span class="font-bold">10%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Contracts Table -->
+<div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+<h3 class="text-sm font-bold text-slate-700 uppercase tracking-wide">Recent Contracts</h3>
+<button class="text-[#1e3a8a] text-xs font-bold hover:underline">View All Contracts</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-[#f1f5f9] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+<th class="px-6 py-3">Contract No.</th>
+<th class="px-6 py-3">Title</th>
+<th class="px-6 py-3">Vendor</th>
+<th class="px-6 py-3">Value</th>
+<th class="px-6 py-3">Status</th>
+<th class="px-6 py-3">Method</th>
+<th class="px-6 py-3">Risk</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-[#eff3ff] transition-colors text-sm">
+<td class="px-6 py-4 font-mono text-xs text-[#1e3a8a]">CON-2024-001</td>
+<td class="px-6 py-4 font-medium">IT Infrastructure</td>
+<td class="px-6 py-4 text-slate-600">Tech Corp Ltd</td>
+<td class="px-6 py-4 font-semibold">$250,000</td>
+<td class="px-6 py-4"><span class="badge status-active">Active</span></td>
+<td class="px-6 py-4 text-xs direct-award-highlight">Direct Award</td>
+<td class="px-6 py-4"><span class="badge risk-high">High</span></td>
+</tr>
+<tr class="bg-[#f8fafc] hover:bg-[#eff3ff] transition-colors text-sm">
+<td class="px-6 py-4 font-mono text-xs text-[#1e3a8a]">CON-2024-002</td>
+<td class="px-6 py-4 font-medium">Medical Equipment</td>
+<td class="px-6 py-4 text-slate-600">MedTech Solutions</td>
+<td class="px-6 py-4 font-semibold">$1.2M</td>
+<td class="px-6 py-4"><span class="badge status-active">Active</span></td>
+<td class="px-6 py-4 text-xs text-slate-500">Open Tender</td>
+<td class="px-6 py-4"><span class="badge risk-critical">Critical</span></td>
+</tr>
+<tr class="hover:bg-[#eff3ff] transition-colors text-sm">
+<td class="px-6 py-4 font-mono text-xs text-[#1e3a8a]">CON-2024-003</td>
+<td class="px-6 py-4 font-medium">Road Rehabilitation</td>
+<td class="px-6 py-4 text-slate-600">BuildRight Ltd</td>
+<td class="px-6 py-4 font-semibold">$3.4M</td>
+<td class="px-6 py-4"><span class="badge status-completed">Completed</span></td>
+<td class="px-6 py-4 text-xs text-slate-500">Open Tender</td>
+<td class="px-6 py-4"><span class="badge risk-medium">Medium</span></td>
+</tr>
+<tr class="bg-[#f8fafc] hover:bg-[#eff3ff] transition-colors text-sm">
+<td class="px-6 py-4 font-mono text-xs text-[#1e3a8a]">CON-2024-004</td>
+<td class="px-6 py-4 font-medium">School Furniture</td>
+<td class="px-6 py-4 text-slate-600">EduSupply Co</td>
+<td class="px-6 py-4 font-semibold">$180,000</td>
+<td class="px-6 py-4"><span class="badge status-draft">Draft</span></td>
+<td class="px-6 py-4 text-xs text-slate-500">Quotation</td>
+<td class="px-6 py-4 text-slate-400">—</td>
+</tr>
+<tr class="hover:bg-[#eff3ff] transition-colors text-sm">
+<td class="px-6 py-4 font-mono text-xs text-[#1e3a8a]">CON-2024-005</td>
+<td class="px-6 py-4 font-medium">Security Systems</td>
+<td class="px-6 py-4 text-slate-600">SafeGuard Inc</td>
+<td class="px-6 py-4 font-semibold">$560,000</td>
+<td class="px-6 py-4"><span class="badge status-under_review">Under Review</span></td>
+<td class="px-6 py-4 text-xs direct-award-highlight">Direct Award</td>
+<td class="px-6 py-4"><span class="badge risk-high">High</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</body></html>

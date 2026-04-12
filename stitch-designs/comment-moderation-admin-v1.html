@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Moderation | Civic Accountability Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .risk-badge, .status-badge {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .risk-badge {
+            border: 1px solid transparent;
+        }
+
+        .risk-critical {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border-color: #fecaca;
+        }
+
+        .risk-high {
+            background-color: #fff7ed;
+            color: #ea580c;
+            border-color: #fed7aa;
+        }
+
+        .risk-medium {
+            background-color: #fefce8;
+            color: #ca8a04;
+            border-color: #fde68a;
+        }
+
+        .risk-low {
+            background-color: #f0fdf4;
+            color: #16a34a;
+            border-color: #bbf7d0;
+        }
+
+        .status-pending {
+            background-color: #fefce8;
+            color: #ca8a04;
+        }
+
+        .status-active {
+            background-color: #eff6ff;
+            color: #2563eb;
+        }
+
+        .status-completed {
+            background-color: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .status-terminated {
+            background-color: #fef2f2;
+            color: #dc2626;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background-color: #ffffff;
+            border-right: 1px solid #dce4e8;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #596064;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            color: #0f172a;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover {
+            background-color: #f0f4f7;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dce4e8;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #dce4e8;
+        }
+
+        .user-text {
+            display: flex;
+            flex-direction: column;
+            font-size: 13px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .user-role {
+            color: #596064;
+            font-size: 12px;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #596064;
+            margin-bottom: 25px;
+        }
+
+        .breadcrumb a {
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 20px;
+        }
+
+        .filter-section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #dce4e8;
+        }
+
+        .comment-count {
+            font-size: 14px;
+            color: #596064;
+            margin-bottom: 15px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dce4e8;
+            padding-bottom: 15px;
+        }
+
+        .filter-tab {
+            padding: 8px 0;
+            border: none;
+            background: none;
+            color: #596064;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .filter-tab.active {
+            color: #1e3a8a;
+            border-bottom-color: #1e3a8a;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            color: #0f172a;
+            font-weight: 500;
+        }
+
+        .filter-group select {
+            padding: 6px 8px;
+            border: 1px solid #dce4e8;
+            border-radius: 4px;
+            font-size: 13px;
+            background-color: #ffffff;
+            cursor: pointer;
+        }
+
+        .search-box {
+            padding: 8px 12px;
+            border: 1px solid #dce4e8;
+            border-radius: 4px;
+            font-size: 13px;
+            width: 150px;
+        }
+
+        .table-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #dce4e8;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead {
+            background-color: #f0f4f7;
+            border-bottom: 1px solid #dce4e8;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #dce4e8;
+            color: #0f172a;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .record-link {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .record-link:hover {
+            text-decoration: underline;
+        }
+
+        .icon-button {
+            background: none;
+            border: none;
+            color: #1e3a8a;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 4px;
+        }
+
+        .icon-button:hover {
+            color: #0e2e7f;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 20px;
+            color: #596064;
+            font-size: 13px;
+        }
+
+        .pagination-button {
+            background-color: #ffffff;
+            border: 1px solid #dce4e8;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #0f172a;
+            font-weight: 500;
+        }
+
+        .pagination-button:hover {
+            background-color: #f0f4f7;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #596064;
+            cursor: pointer;
+        }
+
+        .modal-content {
+            margin-bottom: 25px;
+            padding: 16px;
+            background-color: #f0f4f7;
+            border-radius: 6px;
+            border-left: 4px solid #1e3a8a;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #0f172a;
+        }
+
+        .modal-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 12px;
+            background-color: #f8fafc;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background-color: #1e3a8a;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0e2e7f;
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: #0f172a;
+            border: 1px solid #dce4e8;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f0f4f7;
+        }
+
+        .whistleblower-badge {
+            background-color: #fef2f2;
+            color: #dc2626;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .flag-icon {
+            color: #ca8a04;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="material-symbols-outlined">shield</span>
+                Civic Accountability Platform
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-link">
+                    <span class="material-symbols-outlined">notifications</span>
+                    notifications
+                </div>
+                <div class="sidebar-link">
+                    <span class="material-symbols-outlined">help</span>
+                    help
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="user-info" style="padding: 10px 0;">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAG2qDTvp0S3y_4Aog77SabWg1YjFIXbue8SBTeIx9YV9dlRO9xquCjcSRIltqv6jnt7lBPYneaI2MY00NFDb7kIEtqxzdLGmOvVdvGGpyNlI_Un7CSF6FDC8aKwJrqpITzT4orMU63OpaFxFAd2lPlEMAXH5OeYF-FVmlMFu892adGT6xGeG4ounzB68_hIGbhPmj0Va22ws_ZGW8jLyrZDViJkbJRExdqlnsVOUh4D9fSawYbYkUQ2Y3D2CDKbJOBMBWyzoKfbE" alt="Admin Avatar" class="user-avatar">
+                    <div class="user-text">
+                        <div class="user-name">Administrator</div>
+                        <div class="user-role">Superuser Access</div>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid #dce4e8; margin: 20px 0;">
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Main Menu</div>
+                <a href="#" class="sidebar-link">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    Overview
+                </a>
+                <a href="#" class="sidebar-link">
+                    <span class="material-symbols-outlined">description</span>
+                    Contracts
+                </a>
+                <a href="#" class="sidebar-link">
+                    <span class="material-symbols-outlined">store</span>
+                    Vendors
+                </a>
+                <a href="#" class="sidebar-link">
+                    <span class="material-symbols-outlined">gavel</span>
+                    Audits
+                </a>
+                <a href="#" class="sidebar-link">
+                    <span class="material-symbols-outlined">business</span>
+                    Departments
+                </a>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Public Portal</div>
+                <a href="#" class="sidebar-link">
+                    <span class="material-symbols-outlined">public</span>
+                    Comments
+                </a>
+                <a href="#" class="sidebar-link">
+                    <span class="material-symbols-outlined">rss_feed</span>
+                    Announcements
+                </a>
+            </div>
+
+            <div class="sidebar-section">
+                <a href="#" class="sidebar-link">
+                    <span class="material-symbols-outlined">settings</span>
+                    Administration
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="breadcrumb">
+                    <a href="#">Home</a>
+                    <span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
+                    <a href="#">Public Portal</a>
+                    <span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
+                    <span>Comments</span>
+                </div>
+                <div class="header-right">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="material-symbols-outlined">help</span>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content-area">
+                <h1 class="page-title">Comment Moderation</h1>
+
+                <div class="filter-section">
+                    <div class="comment-count">18 comments pending review</div>
+
+                    <div class="filter-tabs">
+                        <button class="filter-tab active">All (18)</button>
+                        <button class="filter-tab">Pending (12)</button>
+                        <button class="filter-tab">Approved (4)</button>
+                        <button class="filter-tab">Rejected (2)</button>
+                    </div>
+
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <label>Type:</label>
+                            <select>
+                                <option>All</option>
+                                <option>Whistleblower Only</option>
+                                <option>Flagged Only</option>
+                            </select>
+                        </div>
+                        <input type="text" class="search-box" placeholder="search">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Author</th>
+                                <th>Record</th>
+                                <th>Content</th>
+                                <th>Whistleblower</th>
+                                <th>Flagged</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Anonymous</td>
+                                <td><a href="#" class="record-link">IT Infrastructure Upgrade</a></td>
+                                <td>I have evidence that pricing was inflated...</td>
+                                <td><span class="material-symbols-outlined" style="color: #dc2626;">lock</span></td>
+                                <td>-</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>Mar 5, 2024</td>
+                                <td>
+                                    <button class="icon-button"><span class="material-symbols-outlined">check_circle</span></button>
+                                    <button class="icon-button"><span class="material-symbols-outlined">cancel</span></button>
+                                    <button class="icon-button"><span class="material-symbols-outlined">flag</span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Roshan Silva</td>
+                                <td><a href="#" class="record-link">IT Infrastructure Upgrade</a></td>
+                                <td>Are there documents showing...</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>Mar 2, 2024</td>
+                                <td>
+                                    <button class="icon-button"><span class="material-symbols-outlined">check_circle</span></button>
+                                    <button class="icon-button"><span class="material-symbols-outlined">cancel</span></button>
+                                    <button class="icon-button"><span class="material-symbols-outlined">flag</span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Priya M.</td>
+                                <td><a href="#" class="record-link">Medical Equipment Supply</a></td>
+                                <td>When will the equipment be delivered?...</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>Mar 8, 2024</td>
+                                <td>
+                                    <button class="icon-button"><span class="material-symbols-outlined">check_circle</span></button>
+                                    <button class="icon-button"><span class="material-symbols-outlined">cancel</span></button>
+                                    <button class="icon-button"><span class="material-symbols-outlined">flag</span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Admin Note</td>
+                                <td><a href="#" class="record-link">CON-2024-003</a></td>
+                                <td>Standard public comment...</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="status-badge status-completed">Approved</span></td>
+                                <td>Jan 20, 2024</td>
+                                <td>
+                                    <button class="icon-button"><span class="material-symbols-outlined">cancel</span></button>
+                                    <button class="icon-button"><span class="material-symbols-outlined">flag</span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Anonymous</td>
+                                <td><a href="#" class="record-link">Road Rehabilitation</a></td>
+                                <td>Saw workers leaving site early...</td>
+                                <td><span class="material-symbols-outlined" style="color: #dc2626;">lock</span></td>
+                                <td><span class="material-symbols-outlined flag-icon">warning</span></td>
+                                <td><span class="status-badge status-active">Flagged</span></td>
+                                <td>Feb 14, 2024</td>
+                                <td>
+                                    <button class="icon-button"><span class="material-symbols-outlined">check_circle</span></button>
+                                    <button class="icon-button"><span class="material-symbols-outlined">cancel</span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Test User</td>
+                                <td><a href="#" class="record-link">School Furniture</a></td>
+                                <td>This contract seems too small...</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="status-badge status-terminated">Rejected</span></td>
+                                <td>Dec 5, 2023</td>
+                                <td>
+                                    <button class="icon-button"><span class="material-symbols-outlined">redo</span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <span>Showing 1–10 of 18 results</span>
+                    <button class="pagination-button"><span class="material-symbols-outlined">chevron_left</span> Prev</button>
+                    <button class="pagination-button">1</button>
+                    <button class="pagination-button">2</button>
+                    <button class="pagination-button">Next <span class="material-symbols-outlined">chevron_right</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay active">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Approve Comment</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+
+            <div class="modal-content">
+                "I have evidence that pricing was inflated for the IT hardware components. Compare the unit costs with market rates from January."
+            </div>
+
+            <div class="modal-meta">
+                <span class="material-symbols-outlined">person</span>
+                <strong>Anonymous</strong>
+                <span class="whistleblower-badge"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle;">lock</span> This is a whistleblower report</span>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-primary">Approve Comment</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.modal-close').addEventListener('click', function() {
+            document.querySelector('.modal-overlay').classList.remove('active');
+        });
+    </script>
+</body>
+</html>

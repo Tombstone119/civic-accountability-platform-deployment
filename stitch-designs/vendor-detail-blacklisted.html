@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vendor Detail | Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#e2fff9",
+                    "surface-variant": "#dce4e8",
+                    "on-primary-fixed": "#000c36",
+                    "surface-container-highest": "#dce4e8",
+                    "error-dim": "#6b0221",
+                    "on-secondary-fixed": "#004841",
+                    "primary-fixed": "#8fa7fe",
+                    "on-tertiary-fixed": "#473157",
+                    "error-container": "#f97386",
+                    "on-primary-fixed-variant": "#0e2e7f",
+                    "tertiary-fixed": "#edcfff",
+                    "on-primary-container": "#002474",
+                    "secondary-fixed-dim": "#7ae7d8",
+                    "primary": "#1e3a8a", /* Overriding for Platform Identity per JSON */
+                    "background": "#f8fafc",
+                    "outline": "#747c80",
+                    "surface": "#ffffff",
+                    "on-background": "#0f172a",
+                    "primary-fixed-dim": "#829aef",
+                    "surface-dim": "#d4dbdf",
+                    "error": "#dc2626",
+                    "on-error": "#fff7f7",
+                    "on-tertiary-fixed-variant": "#644d75",
+                    "tertiary-dim": "#614a71",
+                    "surface-container-high": "#e3e9ed",
+                    "surface-tint": "#415aab",
+                    "inverse-primary": "#8fa7fe",
+                    "on-secondary-container": "#005c54",
+                    "on-surface": "#2c3437",
+                    "inverse-on-surface": "#9a9d9f",
+                    "secondary-fixed": "#89f5e7",
+                    "secondary-container": "#89f5e7",
+                    "tertiary": "#6e567e",
+                    "secondary": "#0d9488",
+                    "on-tertiary": "#fff6fd",
+                    "on-surface-variant": "#596064",
+                    "primary-container": "#eff3ff",
+                    "on-tertiary-container": "#5a446a",
+                    "on-error-container": "#6e0523",
+                    "on-secondary-fixed-variant": "#00675e",
+                    "surface-container": "#eaeff2",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#dfc1f0",
+                    "outline-variant": "#acb3b7",
+                    "surface-bright": "#f7f9fb",
+                    "primary-dim": "#344e9e",
+                    "tertiary-container": "#edcfff",
+                    "surface-container-low": "#f0f4f7",
+                    "secondary-dim": "#005e56",
+                    "inverse-surface": "#0b0f10",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav-border {
+            border-left: 4px solid #1e3a8a;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f8fafc] text-[#0f172a] antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full h-16 flex items-center justify-between px-6 z-50 bg-[#1e3a8a] text-white font-['Inter'] antialiased shadow-md">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-white text-2xl">shield</span>
+<h1 class="text-xl font-bold text-white tracking-tight">Civic Accountability Platform</h1>
+</div>
+<div class="flex-1 max-w-md ml-12 hidden md:block">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-blue-200">search</span>
+<input class="w-full bg-blue-800/40 border-none rounded-md py-1.5 pl-10 pr-4 text-sm text-white placeholder-blue-200 focus:ring-2 focus:ring-teal-400 outline-none" placeholder="Search contracts, vendors..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:bg-blue-800 transition-colors p-2 rounded-full">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-blue-800 transition-colors p-2 rounded-full">help</span>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-blue-700">
+<div class="text-right">
+<p class="text-xs font-semibold leading-none">Jane Smith</p>
+<p class="text-[10px] text-blue-200 uppercase mt-1">Administrator</p>
+</div>
+<img alt="User profile" class="w-9 h-9 rounded-full border-2 border-teal-400 object-cover" data-alt="Professional headshot of a female administrator with a friendly expression in a modern office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMo9rgbps1DqzXunMiFGjHSwKBXJliJQ40OWjU6UaVD7fTXACsegwX0Odn-Gq8BobI8LrLmZ6D13SsuF6sJp_QEkfv6NG0JACuDBx3BzXC-e0SDyrfg7bqqhmrwvtLQrufs6KO-Duig3UnRGV3q_v9Q4NUWEmac2uuJjc2CIwmp1sYx5HjSB3T6Y-fHp5d0C7ateWnZAHB7noU1_mbhW5UJvtpTimQFbD4B46tvPCB8-C1LKN4iErFig4POwgdkmixQujQ2HdOuFU"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-16 w-60 h-[calc(100vh-64px)] py-4 z-40 bg-white border-r border-slate-200 overflow-y-auto">
+<div class="px-6 mb-6">
+<p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Management</p>
+<p class="text-xs text-slate-500">Civic Admin</p>
+</div>
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Overview</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined">business_center</span>
+<span>Contracts</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-2.5 text-sm font-medium bg-[#eff3ff] text-[#1e3a8a] border-l-4 border-[#1e3a8a]" href="#">
+<span class="material-symbols-outlined">store</span>
+<span>Vendors</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span>Audits</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span>Departments</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined">public</span>
+<span>Public Portal</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Administration</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-60 pt-24 pb-12 px-8">
+<!-- Breadcrumb -->
+<nav class="mb-6 flex items-center text-sm text-slate-500">
+<span>Home</span>
+<span class="material-symbols-outlined text-base mx-2">chevron_right</span>
+<span>Vendors</span>
+<span class="material-symbols-outlined text-base mx-2">chevron_right</span>
+<span class="text-[#1e3a8a] font-medium">CivicMedia Group</span>
+</nav>
+<!-- Page Header -->
+<div class="mb-6">
+<div class="flex items-baseline gap-3">
+<h2 class="text-[32px] font-bold text-[#0f172a]">CivicMedia Group</h2>
+<span class="text-sm text-[#94a3b8] font-medium">REG-004</span>
+</div>
+<!-- Blacklisted Alert Banner -->
+<div class="mt-4 bg-[#fef2f2] border border-[#fecaca] rounded-lg p-4 flex items-start gap-3">
+<span class="material-symbols-outlined text-[#dc2626] text-xl mt-0.5">block</span>
+<div>
+<p class="text-sm font-semibold text-[#991b1b]">This vendor has been blacklisted on March 15, 2024</p>
+<p class="text-sm text-[#991b1b]/90 mt-1">Reason: Involvement in fraudulent billing practices and document forgery during Contract CON-2023-012.</p>
+</div>
+</div>
+</div>
+<!-- Stat Cards Row -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Total Contracts</p>
+<div class="flex items-end gap-2">
+<span class="text-4xl font-bold text-[#1e3a8a]">1</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Total Value</p>
+<div class="flex items-end gap-2">
+<span class="text-4xl font-bold text-[#1e3a8a]">$120,000</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Performance Score</p>
+<div class="flex items-end gap-2">
+<span class="text-4xl font-bold text-[#dc2626]">45</span>
+<span class="text-sm text-slate-400 font-medium mb-1.5">/ 100</span>
+</div>
+</div>
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Active Documents</p>
+<div class="flex items-end gap-2">
+<span class="text-4xl font-bold text-slate-400">0</span>
+</div>
+</div>
+</div>
+<!-- Section 1 — Vendor Information -->
+<div class="bg-white border border-slate-200 rounded-lg shadow-sm mb-8">
+<div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+<h3 class="text-lg font-bold text-[#0f172a]">Vendor Information</h3>
+<span class="px-3 py-1 bg-[#fef2f2] text-[#dc2626] text-xs font-bold uppercase rounded-full border border-[#fecaca]">Blacklisted</span>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-6">
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Name</p>
+<p class="text-sm text-[#0f172a] font-medium mt-1">CivicMedia Group</p>
+</div>
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Email</p>
+<p class="text-sm text-[#1e3a8a] font-medium mt-1">contact@civicmedia.lk</p>
+</div>
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Phone</p>
+<p class="text-sm text-[#0f172a] font-medium mt-1">+94 11 234 5678</p>
+</div>
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Address</p>
+<p class="text-sm text-[#0f172a] font-medium mt-1">45 Main Street, Colombo 03</p>
+</div>
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Category</p>
+<p class="text-sm text-[#0f172a] font-medium mt-1">Media</p>
+</div>
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Registration No.</p>
+<p class="text-sm text-[#0f172a] font-medium mt-1">REG-004</p>
+</div>
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Is Active</p>
+<div class="mt-1">
+<span class="material-symbols-outlined text-[#dc2626] text-lg">close</span>
+</div>
+</div>
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Performance Score</p>
+<p class="text-sm text-red-600 font-bold mt-1">45 / 100</p>
+</div>
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Blacklisted By</p>
+<p class="text-sm text-[#0f172a] font-medium mt-1">Jane Smith (Admin)</p>
+</div>
+<div>
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Blacklist Date</p>
+<p class="text-sm text-[#0f172a] font-medium mt-1">March 15, 2024</p>
+</div>
+<div class="md:col-span-2">
+<p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Blacklist Reason</p>
+<p class="text-sm text-[#991b1b] font-medium mt-1 italic">Fraudulent billing and document forgery</p>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-8">
+<!-- Section 2 — Compliance Documents -->
+<div class="bg-white border border-slate-200 rounded-lg shadow-sm">
+<div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+<h3 class="text-lg font-bold text-[#0f172a]">Compliance Documents</h3>
+<button class="flex items-center gap-2 px-4 py-1.5 border border-[#1e3a8a] text-[#1e3a8a] text-xs font-semibold rounded-md hover:bg-blue-50 transition-colors">
+<span class="material-symbols-outlined text-sm">upload</span>
+                        Upload Document
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="bg-slate-50 border-b border-slate-200">
+<th class="text-left px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Document Type</th>
+<th class="text-left px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Doc No.</th>
+<th class="text-left px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Issue Date</th>
+<th class="text-left px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Expiry Date</th>
+<th class="text-center px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Verified</th>
+<th class="text-right px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50 transition-colors group">
+<td class="px-6 py-4 text-sm font-semibold text-slate-700">Tax Clearance</td>
+<td class="px-6 py-4 text-sm text-slate-600">TC-2023-456</td>
+<td class="px-6 py-4 text-sm text-slate-600">Jan 1, 2023</td>
+<td class="px-6 py-4 text-sm text-[#dc2626] font-medium">Dec 31, 2023</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-[#dc2626] text-base">cancel</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-block px-2.5 py-1 bg-[#fef2f2] text-[#dc2626] text-[10px] font-bold uppercase rounded border border-[#fecaca]">Expired</span>
+</td>
+</tr>
+<tr class="bg-slate-50/30 hover:bg-slate-50 transition-colors group">
+<td class="px-6 py-4 text-sm font-semibold text-slate-700">Business License</td>
+<td class="px-6 py-4 text-sm text-slate-600">BL-2022-789</td>
+<td class="px-6 py-4 text-sm text-slate-600">Mar 1, 2022</td>
+<td class="px-6 py-4 text-sm text-[#dc2626] font-medium">Feb 28, 2023</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-[#dc2626] text-base">cancel</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-block px-2.5 py-1 bg-[#fef2f2] text-[#dc2626] text-[10px] font-bold uppercase rounded border border-[#fecaca]">Expired</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Section 3 — Contract History -->
+<div class="bg-white border border-slate-200 rounded-lg shadow-sm">
+<div class="px-6 py-4 border-b border-slate-100">
+<h3 class="text-lg font-bold text-[#0f172a]">Contract History</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="bg-slate-50 border-b border-slate-200">
+<th class="text-left px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Contract No.</th>
+<th class="text-left px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Title</th>
+<th class="text-left px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Value</th>
+<th class="text-left px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Method</th>
+<th class="text-left px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Status</th>
+<th class="text-right px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-bold text-[#1e3a8a] underline underline-offset-2">CON-2023-012</td>
+<td class="px-6 py-4 text-sm text-slate-700">Media Campaign Services</td>
+<td class="px-6 py-4 text-sm font-semibold text-slate-900">$120,000</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 px-2.5 py-1 bg-[#fff7ed] text-[#ea580c] text-[10px] font-bold uppercase rounded border border-[#fed7aa] w-fit">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                                        Direct Award
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 bg-[#fef2f2] text-[#dc2626] text-[10px] font-bold uppercase rounded border border-[#fecaca]">Terminated</span>
+</td>
+<td class="px-6 py-4 text-right text-sm text-slate-500">Jun 10, 2023</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Actions Bar -->
+<div class="mt-10 flex flex-wrap gap-4">
+<button class="flex items-center gap-2 px-6 py-2.5 border-2 border-[#1e3a8a] text-[#1e3a8a] text-sm font-bold rounded-lg hover:bg-blue-50 transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+                Edit Vendor
+            </button>
+<button class="flex items-center gap-2 px-6 py-2.5 border-2 border-[#16a34a] text-[#16a34a] text-sm font-bold rounded-lg hover:bg-green-50 transition-all">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+                Remove from Blacklist
+            </button>
+<button class="flex items-center gap-2 px-6 py-2.5 border-2 border-[#dc2626] text-[#dc2626] text-sm font-bold rounded-lg hover:bg-red-50 transition-all">
+<span class="material-symbols-outlined text-lg">delete</span>
+                Delete Vendor
+            </button>
+</div>
+</main>
+<!-- Decorative Canvas elements -->
+<div class="fixed bottom-0 right-0 w-64 h-64 opacity-5 pointer-events-none -z-10">
+<div class="w-full h-full bg-gradient-to-tl from-[#1e3a8a] to-transparent rounded-full blur-3xl"></div>
+</div>
+
+```</body></html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CON-2024-001 | IT Infrastructure Upgrade - Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e3e9ed",
+                        "on-secondary": "#e2fff9",
+                        "on-error": "#fff7f7",
+                        "secondary-dim": "#005e56",
+                        "secondary": "#006b62",
+                        "inverse-surface": "#0b0f10",
+                        "on-primary-fixed-variant": "#0e2e7f",
+                        "tertiary-dim": "#614a71",
+                        "surface-tint": "#415aab",
+                        "on-primary": "#faf8ff",
+                        "on-tertiary": "#fff6fd",
+                        "surface-variant": "#dce4e8",
+                        "outline": "#747c80",
+                        "outline-variant": "#acb3b7",
+                        "secondary-fixed": "#89f5e7",
+                        "tertiary-fixed-dim": "#dfc1f0",
+                        "surface-container": "#eaeff2",
+                        "primary-container": "#8fa7fe",
+                        "error-dim": "#6b0221",
+                        "surface-container-highest": "#dce4e8",
+                        "on-background": "#2c3437",
+                        "primary-dim": "#344e9e",
+                        "tertiary-fixed": "#edcfff",
+                        "on-surface": "#2c3437",
+                        "on-secondary-fixed": "#004841",
+                        "primary-fixed-dim": "#829aef",
+                        "tertiary-container": "#edcfff",
+                        "on-tertiary-container": "#5a446a",
+                        "secondary-fixed-dim": "#7ae7d8",
+                        "on-secondary-fixed-variant": "#00675e",
+                        "surface-dim": "#d4dbdf",
+                        "inverse-primary": "#8fa7fe",
+                        "background": "#f8fafc",
+                        "tertiary": "#6e567e",
+                        "error-container": "#f97386",
+                        "primary-fixed": "#8fa7fe",
+                        "on-error-container": "#6e0523",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary-container": "#005c54",
+                        "on-tertiary-fixed-variant": "#644d75",
+                        "inverse-on-surface": "#9a9d9f",
+                        "on-primary-container": "#002474",
+                        "on-tertiary-fixed": "#473157",
+                        "on-surface-variant": "#596064",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "surface-container-low": "#f0f4f7",
+                        "secondary-container": "#89f5e7",
+                        "primary": "#1e3a8a",
+                        "error": "#a8364b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-6 w-full fixed top-0 z-50 bg-blue-900 dark:bg-slate-950 h-16 shadow-sm">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-white text-2xl">shield</span>
+<h1 class="text-lg font-bold text-white tracking-tight">Civic Accountability Platform</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-blue-100/80 font-['Inter'] text-sm font-normal">
+<button class="hover:bg-blue-800 dark:hover:bg-slate-900 transition-colors p-2 rounded">
+<span class="material-symbols-outlined text-white">notifications</span>
+</button>
+<button class="hover:bg-blue-800 dark:hover:bg-slate-900 transition-colors p-2 rounded">
+<span class="material-symbols-outlined text-white">help</span>
+</button>
+<span class="text-white font-semibold cursor-pointer">Admin Panel</span>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-blue-800">
+<span class="text-xs font-semibold bg-blue-700 px-2 py-0.5 rounded text-white">ADMIN</span>
+<span class="text-sm font-medium text-white">John Doe</span>
+<img alt="User avatar" class="w-8 h-8 rounded-full border-2 border-blue-400" data-alt="Close up professional portrait avatar of a male government official in a blue suit with a soft neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACHQZQC5__z0hlhwHVv3JFPXcRZWfZ73u22Ecr-KRTsnQ7BxPniaCJ4-v4VSrG0DrSYVCAH2Khbd71LzOW6x1Dj6WoQPh3ku9TjvcdixId20_XMYWBTyzdLPXYA0omHXVxtlRr-NGjbNdNGWnDtC8EOYAM0WEUaVixau9Al3LTFLz_wFiVfqv4vjav7wbG0K-FOmChVshgZzEAKS4xzqn7DjVPIhzOSmVyFgB2npJ80omyfhNEHCI9MUpxHopJXhykb-1ioGmmC6k"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-60 flex flex-col pt-4 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-40 transition-all duration-200 ease-in-out">
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-900 font-['Inter'] text-sm font-medium rounded transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-900 dark:border-blue-400 text-blue-900 dark:text-blue-400 font-['Inter'] text-sm font-medium rounded-r transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Contracts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-900 font-['Inter'] text-sm font-medium rounded transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="store">store</span>
+<span>Vendors</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-900 font-['Inter'] text-sm font-medium rounded transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span>Audits</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-900 font-['Inter'] text-sm font-medium rounded transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="business">business</span>
+<span>Departments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-900 font-['Inter'] text-sm font-medium rounded transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="public">public</span>
+<span>Public Portal</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-900 font-['Inter'] text-sm font-medium rounded transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Administration</span>
+</a>
+</nav>
+<div class="p-6 border-t border-slate-100 dark:border-slate-800">
+<p class="text-xs font-bold text-blue-900 uppercase">Civic Platform</p>
+<p class="text-[10px] text-slate-500 uppercase">Government Admin</p>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-60 pt-24 pb-20 px-8 min-h-screen">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-6">
+<span class="text-xs font-medium text-slate-400">Home</span>
+<span class="material-symbols-outlined text-[14px] text-slate-300">chevron_right</span>
+<span class="text-xs font-medium text-slate-400">Contracts</span>
+<span class="material-symbols-outlined text-[14px] text-slate-300">chevron_right</span>
+<span class="text-xs font-medium text-slate-900">CON-2024-001</span>
+</nav>
+<!-- Header Row -->
+<div class="flex justify-between items-start mb-8">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h2 class="text-[32px] font-bold text-slate-900 leading-tight">IT Infrastructure Upgrade</h2>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-blue-50 text-blue-600 border border-blue-200">Active</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-red-50 text-red-600 border border-red-200">⚠ Direct Award</span>
+</div>
+</div>
+<p class="text-sm font-medium text-slate-400">CON-2024-001</p>
+</div>
+<!-- Risk Card -->
+<div class="bg-[#fff7ed] border border-[#fed7aa] p-4 rounded-lg flex flex-col items-center min-w-[160px] shadow-sm">
+<span class="text-[10px] font-bold text-orange-600 uppercase tracking-wider mb-1">Risk Rating</span>
+<span class="text-[32px] font-bold text-orange-600 leading-none mb-2">HIGH</span>
+<a class="text-[11px] font-semibold text-orange-700 underline hover:text-orange-800" href="#">View Audit Report</a>
+</div>
+</div>
+<!-- Section 1: Contract Details -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-8">
+<div class="grid grid-cols-2 divide-x divide-slate-100">
+<div class="divide-y divide-slate-100">
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">Contract No</span>
+<span class="text-sm font-medium text-slate-900">CON-2024-001</span>
+</div>
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">Department</span>
+<a class="text-sm font-medium text-blue-700 hover:underline" href="#">Ministry of Health</a>
+</div>
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">Contract Value</span>
+<span class="text-sm font-bold text-slate-900">$250,000.00</span>
+</div>
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">Start Date</span>
+<span class="text-sm font-medium text-slate-900">Jan 15, 2024</span>
+</div>
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">Procurement Method</span>
+<div class="mt-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-red-50 text-red-600 border border-red-200">Direct Award</span>
+</div>
+</div>
+</div>
+<div class="divide-y divide-slate-100">
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">Vendor</span>
+<a class="text-sm font-medium text-blue-700 hover:underline" href="#">Tech Corp Ltd</a>
+</div>
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">Created By</span>
+<span class="text-sm font-medium text-slate-900">John Admin</span>
+</div>
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">Total Paid</span>
+<span class="text-sm font-bold text-slate-900">$125,000.00</span>
+</div>
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">End Date</span>
+<span class="text-sm font-medium text-slate-900">Dec 31, 2024</span>
+</div>
+<div class="px-6 py-4 flex flex-col gap-1">
+<span class="text-[12px] font-semibold uppercase text-slate-500">Status</span>
+<div class="mt-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-50 text-blue-600 border border-blue-200">Active</span>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 py-5 bg-slate-50/50 border-t border-slate-100">
+<span class="text-[12px] font-semibold uppercase text-slate-500 mb-2 block">Description</span>
+<p class="text-sm text-slate-600 leading-relaxed max-w-4xl">
+                    Complete infrastructure modernization including server replacements, high-capacity networking switches for the central hub, and licensing for enterprise security software. This upgrade ensures redundant failover systems for the national health registry and supports high-concurrency access for municipal clinics.
+                </p>
+</div>
+</div>
+<!-- Payment Progress Bar -->
+<div class="mb-12 bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+<div class="flex justify-between items-end mb-3">
+<div>
+<h3 class="text-[12px] font-semibold uppercase text-slate-500 mb-1">Contract Utilization</h3>
+<div class="flex items-center gap-2">
+<span class="text-2xl font-bold text-slate-900">$125,000.00</span>
+<span class="text-sm text-slate-400">of $250,000.00</span>
+</div>
+</div>
+<div class="text-right">
+<span class="text-2xl font-bold text-orange-600">50%</span>
+</div>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+<div class="bg-orange-500 h-full rounded-full" style="width: 50%"></div>
+</div>
+</div>
+<!-- Section 2: Contract Line Items -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-8">
+<div class="px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900">Contract Line Items <span class="text-slate-400 text-sm font-normal ml-1">(4 items)</span></h3>
+<button class="text-sm font-semibold text-blue-700">Export Analysis</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 border-b border-slate-200">
+<tr>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Description</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-center">Qty</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Unit</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right">Unit Price</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right">Total Price</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right">Market Price</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-center">Overpriced?</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-blue-50/50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-900">Enterprise Grade Servers (Gen 11)</td>
+<td class="px-6 py-4 text-sm text-slate-600 text-center">10</td>
+<td class="px-6 py-4 text-sm text-slate-600">Unit</td>
+<td class="px-6 py-4 text-sm text-slate-900 text-right">$8,000.00</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$80,000.00</td>
+<td class="px-6 py-4 text-sm text-slate-400 text-right italic">$7,500.00 avg</td>
+<td class="px-6 py-4 text-center">
+<span class="text-xs font-bold text-red-600">YES</span>
+</td>
+</tr>
+<tr class="hover:bg-blue-50/50 transition-colors bg-slate-50/30">
+<td class="px-6 py-4 text-sm font-medium text-slate-900">L3 Core Switches (48 Port)</td>
+<td class="px-6 py-4 text-sm text-slate-600 text-center">6</td>
+<td class="px-6 py-4 text-sm text-slate-600">Unit</td>
+<td class="px-6 py-4 text-sm text-slate-900 text-right">$5,000.00</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$30,000.00</td>
+<td class="px-6 py-4 text-sm text-slate-400 text-right italic">$5,330.00 avg</td>
+<td class="px-6 py-4 text-center">
+<span class="text-xs text-slate-300">—</span>
+</td>
+</tr>
+<tr class="hover:bg-blue-50/50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-900">Infrastructure Monitoring Software</td>
+<td class="px-6 py-4 text-sm text-slate-600 text-center">1</td>
+<td class="px-6 py-4 text-sm text-slate-600">License</td>
+<td class="px-6 py-4 text-sm text-slate-900 text-right">$25,000.00</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$25,000.00</td>
+<td class="px-6 py-4 text-sm text-slate-400 text-right italic">$22,500.00 avg</td>
+<td class="px-6 py-4 text-center">
+<span class="text-xs font-bold text-red-600">YES</span>
+</td>
+</tr>
+<tr class="hover:bg-blue-50/50 transition-colors bg-slate-50/30">
+<td class="px-6 py-4 text-sm font-medium text-slate-900">Installation &amp; System Tuning</td>
+<td class="px-6 py-4 text-sm text-slate-600 text-center">200</td>
+<td class="px-6 py-4 text-sm text-slate-600">Hours</td>
+<td class="px-6 py-4 text-sm text-slate-900 text-right">$150.00</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$30,000.00</td>
+<td class="px-6 py-4 text-sm text-slate-400 text-right italic">$145.00 avg</td>
+<td class="px-6 py-4 text-center">
+<span class="text-xs text-slate-300">—</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Section 3: Payment History -->
+<div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-12">
+<div class="px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900">Payment History</h3>
+<button class="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded text-sm font-semibold flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Add Payment
+                </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 border-b border-slate-200">
+<tr>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Ref No</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right">Amount</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Date</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Method</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Status</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Processed By</th>
+<th class="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-center">Overpayment</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-blue-50/50 transition-colors">
+<td class="px-6 py-4 text-sm font-bold text-blue-700">PAY-001</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$75,000.00</td>
+<td class="px-6 py-4 text-sm text-slate-600">Feb 10, 2024</td>
+<td class="px-6 py-4 text-sm text-slate-600">Wire Transfer</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-green-50 text-green-600 border border-green-200">Completed</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600">Sarah Finance</td>
+<td class="px-6 py-4 text-center">
+<span class="text-xs text-slate-300">—</span>
+</td>
+</tr>
+<tr class="hover:bg-blue-50/50 transition-colors bg-slate-50/30">
+<td class="px-6 py-4 text-sm font-bold text-blue-700">PAY-002</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 text-right">$50,000.00</td>
+<td class="px-6 py-4 text-sm text-slate-600">Mar 22, 2024</td>
+<td class="px-6 py-4 text-sm text-slate-600">EFT</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-blue-50 text-blue-600 border border-blue-200">Processing</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600">Sarah Finance</td>
+<td class="px-6 py-4 text-center">
+<span class="text-xs text-slate-300">—</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- Bottom Actions Bar -->
+<footer class="fixed bottom-0 right-0 left-60 bg-white border-t border-slate-200 px-8 py-4 flex justify-between items-center z-40 shadow-[0_-4px_10px_rgba(0,0,0,0.02)]">
+<div class="flex gap-4">
+<button class="px-4 py-2 rounded text-sm font-bold text-slate-600 border border-slate-300 hover:bg-slate-50 transition-colors">Edit Contract</button>
+<button class="px-4 py-2 rounded text-sm font-bold text-white bg-teal-600 hover:bg-teal-700 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+                Publish to Portal
+            </button>
+</div>
+<button class="px-4 py-2 rounded text-sm font-bold text-red-600 border border-red-200 hover:bg-red-50 transition-colors">Delete Contract</button>
+</footer>
+</body></html>

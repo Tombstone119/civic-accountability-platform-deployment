@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Equipment Supply | Civic Accountability Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e3a8a;
+            --primary-dim: #344e9e;
+            --primary-container: #eff3ff;
+            --on-primary: #faf8ff;
+            --on-primary-fixed: #000c36;
+            --secondary: #006b62;
+            --secondary-dim: #005e56;
+            --secondary-container: #89f5e7;
+            --on-secondary: #e2fff9;
+            --tertiary: #6e567e;
+            --tertiary-container: #edcfff;
+            --on-tertiary: #fff6fd;
+            --error: #dc2626;
+            --error-dim: #6b0221;
+            --error-container: #f97386;
+            --on-error: #fff7f7;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --surface-bright: #f7f9fb;
+            --surface-dim: #d4dbdf;
+            --surface-variant: #dce4e8;
+            --on-surface: #0f172a;
+            --on-surface-variant: #596064;
+            --outline: #747c80;
+            --outline-variant: #acb3b7;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--on-surface);
+            line-height: 1.6;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+            font-size: 1.25rem;
+            display: inline-block;
+        }
+
+        header {
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--outline-variant);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--on-surface);
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .breadcrumb {
+            padding: 1rem 2rem;
+            font-size: 0.9rem;
+            color: var(--on-surface-variant);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            background-color: var(--secondary-container);
+            color: var(--on-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .publish-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--on-surface-variant);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--surface-variant);
+        }
+
+        .contract-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contract-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field-label {
+            font-size: 0.85rem;
+            color: var(--on-surface-variant);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+
+        .field-value {
+            font-size: 1rem;
+            color: var(--on-surface);
+            font-weight: 500;
+        }
+
+        .contract-value-display {
+            font-size: 1.75rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .currency-converter {
+            background-color: var(--surface-container-low, #f0f4f7);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .currency-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .currency-btn {
+            background-color: var(--primary-container);
+            border: 1px solid var(--outline-variant);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .currency-btn:hover {
+            background-color: var(--primary);
+            color: var(--on-primary);
+        }
+
+        .converted-value {
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .exchange-note {
+            font-size: 0.75rem;
+            color: var(--on-surface-variant);
+            margin-top: 0.5rem;
+        }
+
+        .about-text {
+            color: var(--on-surface);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .comments-section {
+            margin-top: 2rem;
+        }
+
+        .comment {
+            background-color: #f0f4f7;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--on-surface);
+        }
+
+        .comment-date {
+            color: var(--on-surface-variant);
+            font-size: 0.85rem;
+        }
+
+        .comment-text {
+            color: var(--on-surface);
+            margin-top: 0.5rem;
+        }
+
+        .whistleblower-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background-color: var(--error-container);
+            color: var(--on-error-container, #6e0523);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .comment-form {
+            background-color: #f0f4f7;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--on-surface);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--outline-variant);
+            border-radius: 0.25rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--on-surface);
+            background-color: var(--surface);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-checkbox input {
+            width: auto;
+        }
+
+        .form-checkbox label {
+            margin: 0;
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-dim);
+        }
+
+        footer {
+            background-color: var(--surface);
+            border-top: 1px solid var(--outline-variant);
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-copy {
+            color: var(--on-surface-variant);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .contract-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .page-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-brand">
+            <span class="material-symbols-outlined">shield</span>
+            Civic Accountability Platform
+        </div>
+        <nav class="header-nav">
+            <a href="#">Public Portal</a>
+            <a href="#">Login</a>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="#">Public Portal</a>
+        <span class="material-symbols-outlined">chevron_right</span>
+        <span>Medical Equipment Supply</span>
+    </div>
+
+    <div class="main-container">
+        <div class="page-title">
+            <h1>Medical Equipment Supply</h1>
+            <span class="status-badge">Ministry of Health Active</span>
+        </div>
+
+        <div class="publish-info">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span>Published Jan 15, 2024</span>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Contract Summary</h2>
+            <div class="contract-grid">
+                <div class="contract-field">
+                    <label class="field-label">Contract Value</label>
+                    <div class="contract-value-display">$1,200,000</div>
+                </div>
+                <div class="contract-field">
+                    <label class="field-label">Vendor</label>
+                    <div class="field-value">MedTech Solutions</div>
+                </div>
+                <div class="contract-field">
+                    <label class="field-label">Department</label>
+                    <div class="field-value">Ministry of Health</div>
+                </div>
+                <div class="contract-field">
+                    <label class="field-label">Procurement Method</label>
+                    <div class="field-value">Open Tender</div>
+                </div>
+                <div class="contract-field">
+                    <label class="field-label">Start Date</label>
+                    <div class="field-value">February 3, 2024</div>
+                </div>
+                <div class="contract-field">
+                    <label class="field-label">End Date</label>
+                    <div class="field-value">January 31, 2026</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Convert Contract Value</h2>
+            <div class="currency-converter">
+                <div class="currency-buttons">
+                    <button class="currency-btn">USD</button>
+                    <button class="currency-btn">LKR</button>
+                    <button class="currency-btn">to EUR</button>
+                    <button class="currency-btn">GBP</button>
+                </div>
+                <div class="converted-value">€1,104,000</div>
+                <div class="exchange-note">Exchange rates via Frankfurter API</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">About This Contract</h2>
+            <p class="about-text">
+                This contract covers the supply and delivery of advanced medical equipment including ventilators, patient monitoring systems, and diagnostic imaging machines to public hospitals nationwide. The procurement aims to modernize ICU units across 15 provincial healthcare facilities to ensure equitable access to high-quality care.
+            </p>
+            <p class="about-text">
+                Quality assurance protocols are built into the delivery schedule, requiring independent verification of equipment specifications upon arrival at each destination site.
+            </p>
+        </div>
+
+        <div class="section comments-section">
+            <h2 class="section-title">Public Comments (7)</h2>
+
+            <div class="comment">
+                <div class="comment-header">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background-color: var(--primary); color: var(--on-primary); border-radius: 50%; font-weight: 600; font-size: 0.9rem;">RS</span>
+                    <span class="comment-author">Roshan Silva</span>
+                    <span class="comment-date">March 2, 2024</span>
+                </div>
+                <div class="comment-text">
+                    Are there any documents showing the equipment specifications? I'd like to see the exact models of the ventilators being purchased.
+                </div>
+            </div>
+
+            <div class="comment">
+                <div class="comment-header">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background-color: var(--surface-variant); color: var(--on-surface-variant); border-radius: 50%; font-weight: 600; font-size: 0.9rem;">?</span>
+                    <span class="comment-author">Anonymous</span>
+                    <span class="comment-date">March 5, 2024</span>
+                </div>
+                <div class="whistleblower-badge">
+                    <span class="material-symbols-outlined" style="font-size: 1rem;">lock</span>
+                    Whistleblower Report
+                </div>
+                <div class="comment-text">
+                    I have evidence that the pricing was inflated compared to regional averages. The same monitoring units were procured for 30% less in the neighboring district last quarter.
+                </div>
+            </div>
+
+            <div class="comment">
+                <div class="comment-header">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background-color: var(--primary); color: var(--on-primary); border-radius: 50%; font-weight: 600; font-size: 0.9rem;">PM</span>
+                    <span class="comment-author">Priya M.</span>
+                    <span class="comment-date">March 8, 2024</span>
+                </div>
+                <div class="comment-text">
+                    When will the equipment be delivered? The general hospital in my area is in urgent need of these monitoring systems.
+                </div>
+            </div>
+
+            <div class="comment-form">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Leave a Comment</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email (Optional)</label>
+                        <input type="email" id="email" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">Your Comment</label>
+                        <textarea id="comment" placeholder=""></textarea>
+                    </div>
+                    <div class="form-options">
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="anonymous">
+                            <label for="anonymous">Submit anonymously</label>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="whistleblower">
+                            <label for="whistleblower">This is a whistleblower report</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Accessibility</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Open Data API</a>
+        </div>
+        <div class="footer-copy">
+            &copy; 2024 Civic Accountability Platform. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

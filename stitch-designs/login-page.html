@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#5a446a",
+                    "secondary-dim": "#005e56",
+                    "primary-container": "#8fa7fe",
+                    "on-tertiary-fixed-variant": "#644d75",
+                    "on-background": "#2c3437",
+                    "error-container": "#f97386",
+                    "background": "#f8fafc",
+                    "tertiary": "#6e567e",
+                    "surface-bright": "#f7f9fb",
+                    "primary-fixed": "#8fa7fe",
+                    "secondary-fixed-dim": "#7ae7d8",
+                    "on-secondary-container": "#005c54",
+                    "surface-dim": "#d4dbdf",
+                    "on-primary-fixed-variant": "#0e2e7f",
+                    "error-dim": "#6b0221",
+                    "tertiary-fixed-dim": "#dfc1f0",
+                    "on-tertiary": "#fff6fd",
+                    "on-primary-container": "#002474",
+                    "on-tertiary-fixed": "#473157",
+                    "on-surface-variant": "#596064",
+                    "on-primary": "#faf8ff",
+                    "inverse-surface": "#0b0f10",
+                    "surface-tint": "#415aab",
+                    "surface-container-low": "#f0f4f7",
+                    "on-primary-fixed": "#000c36",
+                    "surface-container-highest": "#dce4e8",
+                    "surface-container-high": "#e3e9ed",
+                    "inverse-primary": "#8fa7fe",
+                    "tertiary-fixed": "#edcfff",
+                    "primary": "#1e3a8a",
+                    "on-secondary": "#e2fff9",
+                    "secondary-fixed": "#89f5e7",
+                    "surface": "#ffffff",
+                    "error": "#dc2626",
+                    "outline-variant": "#e2e8f0",
+                    "on-secondary-fixed-variant": "#00675e",
+                    "on-error": "#fff7f7",
+                    "tertiary-dim": "#614a71",
+                    "surface-variant": "#dce4e8",
+                    "primary-dim": "#1e3a8a",
+                    "on-surface": "#0f172a",
+                    "on-secondary-fixed": "#004841",
+                    "secondary": "#475569",
+                    "primary-fixed-dim": "#829aef",
+                    "on-error-container": "#6e0523",
+                    "secondary-container": "#89f5e7",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#edcfff",
+                    "inverse-on-surface": "#9a9d9f",
+                    "surface-container": "#eaeff2",
+                    "outline": "#e2e8f0"
+            },
+            "fontFamily": {
+                    "headline": ["Inter", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Inter", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-[#f8fafc] h-full flex items-center justify-center p-6">
+<div class="w-full max-w-[400px] flex flex-col items-center">
+<!-- Main Login Card -->
+<main class="w-full bg-white border border-[#e2e8f0] rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.08)] overflow-hidden">
+<div class="pt-10 pb-8 px-8 flex flex-col items-center text-center">
+<!-- Branding Header -->
+<div class="mb-4">
+<span class="material-symbols-outlined text-[#1e3a8a] !text-[32px]" data-icon="shield" style="font-variation-settings: 'FILL' 1;">
+                        shield
+                    </span>
+</div>
+<h1 class="text-[18px] font-semibold text-[#1e3a8a] leading-tight mb-1">
+                    Civic Accountability Platform
+                </h1>
+<p class="text-[14px] font-normal text-[#475569]">
+                    Sign in to your account
+                </p>
+</div>
+<div class="px-8 pb-10">
+<!-- Divider -->
+<div class="h-px bg-[#e2e8f0] w-full mb-8"></div>
+<form action="#" class="space-y-6" method="POST">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="block text-[12px] font-medium text-[#475569] uppercase tracking-wider" for="email">
+                            EMAIL ADDRESS
+                        </label>
+<input class="w-full h-10 px-3 py-2 bg-white border border-[#e2e8f0] rounded-md text-[14px] text-[#0f172a] placeholder-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]/20 focus:border-[#1e3a8a] transition-all" id="email" name="email" placeholder="admin@civic.gov" required="" type="email"/>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-[12px] font-medium text-[#475569] uppercase tracking-wider" for="password">
+                                PASSWORD
+                            </label>
+<a class="text-[12px] font-medium text-[#1e3a8a] hover:underline" href="#">Forgot?</a>
+</div>
+<input class="w-full h-10 px-3 py-2 bg-white border border-[#e2e8f0] rounded-md text-[14px] text-[#0f172a] placeholder-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-[#1e3a8a]/20 focus:border-[#1e3a8a] transition-all" id="password" name="password" placeholder="••••••" required="" type="password"/>
+</div>
+<!-- Sign In Button -->
+<button class="w-full h-[40px] bg-[#1e3a8a] text-white text-[14px] font-medium rounded-md hover:bg-[#1e3a8a]/90 active:scale-[0.98] transition-all shadow-sm flex items-center justify-center gap-2" type="submit">
+                        Sign In
+                    </button>
+<!-- Error Area (Hidden by default) -->
+<div class="hidden text-center" id="error-message">
+<span class="text-[12px] text-[#dc2626] font-medium">Invalid credentials. Please try again.</span>
+</div>
+</form>
+</div>
+</main>
+<!-- Page Footer -->
+<footer class="mt-8 text-center">
+<p class="text-[12px] text-[#64748b] font-normal leading-relaxed">
+                © 2025 Civic Accountability Platform · Government of Sri Lanka
+            </p>
+<div class="mt-4 flex gap-4 justify-center">
+<a class="text-[11px] text-[#94a3b8] hover:text-[#1e3a8a] transition-colors" href="#">Privacy Policy</a>
+<a class="text-[11px] text-[#94a3b8] hover:text-[#1e3a8a] transition-colors" href="#">Accessibility</a>
+<a class="text-[11px] text-[#94a3b8] hover:text-[#1e3a8a] transition-colors" href="#">Terms of Service</a>
+</div>
+</footer>
+</div>
+<!-- Decorative Subtle Pattern (Abstract) -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none opacity-20">
+<div class="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-gradient-to-br from-[#1e3a8a]/10 to-transparent blur-3xl"></div>
+<div class="absolute bottom-[-5%] left-[-5%] w-[30%] h-[30%] rounded-full bg-gradient-to-tr from-[#0d9488]/10 to-transparent blur-3xl"></div>
+</div>
+</body></html>

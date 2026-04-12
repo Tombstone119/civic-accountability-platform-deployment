@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payment Records - Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#fff6fd",
+                    "on-primary": "#faf8ff",
+                    "secondary-fixed": "#89f5e7",
+                    "outline-variant": "#acb3b7",
+                    "outline": "#747c80",
+                    "surface-variant": "#dce4e8",
+                    "inverse-surface": "#0b0f10",
+                    "secondary-dim": "#005e56",
+                    "secondary": "#006b62",
+                    "on-error": "#fff7f7",
+                    "surface-container-high": "#e3e9ed",
+                    "on-secondary": "#e2fff9",
+                    "surface-tint": "#415aab",
+                    "tertiary-dim": "#614a71",
+                    "on-primary-fixed-variant": "#0e2e7f",
+                    "primary-fixed-dim": "#829aef",
+                    "on-secondary-fixed": "#004841",
+                    "primary-dim": "#344e9e",
+                    "surface-container-highest": "#dce4e8",
+                    "on-background": "#2c3437",
+                    "primary-container": "#8fa7fe",
+                    "error-dim": "#6b0221",
+                    "tertiary-fixed-dim": "#dfc1f0",
+                    "surface-container": "#eaeff2",
+                    "on-surface": "#2c3437",
+                    "tertiary-fixed": "#edcfff",
+                    "error-container": "#f97386",
+                    "tertiary": "#6e567e",
+                    "on-tertiary-fixed-variant": "#644d75",
+                    "on-secondary-container": "#005c54",
+                    "surface-bright": "#f7f9fb",
+                    "on-error-container": "#6e0523",
+                    "primary-fixed": "#8fa7fe",
+                    "secondary-fixed-dim": "#7ae7d8",
+                    "tertiary-container": "#edcfff",
+                    "on-tertiary-container": "#5a446a",
+                    "background": "#f7f9fb",
+                    "inverse-primary": "#8fa7fe",
+                    "surface-dim": "#d4dbdf",
+                    "on-secondary-fixed-variant": "#00675e",
+                    "surface-container-low": "#f0f4f7",
+                    "on-primary-fixed": "#000c36",
+                    "secondary-container": "#89f5e7",
+                    "primary": "#415aab",
+                    "error": "#a8364b",
+                    "on-primary-container": "#002474",
+                    "inverse-on-surface": "#9a9d9f",
+                    "surface": "#f7f9fb",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#473157",
+                    "on-surface-variant": "#596064"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-blue-900 dark:bg-slate-950 text-white dark:text-blue-400 fixed top-0 w-full h-16 z-50 flex justify-between items-center px-6 border-b border-blue-800 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-white text-2xl">shield</span>
+<span class="text-xl font-bold text-white">Civic Accountability Platform</span>
+</div>
+<div class="flex-1 max-w-md mx-8">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/60">search</span>
+<input class="w-full bg-blue-800/50 border-none rounded-lg py-2 pl-10 pr-4 text-sm text-white placeholder:text-white/60 focus:ring-2 focus:ring-teal-400 outline-none" placeholder="Global search records..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-white/80 hover:bg-blue-800 dark:hover:bg-slate-800 p-2 rounded-full cursor-pointer transition-colors">notifications</span>
+<span class="material-symbols-outlined text-white/80 hover:bg-blue-800 dark:hover:bg-slate-800 p-2 rounded-full cursor-pointer transition-colors">help</span>
+</div>
+<div class="h-8 w-px bg-blue-800"></div>
+<div class="flex items-center gap-3 cursor-pointer">
+<div class="text-right">
+<p class="text-sm font-semibold leading-none">John Admin</p>
+<p class="text-[10px] text-teal-400 font-bold uppercase tracking-wider mt-1">Administrator</p>
+</div>
+<img alt="User avatar" class="w-10 h-10 rounded-full border-2 border-blue-800" data-alt="professional portrait of a middle-aged man with short dark hair in a corporate setting with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuUzxP-d-XRrnkpU55emTKXh8eWo36Ps-KG0t6clt9UZBpdSIUZaAZ1N_oZZfBjKTMa7XClKJ47JB_Ab2amdGMnDAIt-Shk7bs7veQNWz8h9bdiqf6S6JPmH2Gi9aLNxVJX7ercbdwKV6h87v_Cos5e9ZokNnQcVr600SVWZ2TLtrcUIBIIJbKNKOiCanY7uKD3BNCC9ET_h7RSrzcTywRlEfWatGgWJqdkn75rz4q3cjuapnlo4AcfhQOMboeIDGrZyRYsAoYJ-8"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="bg-white dark:bg-slate-900 w-60 fixed left-0 top-16 bottom-0 flex flex-col pt-4 border-r border-slate-200 dark:border-slate-800 z-40">
+<nav class="flex-1 px-3 space-y-1">
+<div class="flex items-center px-3 py-2 text-slate-600 dark:text-slate-400 mb-2">
+<img alt="Organization Logo" class="w-8 h-8 rounded bg-slate-100 p-1 mr-3" data-alt="minimalist clean government agency logo emblem on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnFQ9JSRzssQvnP5FNAI0FqlWMTTSXPtck5cM_Z1A8b-ejFbmJjDhixvrBikR5lDLYnB_tNZ-ajMt93b8yjPzBBZmgTygg_UKtFC48EpYz7serkqOx3g2ohQzGFW1KEmXe0iCM6sOPHGRYbVQrmt_bLsMRqyLm0gAr4D8WpYOM4Wb9lyyS_6xut4ndKGpiqzXQJjPluP3hWG5eYwczWYBJdNd9tewJUJtIch78jcu_LH1YsLJgIUcY9KjYm_5iyP9Z-6YsIr8ql5o"/>
+<div class="overflow-hidden">
+<p class="text-xs font-bold text-slate-900 dark:text-white truncate">Admin Portal</p>
+<p class="text-[10px] truncate">Dept. Civic Oversight</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="text-sm font-medium">All Contracts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-300 border-l-4 border-blue-900 dark:border-blue-400 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-sm font-semibold">Payments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">storefront</span>
+<span class="text-sm font-medium">Vendors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">fact_check</span>
+<span class="text-sm font-medium">Audits</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">corporate_fare</span>
+<span class="text-sm font-medium">Departments</span>
+</a>
+<div class="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">public</span>
+<span class="text-sm font-medium">Public Portal</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Administration</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-60 mt-16 p-8 min-h-screen">
+<!-- Breadcrumb & Header -->
+<div class="mb-8">
+<nav class="flex text-xs text-slate-500 mb-2 uppercase tracking-widest font-semibold">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="mx-2">/</span>
+<span class="text-slate-900">Payments</span>
+</nav>
+<div class="flex justify-between items-end">
+<div>
+<h1 class="text-[32px] font-bold text-slate-900 leading-tight">Payment Records</h1>
+<p class="text-slate-500 text-sm mt-1">89 payment records in total</p>
+</div>
+<div class="flex gap-3">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full h-11 bg-white border border-slate-200 rounded-lg pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="Search payments..." type="text"/>
+</div>
+<button class="bg-blue-900 hover:bg-primary-dim text-white px-6 h-11 rounded-lg font-semibold flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined">add</span>
+                        Record Payment
+                    </button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Filters Sidebar -->
+<div class="col-span-3">
+<div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm sticky top-24">
+<h3 class="text-xs font-bold text-slate-900 uppercase tracking-widest mb-6">Filter Records</h3>
+<div class="space-y-6">
+<!-- Status Checkboxes -->
+<div>
+<label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3 block">Status</label>
+<div class="space-y-2.5">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded border-slate-300 text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-sm text-slate-700 group-hover:text-primary transition-colors">Pending</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded border-slate-300 text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-sm text-slate-700 group-hover:text-primary transition-colors">Processing</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded border-slate-300 text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-sm text-slate-700 group-hover:text-primary transition-colors">Completed</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded border-slate-300 text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-sm text-slate-700 group-hover:text-primary transition-colors">Failed</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded border-slate-300 text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-sm text-slate-700 group-hover:text-primary transition-colors">Reversed</span>
+</label>
+</div>
+</div>
+<!-- Date Range -->
+<div>
+<label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3 block">Date Range</label>
+<div class="space-y-2">
+<input class="w-full bg-slate-50 border-slate-200 rounded-lg py-2 px-3 text-sm focus:border-primary outline-none" type="date"/>
+<input class="w-full bg-slate-50 border-slate-200 rounded-lg py-2 px-3 text-sm focus:border-primary outline-none" type="date"/>
+</div>
+</div>
+<!-- Overpayment -->
+<div>
+<label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3 block">Overpayment</label>
+<div class="space-y-2.5">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 border-slate-300 text-primary focus:ring-primary/20" name="overpayment" type="radio"/>
+<span class="text-sm text-slate-700 group-hover:text-primary transition-colors">All Records</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 border-slate-300 text-primary focus:ring-primary/20" name="overpayment" type="radio"/>
+<span class="text-sm text-slate-700 group-hover:text-primary transition-colors">Overpayments Only</span>
+</label>
+</div>
+</div>
+<div class="pt-4 flex flex-col gap-2">
+<button class="w-full bg-blue-900 text-white py-2.5 rounded-lg font-semibold text-sm hover:bg-primary-dim transition-colors shadow-sm">Apply Filters</button>
+<button class="w-full text-slate-500 py-2.5 rounded-lg font-semibold text-sm hover:bg-slate-50 transition-colors">Reset</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Table Section -->
+<div class="col-span-9 space-y-6">
+<!-- Active Filter Chips -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-blue-50 text-blue-900 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider border border-blue-100">
+                        Status: Pending
+                        <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-red-500">close</span>
+</div>
+<div class="flex items-center gap-2 bg-blue-50 text-blue-900 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider border border-blue-100">
+                        Status: Processing
+                        <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-red-500">close</span>
+</div>
+<button class="text-primary text-[11px] font-bold uppercase tracking-widest hover:underline px-2">Clear all</button>
+</div>
+<!-- Data Table Card -->
+<div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 border-b border-slate-200">
+<th class="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+<div class="flex items-center gap-1 cursor-pointer hover:text-primary">
+                                            REF NO. <span class="material-symbols-outlined text-[14px]">unfold_more</span>
+</div>
+</th>
+<th class="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">CONTRACT</th>
+<th class="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">VENDOR</th>
+<th class="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest text-right">
+<div class="flex items-center justify-end gap-1 cursor-pointer hover:text-primary">
+                                            AMOUNT <span class="material-symbols-outlined text-[14px]">unfold_more</span>
+</div>
+</th>
+<th class="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+<div class="flex items-center gap-1 cursor-pointer hover:text-primary">
+                                            DATE <span class="material-symbols-outlined text-[14px]">unfold_more</span>
+</div>
+</th>
+<th class="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">METHOD</th>
+<th class="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">STATUS</th>
+<th class="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">OVERPAYMENT</th>
+<th class="px-4 py-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">PROCESSED BY</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<!-- Row 1 -->
+<tr class="h-[52px] bg-white hover:bg-blue-50 transition-colors border-b border-slate-100">
+<td class="px-4 font-medium text-slate-900">PAY-2024-001</td>
+<td class="px-4"><a class="text-primary hover:underline font-medium" href="#">CON-2024-001</a></td>
+<td class="px-4 text-slate-600">Tech Corp Ltd</td>
+<td class="px-4 text-right font-bold text-slate-900">$75,000.00</td>
+<td class="px-4 text-slate-500">Mar 1, 2024</td>
+<td class="px-4 text-slate-500">Bank Transfer</td>
+<td class="px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0]">COMPLETED</span>
+</td>
+<td class="px-4 text-slate-400 text-center">—</td>
+<td class="px-4 text-slate-600">John Admin</td>
+</tr>
+<!-- Row 2 -->
+<tr class="h-[52px] bg-slate-50/50 hover:bg-blue-50 transition-colors border-b border-slate-100">
+<td class="px-4 font-medium text-slate-900">PAY-2024-002</td>
+<td class="px-4 font-medium text-slate-500">CON-2024-001</td>
+<td class="px-4 text-slate-600">Tech Corp Ltd</td>
+<td class="px-4 text-right font-bold text-slate-900">$50,000.00</td>
+<td class="px-4 text-slate-500">Jun 15, 2024</td>
+<td class="px-4 text-slate-500">Bank Transfer</td>
+<td class="px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-[#eff6ff] text-[#2563eb] border border-[#bfdbfe]">PROCESSING</span>
+</td>
+<td class="px-4 text-slate-400 text-center">—</td>
+<td class="px-4 text-slate-600">John Admin</td>
+</tr>
+<!-- Row 3 -->
+<tr class="h-[52px] bg-white hover:bg-blue-50 transition-colors border-b border-slate-100">
+<td class="px-4 font-medium text-slate-900">PAY-2024-003</td>
+<td class="px-4"><a class="text-primary hover:underline font-medium" href="#">CON-2024-002</a></td>
+<td class="px-4 text-slate-600">MedTech Solutions</td>
+<td class="px-4 text-right font-bold text-slate-900">$800,000.00</td>
+<td class="px-4 text-slate-500">Apr 5, 2024</td>
+<td class="px-4 text-slate-500">Wire Transfer</td>
+<td class="px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0]">COMPLETED</span>
+</td>
+<td class="px-4 text-slate-400 text-center">—</td>
+<td class="px-4 text-slate-600">Sarah Officer</td>
+</tr>
+<!-- Row 4 -->
+<tr class="h-[52px] bg-slate-50/50 hover:bg-blue-50 transition-colors border-b border-slate-100">
+<td class="px-4 font-medium text-slate-900">PAY-2024-004</td>
+<td class="px-4 font-medium text-slate-500">CON-2024-002</td>
+<td class="px-4 text-slate-600">MedTech Solutions</td>
+<td class="px-4 text-right font-bold text-slate-900">$450,000.00</td>
+<td class="px-4 text-slate-500">Jul 20, 2024</td>
+<td class="px-4 text-slate-500">Wire Transfer</td>
+<td class="px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0]">COMPLETED</span>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-[#fff7ed] text-[#ea580c] border border-[#fed7aa]">
+<span class="material-symbols-outlined text-[14px]">warning</span> Overpayment
+                                        </span>
+</td>
+<td class="px-4 text-slate-600">Sarah Officer</td>
+</tr>
+<!-- Row 5 -->
+<tr class="h-[52px] bg-white hover:bg-blue-50 transition-colors border-b border-slate-100">
+<td class="px-4 font-medium text-slate-900">PAY-2024-005</td>
+<td class="px-4"><a class="text-primary hover:underline font-medium" href="#">CON-2024-003</a></td>
+<td class="px-4 text-slate-600">BuildRight Ltd</td>
+<td class="px-4 text-right font-bold text-slate-900">$1,700,000.00</td>
+<td class="px-4 text-slate-500">May 10, 2024</td>
+<td class="px-4 text-slate-500">Bank Transfer</td>
+<td class="px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0]">COMPLETED</span>
+</td>
+<td class="px-4 text-slate-400 text-center">—</td>
+<td class="px-4 text-slate-600">John Admin</td>
+</tr>
+<!-- Row 6 -->
+<tr class="h-[52px] bg-slate-50/50 hover:bg-blue-50 transition-colors">
+<td class="px-4 font-medium text-slate-900">PAY-2024-006</td>
+<td class="px-4 font-medium text-slate-500">CON-2024-005</td>
+<td class="px-4 text-slate-600">SafeGuard Inc</td>
+<td class="px-4 text-right font-bold text-slate-900">$200,000.00</td>
+<td class="px-4 text-slate-500">Aug 1, 2024</td>
+<td class="px-4 text-slate-500">Cheque</td>
+<td class="px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-[#fefce8] text-[#ca8a04] border border-[#fde68a]">PENDING</span>
+</td>
+<td class="px-4 text-slate-400 text-center">—</td>
+<td class="px-4 text-slate-600">Sarah Officer</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Pagination Footer -->
+<div class="flex justify-between items-center bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+<p class="text-sm text-slate-500">Showing <span class="font-bold text-slate-900">1–10</span> of <span class="font-bold text-slate-900">89</span> results</p>
+<div class="flex items-center gap-1">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-blue-900 text-white text-xs font-bold shadow-md">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-600 text-xs font-bold transition-colors">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-600 text-xs font-bold transition-colors">3</button>
+<span class="mx-1 text-slate-400">...</span>
+<button class="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-600 text-xs font-bold transition-colors">9</button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

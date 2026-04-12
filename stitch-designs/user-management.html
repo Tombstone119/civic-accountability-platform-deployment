@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management | Civic Accountability Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        :root {
+            --surface-container-lowest: #ffffff;
+            --surface: #f7f9fb;
+            --on-tertiary-fixed: #473157;
+            --on-surface-variant: #596064;
+            --on-primary-container: #002474;
+            --inverse-on-surface: #9a9d9f;
+            --on-primary-fixed: #000c36;
+            --secondary-container: #89f5e7;
+            --primary: #415aab;
+            --error: #a8364b;
+            --surface-container-low: #f0f4f7;
+            --background: #f7f9fb;
+            --inverse-primary: #8fa7fe;
+            --on-secondary-fixed-variant: #00675e;
+            --surface-dim: #d4dbdf;
+            --secondary-fixed-dim: #7ae7d8;
+            --tertiary-container: #edcfff;
+            --on-tertiary-container: #5a446a;
+            --on-secondary-container: #005c54;
+            --on-tertiary-fixed-variant: #644d75;
+            --on-error-container: #6e0523;
+            --surface-bright: #f7f9fb;
+            --primary-fixed: #8fa7fe;
+            --error-container: #f97386;
+            --tertiary: #6e567e;
+            --on-surface: #2c3437;
+            --tertiary-fixed: #edcfff;
+            --primary-dim: #344e9e;
+            --surface-container-highest: #dce4e8;
+            --on-background: #2c3437;
+            --primary-container: #8fa7fe;
+            --error-dim: #6b0221;
+            --tertiary-fixed-dim: #dfc1f0;
+            --surface-container: #eaeff2;
+            --primary-fixed-dim: #829aef;
+            --on-secondary-fixed: #004841;
+            --surface-tint: #415aab;
+            --tertiary-dim: #614a71;
+            --on-primary-fixed-variant: #0e2e7f;
+            --inverse-surface: #0b0f10;
+            --secondary-dim: #005e56;
+            --secondary: #006b62;
+            --surface-container-high: #e3e9ed;
+            --on-secondary: #e2fff9;
+            --on-error: #fff7f7;
+            --outline-variant: #acb3b7;
+            --secondary-fixed: #89f5e7;
+            --surface-variant: #dce4e8;
+            --outline: #747c80;
+            --on-tertiary: #fff6fd;
+            --on-primary: #faf8ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--on-background);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dim);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--outline);
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .table-container {
+            background-color: var(--surface-container-lowest);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: var(--surface-container-low);
+            border-bottom: 1px solid var(--outline-variant);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--on-surface-variant);
+            font-size: 0.875rem;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--surface-variant);
+            color: var(--on-surface);
+        }
+
+        tbody tr:hover {
+            background-color: var(--surface-container-low);
+        }
+
+        .badge-active {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2e7d32;
+        }
+
+        .badge-inactive {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--error);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--surface-container-lowest);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--on-surface);
+            margin: 0;
+        }
+
+        .modal-header button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--on-surface-variant);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--on-surface);
+            font-size: 0.875rem;
+        }
+
+        .form-group input[type="email"],
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--outline-variant);
+            border-radius: 0.375rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            color: var(--on-surface);
+        }
+
+        .form-group input[type="email"]:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(65, 90, 171, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--surface-variant);
+        }
+
+        .profile-info {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--on-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-details h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--on-surface);
+        }
+
+        .profile-details p {
+            margin: 0.25rem 0 0 0;
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+        }
+
+        .header {
+            background-color: var(--surface-container-lowest);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--surface-variant);
+        }
+
+        .sidebar {
+            background-color: var(--surface-container-low);
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.375rem;
+            color: var(--on-surface);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--surface-container);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--on-surface);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--on-surface);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--outline-variant);
+            border-radius: 0.375rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(65, 90, 171, 0.1);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pagination button,
+        .pagination span {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--outline-variant);
+            border-radius: 0.375rem;
+            background-color: var(--surface-container-lowest);
+            color: var(--on-surface);
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .pagination button:hover,
+        .pagination span:hover {
+            background-color: var(--surface-container-low);
+        }
+
+        .pagination .active {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            border-color: var(--primary);
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+            margin-bottom: 1.5rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .user-count {
+            font-size: 0.875rem;
+            color: var(--on-surface-variant);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span class="material-symbols-outlined" style="font-size: 2rem; color: var(--primary);">shield</span>
+                <div>
+                    <h1 style="margin: 0; font-size: 1.5rem; color: var(--on-surface);">Civic Accountability Platform</h1>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="btn-secondary" style="border: none; background: none; padding: 0;">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <button class="btn-secondary" style="border: none; background: none; padding: 0;">
+                    <span class="material-symbols-outlined">help</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; min-height: calc(100vh - 80px);">
+        <!-- Sidebar Navigation -->
+        <div style="width: 250px; background-color: var(--surface-container-low); padding: 1.5rem; border-right: 1px solid var(--surface-variant);">
+            <div style="margin-bottom: 2rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--on-surface-variant); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem;">Admin</div>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                    <div class="profile-avatar" style="width: 2rem; height: 2rem; font-size: 0.875rem;">JA</div>
+                    <div>
+                        <p style="margin: 0; font-weight: 600; font-size: 0.875rem; color: var(--on-surface);">John Admin</p>
+                        <p style="margin: 0.25rem 0 0 0; font-size: 0.75rem; color: var(--on-surface-variant);">System Administrator</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--on-surface-variant); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem;">Admin Dashboard</div>
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--on-surface-variant); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">System Control</div>
+                <a href="#" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-radius: 0.375rem; color: var(--on-surface); text-decoration: none; font-size: 0.875rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem;">dashboard</span> Overview
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-radius: 0.375rem; color: var(--on-surface); text-decoration: none; font-size: 0.875rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem;">description</span> Contracts
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-radius: 0.375rem; color: var(--on-surface); text-decoration: none; font-size: 0.875rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem;">store</span> Vendors
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-radius: 0.375rem; color: var(--on-surface); text-decoration: none; font-size: 0.875rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem;">gavel</span> Audits
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-radius: 0.375rem; color: var(--on-surface); text-decoration: none; font-size: 0.875rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem;">business</span> Departments
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-radius: 0.375rem; color: var(--on-surface); text-decoration: none; font-size: 0.875rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem;">public</span> Public Portal
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; margin-bottom: 0.5rem; border-radius: 0.375rem; color: var(--on-surface); text-decoration: none; font-size: 0.875rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1.25rem;">settings_suggest</span> Administration
+                </a>
+            </div>
+
+            <div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; color: var(--on-surface-variant); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1rem;">verified_user</span> System Status
+                </div>
+                <div style="padding: 0.5rem 1rem; border-radius: 0.375rem; background-color: var(--primary-container); color: var(--on-primary-container); font-size: 0.75rem; font-weight: 600;">All Systems Operational</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div style="flex: 1; padding: 2rem;">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="#">Home</a>
+                <span class="material-symbols-outlined" style="font-size: 1.25rem;">chevron_right</span>
+                <a href="#">Administration</a>
+                <span class="material-symbols-outlined" style="font-size: 1.25rem;">chevron_right</span>
+                <span>Users</span>
+            </div>
+
+            <!-- Page Title -->
+            <h2 class="page-title">User Management</h2>
+
+            <!-- User Count -->
+            <div class="user-count">12 registered users in the system</div>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search users...">
+                </div>
+                <button class="btn-primary" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="material-symbols-outlined">person_add</span> Create User
+                </button>
+            </div>
+
+            <!-- Users Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Department</th>
+                            <th>Active</th>
+                            <th>Last Login</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div class="profile-avatar" style="width: 2rem; height: 2rem; font-size: 0.75rem;">JA</div>
+                                    <span style="font-weight: 600;">John Admin</span>
+                                </div>
+                            </td>
+                            <td>john.admin@civic.gov</td>
+                            <td><span style="background-color: var(--primary-container); color: var(--on-primary-container); padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">ADMIN</span></td>
+                            <td>—</td>
+                            <td><span class="badge-active"><span class="material-symbols-outlined" style="font-size: 1.25rem;">check_circle</span></span></td>
+                            <td>Apr 10, 2024</td>
+                            <td><a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Edit Role</a> | —</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div class="profile-avatar" style="width: 2rem; height: 2rem; font-size: 0.75rem; background-color: var(--secondary);">SO</div>
+                                    <span style="font-weight: 600;">Sarah Officer</span>
+                                </div>
+                            </td>
+                            <td>s.officer@health.gov</td>
+                            <td><span style="background-color: var(--secondary-container); color: var(--on-secondary-container); padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">OFFICER</span></td>
+                            <td>Ministry of Health</td>
+                            <td><span class="badge-active"><span class="material-symbols-outlined" style="font-size: 1.25rem;">check_circle</span></span></td>
+                            <td>Apr 9, 2024</td>
+                            <td><a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;" onclick="openModal(event)">Edit Role</a> | <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Deactivate</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div class="profile-avatar" style="width: 2rem; height: 2rem; font-size: 0.75rem;">JA</div>
+                                    <span style="font-weight: 600;">Jane Auditor</span>
+                                </div>
+                            </td>
+                            <td>j.auditor@finance.gov</td>
+                            <td><span style="background-color: var(--tertiary-container); color: var(--on-tertiary-container); padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">AUDITOR</span></td>
+                            <td>Ministry of Finance</td>
+                            <td><span class="badge-active"><span class="material-symbols-outlined" style="font-size: 1.25rem;">check_circle</span></span></td>
+                            <td>Apr 8, 2024</td>
+                            <td><a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Edit Role</a> | <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Deactivate</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div class="profile-avatar" style="width: 2rem; height: 2rem; font-size: 0.75rem;">BV</div>
+                                    <span style="font-weight: 600;">Bob Viewer</span>
+                                </div>
+                            </td>
+                            <td>b.viewer@edu.gov</td>
+                            <td><span style="background-color: var(--error-container); color: var(--on-error-container); padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">VIEWER</span></td>
+                            <td>Ministry of Education</td>
+                            <td><span class="badge-active"><span class="material-symbols-outlined" style="font-size: 1.25rem;">check_circle</span></span></td>
+                            <td>Apr 7, 2024</td>
+                            <td><a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Edit Role</a> | <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Deactivate</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div class="profile-avatar" style="width: 2rem; height: 2rem; font-size: 0.75rem;">TM</div>
+                                    <span style="font-weight: 600;">Tom Manager</span>
+                                </div>
+                            </td>
+                            <td>t.manager@ops.gov</td>
+                            <td><span style="background-color: var(--surface-container-high); color: var(--on-surface); padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">PROCESSING</span></td>
+                            <td>Operations</td>
+                            <td><span class="badge-active"><span class="material-symbols-outlined" style="font-size: 1.25rem;">check_circle</span></span></td>
+                            <td>Apr 6, 2024</td>
+                            <td><a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Edit Role</a> | <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Deactivate</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div class="profile-avatar" style="width: 2rem; height: 2rem; font-size: 0.75rem;">LR</div>
+                                    <span style="font-weight: 600;">Linda Reviewer</span>
+                                </div>
+                            </td>
+                            <td>l.reviewer@audit.gov</td>
+                            <td><span style="background-color: var(--tertiary-container); color: var(--on-tertiary-container); padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">AUDITOR</span></td>
+                            <td>Internal Audit</td>
+                            <td><span class="badge-inactive"><span class="material-symbols-outlined" style="font-size: 1.25rem;">cancel</span></span></td>
+                            <td>Mar 28, 2024</td>
+                            <td><a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Edit Role</a> | <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Deactivate</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div class="profile-avatar" style="width: 2rem; height: 2rem; font-size: 0.75rem;">DK</div>
+                                    <span style="font-weight: 600;">David Knight</span>
+                                </div>
+                            </td>
+                            <td>d.knight@it.gov</td>
+                            <td><span style="background-color: var(--secondary-container); color: var(--on-secondary-container); padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600;">OFFICER</span></td>
+                            <td>IT Support</td>
+                            <td><span class="badge-active"><span class="material-symbols-outlined" style="font-size: 1.25rem;">check_circle</span></span></td>
+                            <td>Apr 10, 2024</td>
+                            <td><a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Edit Role</a> | <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.875rem;">Deactivate</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div style="text-align: center; font-size: 0.875rem; color: var(--on-surface-variant); margin-top: 1rem;">Showing 1 to 7 of 12 users</div>
+            <div class="pagination">
+                <button>Previous</button>
+                <span class="active">1</span>
+                <button>2</button>
+                <button>Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="roleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit User Role — Sarah Officer</h2>
+                <button onclick="closeModal()">&times;</button>
+            </div>
+
+            <div class="profile-info">
+                <div class="profile-avatar" style="width: 3rem; height: 3rem; font-size: 1rem;">SO</div>
+                <div class="profile-details">
+                    <h3>Sarah Officer</h3>
+                    <p>s.officer@health.gov</p>
+                </div>
+            </div>
+
+            <form>
+                <div class="form-group">
+                    <label>System Role</label>
+                    <select>
+                        <option>OFFICER</option>
+                        <option>ADMIN</option>
+                        <option>AUDITOR</option>
+                        <option>VIEWER</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Department</label>
+                    <select>
+                        <option>Ministry of Health</option>
+                        <option>Ministry of Finance</option>
+                        <option>Ministry of Education</option>
+                        <option>Department of Public Works</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="activeAccount" checked>
+                        <label for="activeAccount" style="margin: 0; font-weight: 500; color: var(--on-surface);">Active Account</label>
+                    </div>
+                    <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--on-surface-variant);">Allows the user to log in to the portal</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(event) {
+            event.preventDefault();
+            document.getElementById('roleModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('roleModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

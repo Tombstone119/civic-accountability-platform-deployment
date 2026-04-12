@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vendor Registry | Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#f7f9fb",
+                    "primary-dim": "#344e9e",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#dfc1f0",
+                    "outline-variant": "#acb3b7",
+                    "surface-container-low": "#f0f4f7",
+                    "secondary-dim": "#005e56",
+                    "inverse-surface": "#0b0f10",
+                    "on-primary": "#faf8ff",
+                    "tertiary-container": "#edcfff",
+                    "on-secondary-container": "#005c54",
+                    "on-surface": "#2c3437",
+                    "inverse-on-surface": "#9a9d9f",
+                    "secondary-fixed": "#89f5e7",
+                    "tertiary-dim": "#614a71",
+                    "surface-container-high": "#e3e9ed",
+                    "surface-tint": "#415aab",
+                    "inverse-primary": "#8fa7fe",
+                    "on-secondary-fixed-variant": "#00675e",
+                    "surface-container": "#eaeff2",
+                    "secondary-container": "#89f5e7",
+                    "tertiary": "#6e567e",
+                    "secondary": "#006b62",
+                    "on-tertiary": "#fff6fd",
+                    "on-surface-variant": "#596064",
+                    "primary-container": "#8fa7fe",
+                    "on-tertiary-container": "#5a446a",
+                    "on-error-container": "#6e0523",
+                    "primary-fixed-dim": "#829aef",
+                    "surface-dim": "#d4dbdf",
+                    "outline": "#747c80",
+                    "surface": "#f7f9fb",
+                    "on-background": "#2c3437",
+                    "on-error": "#fff7f7",
+                    "on-tertiary-fixed-variant": "#644d75",
+                    "error": "#a8364b",
+                    "on-secondary-fixed": "#004841",
+                    "primary-fixed": "#8fa7fe",
+                    "on-tertiary-fixed": "#473157",
+                    "on-secondary": "#e2fff9",
+                    "surface-variant": "#dce4e8",
+                    "on-primary-fixed": "#000c36",
+                    "surface-container-highest": "#dce4e8",
+                    "error-dim": "#6b0221",
+                    "primary": "#415aab",
+                    "background": "#f8fafc",
+                    "error-container": "#f97386",
+                    "on-primary-fixed-variant": "#0e2e7f",
+                    "tertiary-fixed": "#edcfff",
+                    "on-primary-container": "#002474",
+                    "secondary-fixed-dim": "#7ae7d8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .table-fixed-header thead th { position: sticky; top: 0; z-index: 10; }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar Execution -->
+<header class="flex justify-between items-center px-6 w-full z-50 fixed top-0 left-0 bg-[#1e3a8a] dark:bg-slate-950 text-white dark:text-slate-100 font-['Inter'] text-sm font-normal h-16 shadow-lg">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-white" data-icon="shield">shield</span>
+<span class="text-lg font-bold text-white tracking-tight">Civic Accountability Platform</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-4">
+<span class="text-white font-semibold cursor-pointer active:opacity-80">Dashboard</span>
+<span class="text-slate-200 hover:bg-[#3b5fc0] dark:hover:bg-slate-800 transition-colors px-3 py-2 rounded cursor-pointer active:opacity-80">Reports</span>
+<span class="text-slate-200 hover:bg-[#3b5fc0] dark:hover:bg-slate-800 transition-colors px-3 py-2 rounded cursor-pointer active:opacity-80">Portal</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined cursor-pointer active:opacity-80" data-icon="notifications">notifications</span>
+<div class="flex items-center gap-2 bg-[#3b5fc0] px-3 py-1.5 rounded-full cursor-pointer">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-medium">Admin User</span>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar Execution -->
+<aside class="fixed left-0 top-16 flex flex-col pt-4 bg-white dark:bg-slate-900 text-[#1e3a8a] dark:text-blue-400 font-['Inter'] text-[14px] font-medium docked left-0 top-16 w-[240px] h-[calc(100vh-64px)] border-r border-slate-200 dark:border-slate-800 transition-all duration-150 ease-in-out">
+<div class="px-6 mb-6">
+<h2 class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Main Menu</h2>
+</div>
+<nav class="flex flex-col gap-1 px-2">
+<!-- Nav Item: Overview -->
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] dark:hover:text-blue-400 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<!-- Nav Item: Contracts -->
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] dark:hover:text-blue-400 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span>Contracts</span>
+</a>
+<!-- Nav Item: Vendors (ACTIVE) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-[#eff3ff] dark:bg-blue-900/20 border-l-4 border-[#1e3a8a] dark:border-blue-500 text-[#1e3a8a] dark:text-blue-400 font-semibold" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="storefront" style="font-variation-settings: 'FILL' 1;">storefront</span>
+<span>Vendors</span>
+</a>
+<!-- Nav Item: Audits -->
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] dark:hover:text-blue-400 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="gavel">gavel</span>
+<span>Audits</span>
+</a>
+<!-- Nav Item: Departments -->
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] dark:hover:text-blue-400 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="business">business</span>
+<span>Departments</span>
+</a>
+<!-- Nav Item: Public Portal -->
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] dark:hover:text-blue-400 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="public">public</span>
+<span>Public Portal</span>
+</a>
+<!-- Nav Item: Administration -->
+<a class="flex items-center gap-3 px-4 py-3 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] dark:hover:text-blue-400 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span>Administration</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-[240px] pt-16 min-h-screen">
+<!-- Header / Title Section -->
+<div class="px-8 py-6">
+<nav class="flex text-xs text-slate-500 mb-2 gap-1">
+<span>Home</span>
+<span>/</span>
+<span class="font-medium text-primary">Vendors</span>
+</nav>
+<div class="flex justify-between items-end">
+<div>
+<h1 class="text-[32px] font-bold text-[#0f172a]">Vendor Registry</h1>
+<p class="text-[14px] text-slate-600">52 registered vendors</p>
+</div>
+<!-- Action Bar (Right Side) -->
+<div class="flex items-center gap-4">
+<div class="relative w-[360px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 border border-slate-200 rounded text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none" placeholder="Search vendors by name or registration number..." type="text"/>
+</div>
+<button class="flex items-center gap-2 bg-[#1e3a8a] text-white px-4 py-2 rounded font-semibold text-sm hover:bg-[#3b5fc0] transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+                        Register Vendor
+                    </button>
+</div>
+</div>
+</div>
+<div class="flex px-8 pb-12 gap-6">
+<!-- Left Filter Sidebar -->
+<aside class="w-[260px] flex-shrink-0 bg-white border border-slate-200 rounded-lg p-6 h-fit sticky top-24">
+<h3 class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider mb-6">Filters</h3>
+<div class="space-y-8">
+<!-- Status Filter -->
+<div>
+<label class="block text-xs font-bold text-slate-700 mb-3 uppercase tracking-tight">Status</label>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="text-primary focus:ring-primary border-slate-300" name="status" type="radio"/>
+<span class="text-sm text-slate-600 group-hover:text-primary transition-colors">All</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="text-primary focus:ring-primary border-slate-300" name="status" type="radio"/>
+<span class="text-sm text-slate-600 group-hover:text-primary transition-colors">Active</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="text-primary focus:ring-primary border-slate-300" name="status" type="radio"/>
+<span class="text-sm text-slate-600 group-hover:text-primary transition-colors">Inactive</span>
+</label>
+</div>
+</div>
+<!-- Blacklist Status -->
+<div>
+<label class="block text-xs font-bold text-slate-700 mb-3 uppercase tracking-tight">Blacklist Status</label>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="text-primary focus:ring-primary border-slate-300" name="blacklist" type="radio"/>
+<span class="text-sm text-slate-600 group-hover:text-primary transition-colors">All</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="text-primary focus:ring-primary border-slate-300" name="blacklist" type="radio"/>
+<span class="text-sm text-slate-600 group-hover:text-primary transition-colors">Blacklisted Only</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="text-primary focus:ring-primary border-slate-300" name="blacklist" type="radio"/>
+<span class="text-sm text-slate-600 group-hover:text-primary transition-colors">Not Blacklisted</span>
+</label>
+</div>
+</div>
+<!-- Category Filter -->
+<div>
+<label class="block text-xs font-bold text-slate-700 mb-3 uppercase tracking-tight">Category</label>
+<select class="w-full border-slate-200 rounded text-sm text-slate-600 focus:ring-primary focus:border-primary">
+<option>All Categories</option>
+<option>IT &amp; Technology</option>
+<option>Medical</option>
+<option>Construction</option>
+<option>Education</option>
+<option>Security</option>
+</select>
+</div>
+<!-- Compliance Filter -->
+<div>
+<label class="block text-xs font-bold text-slate-700 mb-3 uppercase tracking-tight">Compliance</label>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+<span class="text-sm text-slate-600 group-hover:text-primary transition-colors">Expired Documents</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+<span class="text-sm text-slate-600 group-hover:text-primary transition-colors">Verified Only</span>
+</label>
+</div>
+</div>
+<!-- Filter Actions -->
+<div class="pt-4 space-y-3">
+<button class="w-full bg-[#1e3a8a] text-white py-2.5 rounded font-semibold text-sm hover:bg-[#3b5fc0] transition-shadow">Apply Filters</button>
+<button class="w-full text-[#1e3a8a] py-1 text-sm font-medium hover:underline">Reset Filters</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area: Vendor Table -->
+<section class="flex-grow">
+<div class="bg-white border border-slate-200 overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#f1f5f9] border-b border-slate-200">
+<th class="px-4 py-3 text-[12px] font-semibold text-slate-500 uppercase tracking-wider cursor-pointer hover:text-primary flex items-center gap-1">
+                                    Name <span class="material-symbols-outlined text-[14px]" data-icon="unfold_more">unfold_more</span>
+</th>
+<th class="px-4 py-3 text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Reg. No.</th>
+<th class="px-4 py-3 text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Category</th>
+<th class="px-4 py-3 text-[12px] font-semibold text-slate-500 uppercase tracking-wider text-center">Contracts</th>
+<th class="px-4 py-3 text-[12px] font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+                                    Total Value <span class="material-symbols-outlined text-[14px]" data-icon="unfold_more">unfold_more</span>
+</th>
+<th class="px-4 py-3 text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Performance</th>
+<th class="px-4 py-3 text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+<th class="px-4 py-3 text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Blacklisted</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<!-- Row 1 -->
+<tr class="h-[52px] border-b border-slate-100 hover:bg-[#eff3ff] transition-colors">
+<td class="px-4 py-2 font-semibold text-[#1e3a8a] hover:underline cursor-pointer">Tech Corp Ltd</td>
+<td class="px-4 py-2 text-slate-600">REG-001</td>
+<td class="px-4 py-2 text-slate-600">IT &amp; Technology</td>
+<td class="px-4 py-2 text-slate-600 text-center">8</td>
+<td class="px-4 py-2 text-slate-900 font-medium">$1,450,000</td>
+<td class="px-4 py-2">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#16a34a] h-full" style="width: 92%"></div>
+</div>
+<span class="text-[#16a34a] font-bold">92</span>
+</div>
+</td>
+<td class="px-4 py-2">
+<span class="bg-[#eff6ff] text-[#2563eb] px-2 py-0.5 rounded text-[11px] font-semibold uppercase">Active</span>
+</td>
+<td class="px-4 py-2 text-slate-400 text-center">—</td>
+</tr>
+<!-- Row 2 -->
+<tr class="h-[52px] border-b border-slate-100 bg-[#f8fafc] hover:bg-[#eff3ff] transition-colors">
+<td class="px-4 py-2 font-semibold text-[#1e3a8a] hover:underline cursor-pointer">MedTech Solutions</td>
+<td class="px-4 py-2 text-slate-600">REG-002</td>
+<td class="px-4 py-2 text-slate-600">Medical</td>
+<td class="px-4 py-2 text-slate-600 text-center">3</td>
+<td class="px-4 py-2 text-slate-900 font-medium">$3,600,000</td>
+<td class="px-4 py-2">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#ca8a04] h-full" style="width: 78%"></div>
+</div>
+<span class="text-[#ca8a04] font-bold">78</span>
+</div>
+</td>
+<td class="px-4 py-2">
+<span class="bg-[#eff6ff] text-[#2563eb] px-2 py-0.5 rounded text-[11px] font-semibold uppercase">Active</span>
+</td>
+<td class="px-4 py-2 text-slate-400 text-center">—</td>
+</tr>
+<!-- Row 3 -->
+<tr class="h-[52px] border-b border-slate-100 hover:bg-[#eff3ff] transition-colors">
+<td class="px-4 py-2 font-semibold text-[#1e3a8a] hover:underline cursor-pointer">BuildRight Ltd</td>
+<td class="px-4 py-2 text-slate-600">REG-003</td>
+<td class="px-4 py-2 text-slate-600">Construction</td>
+<td class="px-4 py-2 text-slate-600 text-center">12</td>
+<td class="px-4 py-2 text-slate-900 font-medium">$8,200,000</td>
+<td class="px-4 py-2">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#16a34a] h-full" style="width: 85%"></div>
+</div>
+<span class="text-[#16a34a] font-bold">85</span>
+</div>
+</td>
+<td class="px-4 py-2">
+<span class="bg-[#eff6ff] text-[#2563eb] px-2 py-0.5 rounded text-[11px] font-semibold uppercase">Active</span>
+</td>
+<td class="px-4 py-2 text-slate-400 text-center">—</td>
+</tr>
+<!-- Row 4 -->
+<tr class="h-[52px] border-b border-slate-100 bg-[#f8fafc] hover:bg-[#eff3ff] transition-colors">
+<td class="px-4 py-2 font-semibold text-[#1e3a8a] hover:underline cursor-pointer">CivicMedia Group</td>
+<td class="px-4 py-2 text-slate-600">REG-004</td>
+<td class="px-4 py-2 text-slate-600">Media</td>
+<td class="px-4 py-2 text-slate-600 text-center">1</td>
+<td class="px-4 py-2 text-slate-900 font-medium">$120,000</td>
+<td class="px-4 py-2">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#dc2626] h-full" style="width: 45%"></div>
+</div>
+<span class="text-[#dc2626] font-bold">45</span>
+</div>
+</td>
+<td class="px-4 py-2">
+<span class="bg-[#f1f5f9] text-[#64748b] px-2 py-0.5 rounded text-[11px] font-semibold uppercase">Inactive</span>
+</td>
+<td class="px-4 py-2">
+<span class="bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] px-2 py-0.5 rounded text-[11px] font-semibold uppercase flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="block">block</span> Blacklisted
+                                    </span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="h-[52px] border-b border-slate-100 hover:bg-[#eff3ff] transition-colors">
+<td class="px-4 py-2 font-semibold text-[#1e3a8a] hover:underline cursor-pointer">EduSupply Co.</td>
+<td class="px-4 py-2 text-slate-600">REG-005</td>
+<td class="px-4 py-2 text-slate-600">Education</td>
+<td class="px-4 py-2 text-slate-600 text-center">4</td>
+<td class="px-4 py-2 text-slate-900 font-medium">$720,000</td>
+<td class="px-4 py-2">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#16a34a] h-full" style="width: 88%"></div>
+</div>
+<span class="text-[#16a34a] font-bold">88</span>
+</div>
+</td>
+<td class="px-4 py-2">
+<span class="bg-[#eff6ff] text-[#2563eb] px-2 py-0.5 rounded text-[11px] font-semibold uppercase">Active</span>
+</td>
+<td class="px-4 py-2 text-slate-400 text-center">—</td>
+</tr>
+<!-- Row 6 -->
+<tr class="h-[52px] border-b border-slate-100 bg-[#f8fafc] hover:bg-[#eff3ff] transition-colors">
+<td class="px-4 py-2 font-semibold text-[#1e3a8a] hover:underline cursor-pointer">SafeGuard Inc</td>
+<td class="px-4 py-2 text-slate-600">REG-006</td>
+<td class="px-4 py-2 text-slate-600">Security</td>
+<td class="px-4 py-2 text-slate-600 text-center">2</td>
+<td class="px-4 py-2 text-slate-900 font-medium">$580,000</td>
+<td class="px-4 py-2">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#ca8a04] h-full" style="width: 71%"></div>
+</div>
+<span class="text-[#ca8a04] font-bold">71</span>
+</div>
+</td>
+<td class="px-4 py-2">
+<span class="bg-[#eff6ff] text-[#2563eb] px-2 py-0.5 rounded text-[11px] font-semibold uppercase">Active</span>
+</td>
+<td class="px-4 py-2 text-slate-400 text-center">—</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="px-6 py-4 flex items-center justify-between bg-white">
+<span class="text-xs text-slate-500 font-medium">Showing 1–10 of 52 results</span>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-400 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-[#1e3a8a] text-white text-xs font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-600 text-xs font-medium hover:bg-slate-50">2</button>
+<span class="px-2 text-slate-400 text-xs">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-600 text-xs font-medium hover:bg-slate-50">6</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bento-style Statistics at bottom of table -->
+<div class="mt-8 grid grid-cols-4 gap-4">
+<div class="bg-white border border-slate-200 p-5 rounded-lg">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Total Value</span>
+<span class="material-symbols-outlined text-[#1e3a8a] text-[20px]" data-icon="payments">payments</span>
+</div>
+<div class="text-2xl font-bold text-[#1e3a8a]">$14.6M</div>
+<div class="text-[10px] text-green-600 font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="trending_up">trending_up</span> 12% from last quarter
+                        </div>
+</div>
+<div class="bg-white border border-slate-200 p-5 rounded-lg">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Avg Performance</span>
+<span class="material-symbols-outlined text-[#1e3a8a] text-[20px]" data-icon="verified_user">verified_user</span>
+</div>
+<div class="text-2xl font-bold text-[#1e3a8a]">82.4</div>
+<div class="text-[10px] text-slate-400 font-medium mt-1">Across all registered entities</div>
+</div>
+<div class="bg-white border border-slate-200 p-5 rounded-lg">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Blacklisted</span>
+<span class="material-symbols-outlined text-[#dc2626] text-[20px]" data-icon="error">error</span>
+</div>
+<div class="text-2xl font-bold text-[#dc2626]">3</div>
+<div class="text-[10px] text-slate-400 font-medium mt-1">Vendors restricted from bidding</div>
+</div>
+<div class="bg-white border border-slate-200 p-5 rounded-lg">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Active Tenders</span>
+<span class="material-symbols-outlined text-[#1e3a8a] text-[20px]" data-icon="history_edu">history_edu</span>
+</div>
+<div class="text-2xl font-bold text-[#1e3a8a]">28</div>
+<div class="text-[10px] text-blue-600 font-medium mt-1">Currently open for application</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Visual Enhancements: Background Decorative Mesh -->
+<div class="fixed inset-0 pointer-events-none -z-10 opacity-30">
+<div class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-[#eff3ff] to-transparent rounded-full blur-3xl"></div>
+</div>
+</body></html>

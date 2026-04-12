@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Public Records Portal | Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#004841",
+                    "inverse-primary": "#8fa7fe",
+                    "tertiary-dim": "#614a71",
+                    "secondary": "#006b62",
+                    "on-primary-container": "#002474",
+                    "on-secondary-container": "#005c54",
+                    "on-primary-fixed-variant": "#0e2e7f",
+                    "surface-bright": "#f7f9fb",
+                    "surface-dim": "#d4dbdf",
+                    "on-tertiary": "#fff6fd",
+                    "on-secondary": "#e2fff9",
+                    "surface-container-low": "#f0f4f7",
+                    "surface-container": "#eaeff2",
+                    "on-error": "#fff7f7",
+                    "primary-fixed": "#8fa7fe",
+                    "tertiary-fixed-dim": "#dfc1f0",
+                    "secondary-fixed-dim": "#7ae7d8",
+                    "tertiary-fixed": "#edcfff",
+                    "on-tertiary-fixed": "#473157",
+                    "outline": "#747c80",
+                    "error-container": "#f97386",
+                    "outline-variant": "#acb3b7",
+                    "primary-fixed-dim": "#829aef",
+                    "inverse-surface": "#0b0f10",
+                    "secondary-container": "#89f5e7",
+                    "background": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#00675e",
+                    "secondary-fixed": "#89f5e7",
+                    "on-surface-variant": "#596064",
+                    "on-background": "#2c3437",
+                    "surface": "#f7f9fb",
+                    "primary": "#415aab",
+                    "on-primary": "#faf8ff",
+                    "on-primary-fixed": "#000c36",
+                    "primary-dim": "#344e9e",
+                    "primary-container": "#8fa7fe",
+                    "surface-container-highest": "#dce4e8",
+                    "on-error-container": "#6e0523",
+                    "tertiary-container": "#edcfff",
+                    "on-tertiary-container": "#5a446a",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-dim": "#005e56",
+                    "on-surface": "#2c3437",
+                    "on-tertiary-fixed-variant": "#644d75",
+                    "tertiary": "#6e567e",
+                    "surface-container-high": "#e3e9ed",
+                    "surface-tint": "#415aab",
+                    "surface-variant": "#dce4e8",
+                    "inverse-on-surface": "#9a9d9f",
+                    "error-dim": "#6b0221",
+                    "error": "#a8364b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-[#1e3a8a] dark:bg-slate-950 shadow-lg dark:shadow-none fixed top-0 left-0 right-0 h-16 z-50 flex justify-between items-center px-6 w-full max-w-full mx-auto transition-all duration-200">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white text-2xl" data-icon="shield">shield</span>
+<h1 class="text-xl font-bold text-white tracking-tight">Civic Accountability Platform</h1>
+<span class="ml-4 text-sm text-white/70 font-medium hidden md:inline">Public Portal</span>
+</div>
+<nav class="hidden lg:flex items-center gap-8 font-inter text-sm font-medium">
+<a class="text-white/80 hover:text-white transition-colors" href="#">Contracts</a>
+<a class="text-white/80 hover:text-white transition-colors" href="#">Vendors</a>
+<a class="text-white/80 hover:text-white transition-colors" href="#">Audits</a>
+<a class="text-white/80 hover:text-white transition-colors" href="#">Departments</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="border border-white/40 text-white px-5 py-1.5 rounded-lg text-sm font-medium hover:bg-white/10 transition-all active:opacity-80">
+                Login
+            </button>
+</div>
+</header>
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-[#1e3a8a] to-[#3b5fc0] py-20 px-6 text-center text-white">
+<div class="max-w-4xl mx-auto">
+<h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Government Contract Transparency</h2>
+<p class="text-lg md:text-xl text-white/85 mb-10 max-w-2xl mx-auto">Browse publicly disclosed contracts and participate in civic oversight</p>
+<div class="relative max-w-2xl mx-auto">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400" data-icon="search">search</span>
+</div>
+<input class="w-full pl-12 pr-4 py-4 rounded-xl text-slate-900 focus:ring-4 focus:ring-teal-400/30 border-none shadow-xl text-base outline-none" placeholder="Search contracts, vendors, departments..." type="text"/>
+</div>
+</div>
+</section>
+<!-- Stat Bar -->
+<section class="bg-white border-b border-slate-200">
+<div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
+<div class="flex-1 w-full md:w-auto">
+<p class="text-2xl md:text-3xl font-bold text-[#1e3a8a]">47</p>
+<p class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Published Contracts</p>
+</div>
+<div class="hidden md:block h-12 w-px bg-slate-200"></div>
+<div class="flex-1 w-full md:w-auto">
+<p class="text-2xl md:text-3xl font-bold text-[#1e3a8a]">5</p>
+<p class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Departments</p>
+</div>
+<div class="hidden md:block h-12 w-px bg-slate-200"></div>
+<div class="flex-1 w-full md:w-auto">
+<p class="text-2xl md:text-3xl font-bold text-[#1e3a8a]">$18.4M</p>
+<p class="text-[12px] font-semibold text-slate-500 uppercase tracking-wider">Total Value Disclosed</p>
+</div>
+</div>
+</section>
+<!-- Filter Bar -->
+<section class="bg-white border-b border-slate-200 sticky top-16 z-40">
+<div class="max-w-7xl mx-auto px-6 py-4">
+<form class="flex flex-wrap items-center gap-4">
+<div class="flex-1 min-w-[200px]">
+<label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Department</label>
+<select class="w-full border-slate-200 rounded-lg text-sm focus:border-primary focus:ring-primary">
+<option>All Departments</option>
+<option>Ministry of Health</option>
+<option>Ministry of Transport</option>
+<option>Ministry of Education</option>
+</select>
+</div>
+<div class="flex-1 min-w-[200px]">
+<label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Status</label>
+<select class="w-full border-slate-200 rounded-lg text-sm focus:border-primary focus:ring-primary">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Completed</option>
+<option>Pending</option>
+</select>
+</div>
+<div class="w-40">
+<label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Date From</label>
+<input class="w-full border-slate-200 rounded-lg text-sm focus:border-primary focus:ring-primary" type="date"/>
+</div>
+<div class="w-40">
+<label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Date To</label>
+<input class="w-full border-slate-200 rounded-lg text-sm focus:border-primary focus:ring-primary" type="date"/>
+</div>
+<div class="pt-5">
+<button class="bg-[#1e3a8a] text-white px-8 py-2.5 rounded-lg font-semibold text-sm hover:bg-blue-800 transition-colors shadow-sm" type="submit">
+                            Search
+                        </button>
+</div>
+</form>
+</div>
+</section>
+<!-- Results Section -->
+<section class="bg-[#f8fafc] py-12 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="text-2xl font-semibold text-slate-900">47 Published Contracts</h3>
+<p class="text-sm text-slate-500">Showing public records from fiscal year 2024-2025</p>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium text-slate-600 cursor-pointer hover:text-primary transition-colors">
+<span>Sort by: Most Recent</span>
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Card Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="p-6 flex-1">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-[#eff6ff] text-[#2563eb] text-[11px] font-bold uppercase px-2 py-1 rounded">Active</span>
+<p class="text-2xl font-bold text-primary">$250,000</p>
+</div>
+<h4 class="text-lg font-semibold text-slate-900 mb-2 leading-tight">IT Infrastructure Upgrade</h4>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Ministry of Health</span>
+</div>
+<div class="space-y-2 text-sm text-slate-600">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="business">business</span>
+<span>Vendor: Tech Corp Ltd.</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="calendar_month">calendar_month</span>
+<span>Published Jan 15, 2024</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 px-6 py-4 flex justify-between items-center border-t border-slate-100">
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chat_bubble">chat_bubble</span>
+                                3 Comments
+                            </button>
+<a class="text-xs font-bold text-primary flex items-center gap-1 hover:underline" href="#">
+                                View Details <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="p-6 flex-1">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-[#f0fdf4] text-[#16a34a] text-[11px] font-bold uppercase px-2 py-1 rounded">Active</span>
+<p class="text-2xl font-bold text-primary">$1,200,000</p>
+</div>
+<h4 class="text-lg font-semibold text-slate-900 mb-2 leading-tight">Medical Equipment Supply</h4>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Ministry of Health</span>
+</div>
+<div class="space-y-2 text-sm text-slate-600">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="business">business</span>
+<span>Vendor: MedTech Solutions</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="calendar_month">calendar_month</span>
+<span>Published Jan 12, 2024</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 px-6 py-4 flex justify-between items-center border-t border-slate-100">
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chat_bubble">chat_bubble</span>
+                                7 Comments
+                            </button>
+<a class="text-xs font-bold text-primary flex items-center gap-1 hover:underline" href="#">
+                                View Details <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="p-6 flex-1">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-[#eff6ff] text-[#2563eb] text-[11px] font-bold uppercase px-2 py-1 rounded">Active</span>
+<p class="text-2xl font-bold text-primary">$3,400,000</p>
+</div>
+<h4 class="text-lg font-semibold text-slate-900 mb-2 leading-tight">Road Rehabilitation Phase 2</h4>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Ministry of Transport</span>
+</div>
+<div class="space-y-2 text-sm text-slate-600">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="business">business</span>
+<span>Vendor: BuildRight Ltd</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="calendar_month">calendar_month</span>
+<span>Published Jan 10, 2024</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 px-6 py-4 flex justify-between items-center border-t border-slate-100">
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chat_bubble">chat_bubble</span>
+                                1 Comment
+                            </button>
+<a class="text-xs font-bold text-primary flex items-center gap-1 hover:underline" href="#">
+                                View Details <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="p-6 flex-1">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-[#fefce8] text-[#ca8a04] text-[11px] font-bold uppercase px-2 py-1 rounded">Under Review</span>
+<p class="text-2xl font-bold text-primary">$180,000</p>
+</div>
+<h4 class="text-lg font-semibold text-slate-900 mb-2 leading-tight">School IT Equipment</h4>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Ministry of Education</span>
+</div>
+<div class="space-y-2 text-sm text-slate-600">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="business">business</span>
+<span>Vendor: EduSupply Co</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="calendar_month">calendar_month</span>
+<span>Published Jan 08, 2024</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 px-6 py-4 flex justify-between items-center border-t border-slate-100">
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chat_bubble">chat_bubble</span>
+                                0 Comments
+                            </button>
+<a class="text-xs font-bold text-primary flex items-center gap-1 hover:underline" href="#">
+                                View Details <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="p-6 flex-1">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-[#f0fdf4] text-[#16a34a] text-[11px] font-bold uppercase px-2 py-1 rounded">Completed</span>
+<p class="text-2xl font-bold text-primary">$95,000</p>
+</div>
+<h4 class="text-lg font-semibold text-slate-900 mb-2 leading-tight">Public Library Renovation</h4>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Ministry of Education</span>
+</div>
+<div class="space-y-2 text-sm text-slate-600">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="business">business</span>
+<span>Vendor: ConstructPro</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="calendar_month">calendar_month</span>
+<span>Published Jan 05, 2024</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 px-6 py-4 flex justify-between items-center border-t border-slate-100">
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chat_bubble">chat_bubble</span>
+                                2 Comments
+                            </button>
+<a class="text-xs font-bold text-primary flex items-center gap-1 hover:underline" href="#">
+                                View Details <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col">
+<div class="p-6 flex-1">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-[#eff6ff] text-[#2563eb] text-[11px] font-bold uppercase px-2 py-1 rounded">Active</span>
+<p class="text-2xl font-bold text-primary">$560,000</p>
+</div>
+<h4 class="text-lg font-semibold text-slate-900 mb-2 leading-tight">Border Security Systems</h4>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Ministry of Defence</span>
+</div>
+<div class="space-y-2 text-sm text-slate-600">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="business">business</span>
+<span>Vendor: SafeGuard Inc</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="calendar_month">calendar_month</span>
+<span>Published Jan 01, 2024</span>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 px-6 py-4 flex justify-between items-center border-t border-slate-100">
+<button class="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chat_bubble">chat_bubble</span>
+                                0 Comments
+                            </button>
+<a class="text-xs font-bold text-primary flex items-center gap-1 hover:underline" href="#">
+                                View Details <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<nav class="mt-16 flex justify-center items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 hover:bg-white transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-[#1e3a8a] text-white font-bold text-sm">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 bg-white hover:bg-slate-50 font-medium text-sm">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 bg-white hover:bg-slate-50 font-medium text-sm">3</button>
+<span class="px-2 text-slate-400">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 bg-white hover:bg-slate-50 font-medium text-sm">8</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 hover:bg-white transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</nav>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-white border-t border-slate-200">
+<div class="max-w-7xl mx-auto py-12 px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#1e3a8a] text-lg" data-icon="shield">shield</span>
+<h5 class="text-sm font-bold text-slate-800">Civic Accountability Platform</h5>
+</div>
+<p class="text-xs text-slate-500 max-w-xs text-center md:text-left">
+                    © 2025 Civic Accountability Platform · Government of Sri Lanka. 
+                    An official government transparency initiative dedicated to open governance.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-xs font-medium text-slate-500 hover:text-[#1e3a8a] transition-colors" href="#">Privacy Policy</a>
+<a class="text-xs font-medium text-slate-500 hover:text-[#1e3a8a] transition-colors" href="#">Terms of Service</a>
+<a class="text-xs font-medium text-slate-500 hover:text-[#1e3a8a] transition-colors" href="#">Accessibility Statement</a>
+<a class="text-xs font-medium text-slate-500 hover:text-[#1e3a8a] transition-colors" href="#">Contact Registry</a>
+</div>
+</div>
+</footer>
+</body></html>

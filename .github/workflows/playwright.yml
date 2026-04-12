@@ -1,0 +1,97 @@
+name: Playwright Tests
+
+# Triggers: run on push or PR to these branches
+on:
+  push:
+    branches: [main, master, feat-authentication--Yohan, Dilsara]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    # Spin up a real MongoDB instance for the API tests
+    services:
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+
+    steps:
+      # ── Step 1: Get the code ──────────────────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ── Step 2: Setup Node.js ─────────────────────────────────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # ── Step 3: Install all workspace dependencies (root + client + server)
+      - name: Install dependencies
+        run: npm ci
+
+      # ── Step 4: Install Playwright browser binary ─────────────────────────
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+        working-directory: ./server
+
+      # ── Step 5: Create .env file for the server ───────────────────────────
+      # MONGO_URI points to the MongoDB service container started above.
+      # JWT_SECRET only needs to be a non-empty string for tests.
+      - name: Create .env file
+        run: |
+          echo "MONGO_URI=mongodb://localhost:27017/civic-test" >> .env
+          echo "JWT_SECRET=ci-test-secret-key-for-playwright" >> .env
+          echo "PORT=5000" >> .env
+          echo "VITE_API_URL=http://localhost:5000/api" >> .env
+
+      # ── Step 6: Start backend in test mode (rate limiter relaxed) ─────────
+      - name: Start backend server
+        run: npm run dev:test --workspace=server &
+
+      # ── Step 7: Wait until backend is accepting requests ──────────────────
+      - name: Wait for backend to be ready
+        run: |
+          echo "Waiting for backend on port 5000..."
+          for i in {1..20}; do
+            curl -sf http://localhost:5000/api/health && echo "Backend ready!" && break
+            echo "  attempt $i — retrying in 3s"
+            sleep 3
+          done
+
+      # ── Step 8: Start React client (needed for network-mock tests) ────────
+      - name: Start frontend client
+        run: npm run dev:client &
+
+      # ── Step 9: Wait until React client is serving ────────────────────────
+      - name: Wait for frontend to be ready
+        run: |
+          echo "Waiting for frontend on port 3000..."
+          for i in {1..20}; do
+            curl -sf http://localhost:3000 && echo "Frontend ready!" && break
+            echo "  attempt $i — retrying in 3s"
+            sleep 3
+          done
+
+      # ── Step 10: Run all Playwright tests ─────────────────────────────────
+      - name: Run Playwright tests
+        run: npx playwright test --workers=1
+        working-directory: ./server
+        env:
+          CI: true
+
+      # ── Step 11: Upload the HTML report as a build artifact ───────────────
+      # `if: always()` ensures the report is uploaded even when tests fail —
+      # this is critical so developers can inspect failures without re-running.
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: server/playwright-report/
+          retention-days: 30

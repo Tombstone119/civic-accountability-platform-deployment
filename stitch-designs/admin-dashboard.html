@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Civic Accountability Platform - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#7ae7d8",
+                    "surface-bright": "#f7f9fb",
+                    "on-secondary-fixed": "#004841",
+                    "background": "#f7f9fb",
+                    "secondary-container": "#89f5e7",
+                    "primary": "#1e3a8a",
+                    "tertiary-fixed-dim": "#dfc1f0",
+                    "on-primary": "#faf8ff",
+                    "on-background": "#2c3437",
+                    "on-tertiary-fixed": "#473157",
+                    "inverse-on-surface": "#9a9d9f",
+                    "surface-container-low": "#f0f4f7",
+                    "error": "#dc2626",
+                    "secondary-dim": "#005e56",
+                    "surface-tint": "#1e3a8a",
+                    "surface-dim": "#d4dbdf",
+                    "inverse-surface": "#0b0f10",
+                    "surface": "#ffffff",
+                    "on-error": "#fff7f7",
+                    "secondary-fixed": "#89f5e7",
+                    "on-surface-variant": "#596064",
+                    "on-primary-container": "#002474",
+                    "on-tertiary": "#fff6fd",
+                    "error-dim": "#6b0221",
+                    "tertiary-container": "#edcfff",
+                    "on-tertiary-fixed-variant": "#644d75",
+                    "on-error-container": "#6e0523",
+                    "outline-variant": "#acb3b7",
+                    "on-tertiary-container": "#5a446a",
+                    "on-secondary-container": "#005c54",
+                    "tertiary-dim": "#614a71",
+                    "tertiary-fixed": "#edcfff",
+                    "outline": "#747c80",
+                    "on-secondary-fixed-variant": "#00675e",
+                    "surface-variant": "#dce4e8",
+                    "primary-fixed": "#8fa7fe",
+                    "tertiary": "#6e567e",
+                    "primary-fixed-dim": "#829aef",
+                    "primary-dim": "#344e9e",
+                    "error-container": "#fef2f2",
+                    "inverse-primary": "#8fa7fe",
+                    "on-primary-fixed": "#000c36",
+                    "surface-container": "#eaeff2",
+                    "on-secondary": "#e2fff9",
+                    "surface-container-highest": "#dce4e8",
+                    "surface-container-high": "#e3e9ed",
+                    "on-primary-fixed-variant": "#0e2e7f",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#0d9488",
+                    "primary-container": "#eff3ff",
+                    "on-surface": "#0f172a"
+            },
+            "fontFamily": {
+                    "headline": ["Inter", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Inter", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .chart-bar { transition: height 0.3s ease; }
+    </style>
+</head>
+<body class="antialiased text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full h-16 bg-[#1e3a8a] dark:bg-slate-900 text-white font-inter antialiased shadow-lg flex items-center justify-between px-6 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="text-xl font-bold text-white">Civic Accountability Platform</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center bg-blue-800 dark:bg-slate-800 rounded px-3 py-1 text-sm font-semibold">
+                Admin Role
+            </div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:bg-blue-800 transition-colors p-2 rounded-full" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-blue-800 transition-colors p-2 rounded-full" data-icon="settings">settings</span>
+<div class="flex items-center gap-2 pl-4 border-l border-blue-700">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-semibold">Alex Administrator</p>
+<p class="text-[10px] text-blue-200 uppercase">Directorate General</p>
+</div>
+<img alt="User avatar" class="w-8 h-8 rounded-full border border-blue-400" data-alt="professional headshot of a government administrator in a dark suit with a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6JyCXyERdSYwO9t-FQKfQXJF8gUyXfjunH2yxddm3igF6ogoXRVT4xokrWQ4j3eyaao9f8WnM8o2DUE5zYoEKTnfviLa_IA3lEBrHhcGBLB4l2mV3_c_FkXy8Lc_yi2JBCR3ELnXv0VAk7LOJxbNsiS3qxKxp_q_yI8WFdkWbo_wUsxitssvlLhf3RpPpYv4I4KrcN6jclhR0JbDujDnMlRA66gvZ3q_i37CbuaHvL7ivUNp54Oq3tCi38Q2B3ZuTU6TsfotW6VY"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-60 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col py-4 gap-1 z-40">
+<div class="px-6 mb-6">
+<h2 class="text-[#1e3a8a] font-bold">Civic Accountability</h2>
+<p class="text-[10px] text-slate-500 uppercase tracking-wider">Government Procurement</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<!-- Active: Overview -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded transition-all duration-200 bg-[#eff3ff] dark:bg-blue-900/30 border-l-4 border-[#1e3a8a] text-[#1e3a8a] dark:text-blue-300 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                Overview
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+                Contracts
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="storefront">storefront</span>
+                Vendors
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="fact_check">fact_check</span>
+                Audits
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="corporate_fare">corporate_fare</span>
+                Departments
+            </a>
+<div class="my-4 border-t border-slate-100 dark:border-slate-800"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="public">public</span>
+                Public Portal
+            </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-[#1e3a8a] font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="admin_panel_settings">admin_panel_settings</span>
+                Administration
+            </a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="ml-60 pt-16 min-h-screen">
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Breadcrumb & Title -->
+<div>
+<nav aria-label="Breadcrumb" class="flex text-sm mb-2">
+<span class="text-[#94a3b8]">Home</span>
+<span class="mx-2 text-slate-300">/</span>
+<span class="text-[#1e3a8a] font-medium">Dashboard</span>
+</nav>
+<div class="flex items-end justify-between">
+<div>
+<h1 class="text-[32px] font-bold text-[#0f172a] leading-tight">Dashboard</h1>
+<p class="text-sm text-[#475569]">Overview of public spending and accountability</p>
+</div>
+<button class="bg-primary text-white px-4 py-2 rounded font-medium text-sm flex items-center gap-2 hover:bg-[#3b5fc0] transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Export Report
+                    </button>
+</div>
+</div>
+<!-- Section 1: Stat Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm flex flex-col gap-2">
+<span class="material-symbols-outlined text-[#1e3a8a] text-2xl" data-icon="description">description</span>
+<span class="text-[36px] font-bold text-[#1e3a8a]">247</span>
+<span class="text-[12px] font-medium text-[#475569] uppercase tracking-wide">Total Contracts</span>
+</div>
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm flex flex-col gap-2">
+<span class="material-symbols-outlined text-[#1e3a8a] text-2xl" data-icon="payments">payments</span>
+<span class="text-[36px] font-bold text-[#1e3a8a]">$12.4M</span>
+<span class="text-[12px] font-medium text-[#475569] uppercase tracking-wide">Total Spend</span>
+</div>
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm flex flex-col gap-2">
+<span class="material-symbols-outlined text-[#1e3a8a] text-2xl" data-icon="corporate_fare">corporate_fare</span>
+<span class="text-[36px] font-bold text-[#1e3a8a]">38</span>
+<span class="text-[12px] font-medium text-[#475569] uppercase tracking-wide">Active Vendors</span>
+</div>
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm flex flex-col gap-2">
+<span class="material-symbols-outlined text-[#1e3a8a] text-2xl" data-icon="fact_check">fact_check</span>
+<span class="text-[36px] font-bold text-[#1e3a8a]">5</span>
+<span class="text-[12px] font-medium text-[#475569] uppercase tracking-wide">Open Audits</span>
+</div>
+</div>
+<!-- Section 2: Critical Alert -->
+<div class="bg-[#fef2f2] border-l-4 border-[#dc2626] p-4 rounded-r shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#dc2626]">warning</span>
+<span class="text-[#0f172a] font-medium">There are 3 critical audit findings requiring immediate attention.</span>
+</div>
+<a class="text-[#dc2626] font-bold text-sm hover:underline flex items-center gap-1" href="#">
+                    View Audits <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<!-- Section 3: Charts -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Left: Spend by Department -->
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-semibold text-[#0f172a]">Spend by Department</h3>
+<span class="text-xs text-slate-400 uppercase font-medium">Fiscal Year 2023</span>
+</div>
+<div class="h-64 flex items-end justify-between gap-4 px-2">
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-[#1e3a8a] rounded-t chart-bar" style="height: 85%;"></div>
+<span class="text-[10px] text-slate-500 uppercase font-semibold rotate-[-45deg] origin-top-left translate-y-2">Health</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-[#1e3a8a] rounded-t chart-bar" style="height: 60%;"></div>
+<span class="text-[10px] text-slate-500 uppercase font-semibold rotate-[-45deg] origin-top-left translate-y-2">Education</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-[#1e3a8a] rounded-t chart-bar" style="height: 45%;"></div>
+<span class="text-[10px] text-slate-500 uppercase font-semibold rotate-[-45deg] origin-top-left translate-y-2">Transport</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-[#1e3a8a] rounded-t chart-bar" style="height: 70%;"></div>
+<span class="text-[10px] text-slate-500 uppercase font-semibold rotate-[-45deg] origin-top-left translate-y-2">Defence</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2">
+<div class="w-full bg-[#1e3a8a] rounded-t chart-bar" style="height: 30%;"></div>
+<span class="text-[10px] text-slate-500 uppercase font-semibold rotate-[-45deg] origin-top-left translate-y-2">Finance</span>
+</div>
+</div>
+</div>
+<!-- Right: Procurement Methods -->
+<div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+<h3 class="text-lg font-semibold text-[#0f172a] mb-6">Procurement Methods</h3>
+<div class="flex items-center gap-8 h-64">
+<div class="relative w-48 h-48">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-slate-100" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="none" r="16" stroke="#1e3a8a" stroke-dasharray="40 100" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="none" r="16" stroke="#0d9488" stroke-dasharray="25 100" stroke-dashoffset="-40" stroke-width="3"></circle>
+<circle cx="18" cy="18" fill="none" r="16" stroke="#dc2626" stroke-dasharray="20 100" stroke-dashoffset="-65" stroke-width="5"></circle>
+<circle cx="18" cy="18" fill="none" r="16" stroke="#94a3b8" stroke-dasharray="15 100" stroke-dashoffset="-85" stroke-width="3"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-bold text-[#0f172a]">247</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">Total</span>
+</div>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-[#1e3a8a] rounded-full"></div>
+<span class="text-slate-600">Open Tender</span>
+</div>
+<span class="font-bold">40%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-[#0d9488] rounded-full"></div>
+<span class="text-slate-600">Restricted Tender</span>
+</div>
+<span class="font-bold">25%</span>
+</div>
+<div class="flex items-center justify-between text-xs font-bold text-[#dc2626]">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-[#dc2626] rounded-full"></div>
+<span>Direct Award</span>
+</div>
+<span>20%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-[#94a3b8] rounded-full"></div>
+<span class="text-slate-600">Quotation</span>
+</div>
+<span class="font-bold">15%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 4: Recent Contracts Table -->
+<div class="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-100 flex items-center justify-between">
+<h3 class="text-lg font-semibold text-[#0f172a]">Recent Contracts</h3>
+<a class="text-[#1e3a8a] font-bold text-sm hover:underline flex items-center gap-1" href="#">
+                        View All <span class="material-symbols-outlined text-sm">chevron_right</span>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-[#f1f5f9] text-[12px] font-semibold text-slate-600 uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Contract No.</th>
+<th class="px-6 py-4">Title</th>
+<th class="px-6 py-4">Vendor</th>
+<th class="px-6 py-4 text-right">Value</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Method</th>
+<th class="px-6 py-4">Risk</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="bg-white hover:bg-[#eff3ff] transition-colors">
+<td class="px-6 py-4 font-mono font-medium text-slate-500">CNT-2023-081</td>
+<td class="px-6 py-4 font-semibold">Medical Supply Procurement</td>
+<td class="px-6 py-4">Global Health Corp</td>
+<td class="px-6 py-4 text-right font-semibold">$1,240,000</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#eff6ff] text-[#2563eb] uppercase">Active</span>
+</td>
+<td class="px-6 py-4 text-slate-500">Open Tender</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#fefce8] text-[#ca8a04] border border-[#fde68a] uppercase">Medium</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-[#f8fafc] hover:bg-[#eff3ff] transition-colors">
+<td class="px-6 py-4 font-mono font-medium text-slate-500">CNT-2023-104</td>
+<td class="px-6 py-4 font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-[#dc2626] text-sm" title="Direct Award Warning">report</span>
+                                    IT Infrastructure Upgrade
+                                </td>
+<td class="px-6 py-4">TechBridge Systems</td>
+<td class="px-6 py-4 text-right font-semibold">$850,000</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#eff6ff] text-[#2563eb] uppercase">Active</span>
+</td>
+<td class="px-6 py-4 text-[#dc2626] font-bold">Direct Award</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#fff7ed] text-[#ea580c] border border-[#fed7aa] uppercase">High</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="bg-white hover:bg-[#eff3ff] transition-colors">
+<td class="px-6 py-4 font-mono font-medium text-slate-500">CNT-2023-042</td>
+<td class="px-6 py-4 font-semibold">City Bridge Repair Phase II</td>
+<td class="px-6 py-4">Metro Constr. Ltd</td>
+<td class="px-6 py-4 text-right font-semibold">$2,100,000</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#f0fdf4] text-[#16a34a] uppercase">Completed</span>
+</td>
+<td class="px-6 py-4 text-slate-500">Open Tender</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#f0fdf4] text-[#16a34a] border border-[#bbf7d0] uppercase">Low</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="bg-[#f8fafc] hover:bg-[#eff3ff] transition-colors">
+<td class="px-6 py-4 font-mono font-medium text-slate-500">CNT-2023-095</td>
+<td class="px-6 py-4 font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-[#dc2626] text-sm" title="Direct Award Warning">report</span>
+                                    Emergency Vaccine Logistics
+                                </td>
+<td class="px-6 py-4">FastTrack Pharma</td>
+<td class="px-6 py-4 text-right font-semibold">$4,500,000</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#eff6ff] text-[#2563eb] uppercase">Active</span>
+</td>
+<td class="px-6 py-4 text-[#dc2626] font-bold">Direct Award</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#fff7ed] text-[#ea580c] border border-[#fed7aa] uppercase">High</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium bg-[#f8fafc]">
+<span>Showing 4 of 247 contracts</span>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded hover:bg-slate-200"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="w-6 h-6 rounded bg-primary text-white">1</button>
+<button class="w-6 h-6 rounded hover:bg-slate-200">2</button>
+<button class="w-6 h-6 rounded hover:bg-slate-200">3</button>
+<button class="p-1 rounded hover:bg-slate-200"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Subtle Footer -->
+<footer class="p-8 text-center text-slate-400 text-xs">
+            © 2023 Civic Accountability Platform • Institutional Transparency Framework • v2.4.0
+        </footer>
+</main>
+</body></html>

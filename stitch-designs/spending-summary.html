@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spending Summary - Civic Accountability Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        * {
+            --primary: #1e3a8a;
+            --secondary: #006b62;
+            --error: #a8364b;
+            --tertiary: #6e567e;
+            --surface: #ffffff;
+            --background: #f8fafc;
+            --on-surface: #0f172a;
+            --outline: #e2e8f0;
+            --outline-variant: #acb3b7;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--on-surface);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .bg-risk-critical {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .bg-risk-high {
+            background-color: #fff7ed;
+            color: #ea580c;
+            border: 1px solid #fed7aa;
+        }
+
+        .bg-risk-medium {
+            background-color: #fefce8;
+            color: #ca8a04;
+            border: 1px solid #fde68a;
+        }
+
+        .bg-risk-low {
+            background-color: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        .table-row-alt:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: var(--surface);
+            border-right: 1px solid var(--outline);
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--outline);
+        }
+
+        .stat-card {
+            background-color: var(--surface);
+            border: 1px solid var(--outline);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .chart-container {
+            background-color: var(--surface);
+            border: 1px solid var(--outline);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--surface);
+            border: 1px solid var(--outline);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #f8fafc;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--on-surface);
+            border-bottom: 1px solid var(--outline);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--outline);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex;">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div style="margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <span class="material-symbols-outlined" style="color: var(--primary);">shield</span>
+                    <h1 style="font-size: 1.125rem; font-weight: 700; color: var(--primary);">Civic Accountability Platform</h1>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <span class="material-symbols-outlined">admin_panel_settings</span>
+                    <span style="font-weight: 600;">Admin</span>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <span class="material-symbols-outlined" style="cursor: pointer;">notifications</span>
+                    <span class="material-symbols-outlined" style="cursor: pointer;">settings</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuApcsxSmjvGmcJlySWmgRUSB8eY7GNxP_R2rL4dir05SUUqQc4Y5Pgaanx0ggzZVTkzM6OwPYuqh4lhxj-af6o3QprLfU_l2_sPWsSEenLoRSZGrUNZtOMPgD3k3nNjoIJgio1BkVZMOrL4UipLnrrcdx_6xkdXGxdRSenoil8ngPGDSosWOBdI-Q7FgoXhH0ZgYcb2uiGcXqtdIgz3fKxi-2sa3GLBfSKfbsEV1RG7dx18QWsUFmw6iSvXmCtGVRAHWHqW5LYYYN8" style="width: 40px; height: 40px; border-radius: 50%;" alt="Administrator">
+                    <span style="font-weight: 500;">Administrator</span>
+                </div>
+            </div>
+
+            <nav style="margin-bottom: 2rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--outline-variant); margin-bottom: 1rem; text-transform: uppercase;">Main Menu</div>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="display: flex; align-items: center; gap: 0.75rem; color: var(--on-surface); text-decoration: none;"><span class="material-symbols-outlined" style="font-size: 20px;">dashboard</span>Overview</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="display: flex; align-items: center; gap: 0.75rem; color: var(--on-surface); text-decoration: none;"><span class="material-symbols-outlined" style="font-size: 20px;">description</span>Contracts</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="display: flex; align-items: center; gap: 0.75rem; color: var(--on-surface); text-decoration: none;"><span class="material-symbols-outlined" style="font-size: 20px;">store</span>Vendors</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="display: flex; align-items: center; gap: 0.75rem; color: var(--on-surface); text-decoration: none;"><span class="material-symbols-outlined" style="font-size: 20px;">fact_check</span>Audits</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="display: flex; align-items: center; gap: 0.75rem; color: var(--on-surface); text-decoration: none;"><span class="material-symbols-outlined" style="font-size: 20px;">corporate_fare</span>Departments</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="display: flex; align-items: center; gap: 0.75rem; color: var(--on-surface); text-decoration: none;"><span class="material-symbols-outlined" style="font-size: 20px;">public</span>Public Portal</a></li>
+                </ul>
+            </nav>
+
+            <nav>
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--outline-variant); margin-bottom: 1rem; text-transform: uppercase;">Administration</div>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--primary); text-decoration: none; font-weight: 500;">Spending Summary</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--on-surface); text-decoration: none;">Audit Trails</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--on-surface); text-decoration: none;">User Access Control</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div style="flex: 1;">
+            <!-- Header -->
+            <div class="header">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="color: var(--on-surface);">Home</span>
+                    <span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+                    <span style="font-weight: 500;">Spending Summary</span>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div style="padding: 2rem;">
+                <div style="margin-bottom: 2rem;">
+                    <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">Spending Summary</h1>
+                    <p style="color: var(--outline-variant);">Aggregated financial data across all departments</p>
+                </div>
+
+                <!-- Filters -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; background-color: var(--surface); padding: 1.5rem; border: 1px solid var(--outline); border-radius: 0.5rem;">
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Fiscal Year</label>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <select style="padding: 0.5rem; border: 1px solid var(--outline); border-radius: 0.25rem; background-color: var(--surface);">
+                                <option>2024</option>
+                                <option>2023</option>
+                                <option>2022</option>
+                            </select>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem;">Department</label>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <select style="padding: 0.5rem; border: 1px solid var(--outline); border-radius: 0.25rem; background-color: var(--surface);">
+                                <option>All Departments</option>
+                                <option>Ministry of Finance</option>
+                                <option>Ministry of Transport</option>
+                                <option>Ministry of Health</option>
+                            </select>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: flex-end;">
+                        <button style="padding: 0.5rem 1rem; background-color: var(--primary); color: white; border: none; border-radius: 0.25rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                            <span class="material-symbols-outlined" style="font-size: 20px;">refresh</span>
+                            Refresh Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Key Metrics -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <span class="material-symbols-outlined">payments</span>
+                            <span style="font-size: 0.875rem; color: var(--outline-variant);">Total Spend</span>
+                        </div>
+                        <div style="font-size: 1.75rem; font-weight: 700;">$18.4M</div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <span class="material-symbols-outlined">description</span>
+                            <span style="font-size: 0.875rem; color: var(--outline-variant);">Total Contracts</span>
+                        </div>
+                        <div style="font-size: 1.75rem; font-weight: 700;">247</div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <span class="material-symbols-outlined">monitoring</span>
+                            <span style="font-size: 0.875rem; color: var(--outline-variant);">Avg Contract Value</span>
+                        </div>
+                        <div style="font-size: 1.75rem; font-weight: 700;">$74,493</div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <span class="material-symbols-outlined">flag</span>
+                            <span style="font-size: 0.875rem; color: var(--outline-variant);">Direct Award Count</span>
+                        </div>
+                        <div style="font-size: 1.75rem; font-weight: 700;">12</div>
+                    </div>
+                </div>
+
+                <!-- Spend by Department Chart -->
+                <div class="chart-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.25rem; font-weight: 600;">Spend by Department</h2>
+                        <span class="material-symbols-outlined" style="cursor: pointer;">more_horiz</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 200px; font-weight: 500;">Ministry of Finance</div>
+                            <div style="flex: 1; background-color: #dbeafe; height: 24px; border-radius: 0.25rem; margin: 0 1rem;"></div>
+                            <div style="width: 100px; text-align: right; font-weight: 600;">$8.2M</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 200px; font-weight: 500;">Ministry of Transport</div>
+                            <div style="flex: 1; background-color: #93c5fd; height: 24px; border-radius: 0.25rem; margin: 0 1rem;"></div>
+                            <div style="width: 100px; text-align: right; font-weight: 600;">$4.8M</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 200px; font-weight: 500;">Ministry of Health</div>
+                            <div style="flex: 1; background-color: #60a5fa; height: 24px; border-radius: 0.25rem; margin: 0 1rem;"></div>
+                            <div style="width: 100px; text-align: right; font-weight: 600;">$3.2M</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 200px; font-weight: 500;">Ministry of Education</div>
+                            <div style="flex: 1; background-color: #3b82f6; height: 24px; border-radius: 0.25rem; margin: 0 1rem;"></div>
+                            <div style="width: 100px; text-align: right; font-weight: 600;">$1.6M</div>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 200px; font-weight: 500;">Ministry of Defence</div>
+                            <div style="flex: 1; background-color: #1d4ed8; height: 24px; border-radius: 0.25rem; margin: 0 1rem;"></div>
+                            <div style="width: 100px; text-align: right; font-weight: 600;">$0.6M</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Year-on-Year Comparison -->
+                <div class="chart-container">
+                    <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem;">Year-on-Year Comparison</h2>
+                    <div style="height: 300px; background-color: #f8fafc; border-radius: 0.25rem; display: flex; align-items: flex-end; justify-content: space-around; padding: 1rem;">
+                        <div style="text-align: center;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">2022</div>
+                            <div style="display: flex; gap: 1rem; align-items: flex-end;">
+                                <div style="width: 40px; height: 200px; background-color: #93c5fd; border-radius: 0.25rem;"></div>
+                                <div style="width: 40px; height: 150px; background-color: #93c5fd; border-radius: 0.25rem;"></div>
+                                <div style="width: 40px; height: 100px; background-color: #93c5fd; border-radius: 0.25rem;"></div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">2023</div>
+                            <div style="display: flex; gap: 1rem; align-items: flex-end;">
+                                <div style="width: 40px; height: 220px; background-color: #60a5fa; border-radius: 0.25rem;"></div>
+                                <div style="width: 40px; height: 170px; background-color: #60a5fa; border-radius: 0.25rem;"></div>
+                                <div style="width: 40px; height: 120px; background-color: #60a5fa; border-radius: 0.25rem;"></div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">2024</div>
+                            <div style="display: flex; gap: 1rem; align-items: flex-end;">
+                                <div style="width: 40px; height: 240px; background-color: #1e3a8a; border-radius: 0.25rem;"></div>
+                                <div style="width: 40px; height: 180px; background-color: #1e3a8a; border-radius: 0.25rem;"></div>
+                                <div style="width: 40px; height: 140px; background-color: #1e3a8a; border-radius: 0.25rem;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; font-size: 0.875rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 16px; height: 16px; background-color: #93c5fd; border-radius: 0.25rem;"></span>MOH</div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 16px; height: 16px; background-color: #60a5fa; border-radius: 0.25rem;"></span>MOE</div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 16px; height: 16px; background-color: #1e3a8a; border-radius: 0.25rem;"></span>MOT</div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 16px; height: 16px; background-color: #0f2f5a; border-radius: 0.25rem;"></span>MOD</div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 16px; height: 16px; background-color: #1e3a8a; border-radius: 0.25rem;"></span>MOF</div>
+                    </div>
+                </div>
+
+                <!-- Department Breakdown Table -->
+                <div style="margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h2 style="font-size: 1.25rem; font-weight: 600;">Department Breakdown</h2>
+                        <button style="padding: 0.5rem 1rem; background-color: transparent; border: 1px solid var(--outline); border-radius: 0.25rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+                            Export CSV
+                        </button>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Department</th>
+                                <th>Fiscal Year</th>
+                                <th>Total Spend</th>
+                                <th>Contracts</th>
+                                <th>Avg Value</th>
+                                <th>Avg Risk</th>
+                                <th>Direct Awards</th>
+                                <th>Overpayments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-row-alt">
+                                <td>Ministry of Finance</td>
+                                <td>2024</td>
+                                <td>$8,200,000</td>
+                                <td>18</td>
+                                <td>$455,555</td>
+                                <td><span class="badge bg-risk-low">LOW</span></td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr class="table-row-alt">
+                                <td>Ministry of Transport</td>
+                                <td>2024</td>
+                                <td>$4,800,000</td>
+                                <td>14</td>
+                                <td>$342,857</td>
+                                <td><span class="badge bg-risk-medium">MEDIUM</span></td>
+                                <td>2</td>
+                                <td>1</td>
+                            </tr>
+                            <tr class="table-row-alt">
+                                <td>Ministry of Health</td>
+                                <td>2024</td>
+                                <td>$3,200,000</td>
+                                <td>12</td>
+                                <td>$266,666</td>
+                                <td><span class="badge bg-risk-high">HIGH</span></td>
+                                <td>3</td>
+                                <td>0</td>
+                            </tr>
+                            <tr class="table-row-alt">
+                                <td>Ministry of Education</td>
+                                <td>2024</td>
+                                <td>$1,600,000</td>
+                                <td>10</td>
+                                <td>$160,000</td>
+                                <td><span class="badge bg-risk-low">LOW</span></td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                            <tr class="table-row-alt">
+                                <td>Ministry of Defence</td>
+                                <td>2024</td>
+                                <td>$600,000</td>
+                                <td>7</td>
+                                <td>$85,714</td>
+                                <td><span class="badge bg-risk-critical">CRITICAL</span></td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr style="font-weight: 700; background-color: #f0fdf4;">
+                                <td>TOTAL</td>
+                                <td>&mdash;</td>
+                                <td>$18,400,000</td>
+                                <td>61</td>
+                                <td>$301,639</td>
+                                <td>&mdash;</td>
+                                <td>7</td>
+                                <td>2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

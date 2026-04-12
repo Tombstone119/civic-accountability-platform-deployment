@@ -1,0 +1,1309 @@
+{
+  "info": {
+    "name": "CAP — Civic Accountability Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Full API collection for the Civic Accountability Platform. Import alongside CAP_Environment.json.\n\n1. Set baseUrl in environment (default: http://localhost:5000)\n2. Run 'Login (admin)' first — token is auto-saved to {{token}}\n3. IDs are auto-saved after Create requests into environment variables"
+  },
+  "item": [
+    {
+      "name": "🔐 Auth",
+      "item": [
+        {
+          "name": "Login — Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data.token) {",
+                  "    pm.environment.set('token', d.data.token);",
+                  "    pm.environment.set('adminId', d.data.user._id);",
+                  "    console.log('✅ Admin token saved');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@civic.gov\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Login — Officer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data.token) {",
+                  "    pm.environment.set('token', d.data.token);",
+                  "    console.log('✅ Officer token saved');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"officer@civic.gov\",\n  \"password\": \"officer123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Login — Auditor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data.token) {",
+                  "    pm.environment.set('token', d.data.token);",
+                  "    console.log('✅ Auditor token saved');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"auditor@civic.gov\",\n  \"password\": \"auditor123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Register New User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Viewer\",\n  \"email\": \"testviewer@civic.gov\",\n  \"password\": \"test123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/profile", "host": ["{{baseUrl}}"], "path": ["api", "auth", "profile"] }
+          }
+        },
+        {
+          "name": "Update My Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin Updated Name\",\n  \"currentPassword\": \"admin123\",\n  \"newPassword\": \"admin123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/profile", "host": ["{{baseUrl}}"], "path": ["api", "auth", "profile"] }
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/health", "host": ["{{baseUrl}}"], "path": ["api", "health"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏢 Departments",
+      "item": [
+        {
+          "name": "List Departments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/departments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "departments"],
+              "query": [
+                { "key": "search", "value": "", "disabled": true },
+                { "key": "includeInactive", "value": "true", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Department by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/departments/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "departments", "{{departmentId}}"] }
+          }
+        },
+        {
+          "name": "Create Department",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data._id) {",
+                  "    pm.environment.set('departmentId', d.data._id);",
+                  "    console.log('✅ departmentId saved:', d.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ministry of Finance\",\n  \"code\": \"MOF\",\n  \"budget\": 120000000,\n  \"description\": \"Fiscal policy and national budget management\",\n  \"headOfDept\": \"Dr. Nimal Silva\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/departments", "host": ["{{baseUrl}}"], "path": ["api", "departments"] }
+          }
+        },
+        {
+          "name": "Update Department",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"budget\": 150000000,\n  \"headOfDept\": \"Dr. Kamal Jayawardena\",\n  \"description\": \"Updated fiscal policy and national budget management\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/departments/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "departments", "{{departmentId}}"] }
+          }
+        },
+        {
+          "name": "Delete Department",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/departments/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "departments", "{{departmentId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏭 Vendors",
+      "item": [
+        {
+          "name": "List Vendors",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/vendors?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "vendors"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "search", "value": "", "disabled": true },
+                { "key": "isBlacklisted", "value": "false", "disabled": true },
+                { "key": "isActive", "value": "true", "disabled": true },
+                { "key": "category", "value": "Construction", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Blacklisted Vendors",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/vendors?isBlacklisted=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "vendors"],
+              "query": [{ "key": "isBlacklisted", "value": "true" }]
+            }
+          }
+        },
+        {
+          "name": "Get Vendor by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/vendors/{{vendorId}}", "host": ["{{baseUrl}}"], "path": ["api", "vendors", "{{vendorId}}"] }
+          }
+        },
+        {
+          "name": "Create Vendor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data._id) {",
+                  "    pm.environment.set('vendorId', d.data._id);",
+                  "    console.log('✅ vendorId saved:', d.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Green Energy Solutions Ltd.\",\n  \"registrationNo\": \"REG-006\",\n  \"email\": \"contact@greenenergy.lk\",\n  \"phone\": \"+94-11-789-0123\",\n  \"address\": \"55 Solar Avenue, Colombo 5\",\n  \"category\": \"Energy\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/vendors", "host": ["{{baseUrl}}"], "path": ["api", "vendors"] }
+          }
+        },
+        {
+          "name": "Update Vendor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+94-11-999-0000\",\n  \"address\": \"88 Renewable Road, Colombo 5\",\n  \"performanceScore\": 80\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/vendors/{{vendorId}}", "host": ["{{baseUrl}}"], "path": ["api", "vendors", "{{vendorId}}"] }
+          }
+        },
+        {
+          "name": "Blacklist Vendor",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Fraudulent invoices submitted — confirmed by forensic audit AF-2025-012\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/vendors/{{vendorId}}/blacklist", "host": ["{{baseUrl}}"], "path": ["api", "vendors", "{{vendorId}}", "blacklist"] }
+          }
+        },
+        {
+          "name": "Remove from Blacklist",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/vendors/{{vendorId}}/blacklist", "host": ["{{baseUrl}}"], "path": ["api", "vendors", "{{vendorId}}", "blacklist"] }
+          }
+        },
+        {
+          "name": "List Vendor Documents",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/vendors/{{vendorId}}/documents", "host": ["{{baseUrl}}"], "path": ["api", "vendors", "{{vendorId}}", "documents"] }
+          }
+        },
+        {
+          "name": "Add Vendor Document",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data._id) {",
+                  "    pm.environment.set('docId', d.data._id);",
+                  "    console.log('✅ docId saved:', d.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documentType\": \"Tax Clearance Certificate\",\n  \"documentNo\": \"TC-GE-2025\",\n  \"issueDate\": \"2025-01-01\",\n  \"expiryDate\": \"2026-12-31\",\n  \"fileUrl\": \"/uploads/vendors/greenenergy-tax.pdf\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/vendors/{{vendorId}}/documents", "host": ["{{baseUrl}}"], "path": ["api", "vendors", "{{vendorId}}", "documents"] }
+          }
+        },
+        {
+          "name": "Verify Vendor Document",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isVerified\": true\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/vendors/{{vendorId}}/documents/{{docId}}", "host": ["{{baseUrl}}"], "path": ["api", "vendors", "{{vendorId}}", "documents", "{{docId}}"] }
+          }
+        },
+        {
+          "name": "Delete Vendor Document",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/vendors/{{vendorId}}/documents/{{docId}}", "host": ["{{baseUrl}}"], "path": ["api", "vendors", "{{vendorId}}", "documents", "{{docId}}"] }
+          }
+        },
+        {
+          "name": "Delete Vendor",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/vendors/{{vendorId}}", "host": ["{{baseUrl}}"], "path": ["api", "vendors", "{{vendorId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📄 Contracts",
+      "item": [
+        {
+          "name": "List Contracts",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/contracts?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "contracts"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "status", "value": "active", "disabled": true },
+                { "key": "procurementMethod", "value": "direct_award", "disabled": true },
+                { "key": "isPublic", "value": "true", "disabled": true },
+                { "key": "search", "value": "highway", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Contracts — Direct Awards",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/contracts?procurementMethod=direct_award",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "contracts"],
+              "query": [{ "key": "procurementMethod", "value": "direct_award" }]
+            }
+          }
+        },
+        {
+          "name": "Get Contract by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}"] }
+          }
+        },
+        {
+          "name": "Create Contract",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data._id) {",
+                  "    pm.environment.set('contractId', d.data._id);",
+                  "    console.log('✅ contractId saved:', d.data._id);",
+                  "    if (d.warnings && d.warnings.length) {",
+                  "        console.log('⚠️  Warnings:', d.warnings.join(', '));",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contractNo\": \"CON-2025-011\",\n  \"title\": \"Solar Panel Installation — Government Buildings\",\n  \"description\": \"Installation of solar panels on 20 government buildings to reduce energy costs\",\n  \"vendor\": \"{{vendorId}}\",\n  \"department\": \"{{departmentId}}\",\n  \"contractValue\": 4500000,\n  \"startDate\": \"2025-04-01\",\n  \"endDate\": \"2026-03-31\",\n  \"procurementMethod\": \"open_tender\",\n  \"status\": \"draft\",\n  \"category\": \"Energy\",\n  \"tags\": [\"solar\", \"renewable\", \"infrastructure\"]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts", "host": ["{{baseUrl}}"], "path": ["api", "contracts"] }
+          }
+        },
+        {
+          "name": "Update Contract",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"active\",\n  \"description\": \"Updated: Installation of solar panels on 20 government buildings — phase 1 commenced\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}"] }
+          }
+        },
+        {
+          "name": "Publish Contract",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data && d.data.publicRecord && d.data.publicRecord._id) {",
+                  "    pm.environment.set('publicRecordId', d.data.publicRecord._id);",
+                  "    console.log('✅ publicRecordId saved:', d.data.publicRecord._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/publish", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "publish"] }
+          }
+        },
+        {
+          "name": "List Contract Items",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/items", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "items"] }
+          }
+        },
+        {
+          "name": "Add Contract Item",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data._id) {",
+                  "    pm.environment.set('itemId', d.data._id);",
+                  "    console.log('✅ itemId saved:', d.data._id);",
+                  "    if (d.warnings && d.warnings.length) console.log('⚠️  Overpricing warning!');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Solar panel (400W monocrystalline)\",\n  \"quantity\": 500,\n  \"unitPrice\": 45000,\n  \"unit\": \"panel\",\n  \"marketPrice\": 42000\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/items", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "items"] }
+          }
+        },
+        {
+          "name": "Add Overpriced Item (triggers warning)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Inverter unit (10kW)\",\n  \"quantity\": 20,\n  \"unitPrice\": 120000,\n  \"unit\": \"unit\",\n  \"marketPrice\": 80000\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/items", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "items"] }
+          }
+        },
+        {
+          "name": "Update Contract Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 600,\n  \"unitPrice\": 44000\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/items/{{itemId}}", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "items", "{{itemId}}"] }
+          }
+        },
+        {
+          "name": "Delete Contract Item",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/items/{{itemId}}", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "items", "{{itemId}}"] }
+          }
+        },
+        {
+          "name": "List Contract Payments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}/payments", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}", "payments"] }
+          }
+        },
+        {
+          "name": "Delete Contract (draft only)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/{{contractId}}", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "{{contractId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💰 Payments",
+      "item": [
+        {
+          "name": "List Payments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "status", "value": "completed", "disabled": true },
+                { "key": "isOverpayment", "value": "true", "disabled": true },
+                { "key": "contract", "value": "{{contractId}}", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Overpayments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments?isOverpayment=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments"],
+              "query": [{ "key": "isOverpayment", "value": "true" }]
+            }
+          }
+        },
+        {
+          "name": "Get Payment by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/payments/{{paymentId}}", "host": ["{{baseUrl}}"], "path": ["api", "payments", "{{paymentId}}"] }
+          }
+        },
+        {
+          "name": "Create Payment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data._id) {",
+                  "    pm.environment.set('paymentId', d.data._id);",
+                  "    console.log('✅ paymentId saved:', d.data._id);",
+                  "    if (d.warning) console.log('⚠️  OVERPAYMENT:', d.warning);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contract\": \"{{contractId}}\",\n  \"amount\": 1000000,\n  \"paymentDate\": \"2025-04-15\",\n  \"paymentMethod\": \"bank_transfer\",\n  \"referenceNo\": \"BT-2025-0415-011\",\n  \"notes\": \"First instalment — mobilisation advance\",\n  \"status\": \"pending\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/payments", "host": ["{{baseUrl}}"], "path": ["api", "payments"] }
+          }
+        },
+        {
+          "name": "Update Payment Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"notes\": \"Payment confirmed — bank receipt verified\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/payments/{{paymentId}}", "host": ["{{baseUrl}}"], "path": ["api", "payments", "{{paymentId}}"] }
+          }
+        },
+        {
+          "name": "Delete Payment (non-completed)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/payments/{{paymentId}}", "host": ["{{baseUrl}}"], "path": ["api", "payments", "{{paymentId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔍 Audits",
+      "item": [
+        {
+          "name": "List Audits",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/audits?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "audits"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "auditType", "value": "forensic", "disabled": true },
+                { "key": "status", "value": "in_progress", "disabled": true },
+                { "key": "riskRating", "value": "critical", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List High Risk Audits",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/audits?riskRating=critical",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "audits"],
+              "query": [{ "key": "riskRating", "value": "critical" }]
+            }
+          }
+        },
+        {
+          "name": "Get Audit by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/audits/{{auditId}}", "host": ["{{baseUrl}}"], "path": ["api", "audits", "{{auditId}}"] }
+          }
+        },
+        {
+          "name": "Create Audit",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data._id) {",
+                  "    pm.environment.set('auditId', d.data._id);",
+                  "    console.log('✅ auditId saved:', d.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"auditType\": \"routine\",\n  \"contract\": \"{{contractId}}\",\n  \"vendor\": \"{{vendorId}}\",\n  \"startDate\": \"2025-05-01\",\n  \"endDate\": \"2025-05-15\",\n  \"summary\": \"Routine compliance check for CON-2025-011 solar panel installation contract\",\n  \"recommendations\": \"Verify site completion certificates match invoiced milestones\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/audits", "host": ["{{baseUrl}}"], "path": ["api", "audits"] }
+          }
+        },
+        {
+          "name": "Create Audit with Inline Findings",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"auditType\": \"compliance\",\n  \"contract\": \"{{contractId}}\",\n  \"startDate\": \"2025-06-01\",\n  \"summary\": \"Compliance review with pre-identified issues\",\n  \"findings\": [\n    {\n      \"findingType\": \"missing_documents\",\n      \"severity\": \"medium\",\n      \"description\": \"Three-quote comparison sheet absent from procurement file\",\n      \"recommendation\": \"Implement mandatory procurement checklist\"\n    },\n    {\n      \"findingType\": \"overpricing\",\n      \"severity\": \"high\",\n      \"description\": \"Inverter units priced 50% above market rate\",\n      \"evidence\": \"Three independent quotes average LKR 80,000; contract price LKR 120,000\",\n      \"recommendation\": \"Renegotiate or issue credit note\"\n    }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/audits", "host": ["{{baseUrl}}"], "path": ["api", "audits"] }
+          }
+        },
+        {
+          "name": "Update Audit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"riskRating\": \"low\",\n  \"isCompliant\": true,\n  \"endDate\": \"2025-05-15\",\n  \"summary\": \"All deliverables verified. No issues found.\",\n  \"recommendations\": \"Continue quarterly monitoring.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/audits/{{auditId}}", "host": ["{{baseUrl}}"], "path": ["api", "audits", "{{auditId}}"] }
+          }
+        },
+        {
+          "name": "List Audit Findings",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/audits/{{auditId}}/findings", "host": ["{{baseUrl}}"], "path": ["api", "audits", "{{auditId}}", "findings"] }
+          }
+        },
+        {
+          "name": "Add Finding to Audit",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data._id) {",
+                  "    pm.environment.set('findingId', d.data._id);",
+                  "    console.log('✅ findingId saved:', d.data._id);",
+                  "    console.log('📊 Audit risk recalculated to:', d.auditRisk.riskRating);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"findingType\": \"fraud\",\n  \"severity\": \"critical\",\n  \"description\": \"Payment issued against a post-contract invoice with no contractual basis\",\n  \"evidence\": \"Invoice dated after contract expiry. No change-order or addendum on file.\",\n  \"recommendation\": \"Freeze vendor account. Refer to Anti-Corruption Commission.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/audits/{{auditId}}/findings", "host": ["{{baseUrl}}"], "path": ["api", "audits", "{{auditId}}", "findings"] }
+          }
+        },
+        {
+          "name": "Resolve a Finding",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isResolved\": true,\n  \"recommendation\": \"Credit note received. Overpaid amount recovered. Case closed.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/audits/{{auditId}}/findings/{{findingId}}", "host": ["{{baseUrl}}"], "path": ["api", "audits", "{{auditId}}", "findings", "{{findingId}}"] }
+          }
+        },
+        {
+          "name": "Update Finding",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"severity\": \"high\",\n  \"description\": \"Updated description after further investigation\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/audits/{{auditId}}/findings/{{findingId}}", "host": ["{{baseUrl}}"], "path": ["api", "audits", "{{auditId}}", "findings", "{{findingId}}"] }
+          }
+        },
+        {
+          "name": "Delete Finding",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/audits/{{auditId}}/findings/{{findingId}}", "host": ["{{baseUrl}}"], "path": ["api", "audits", "{{auditId}}", "findings", "{{findingId}}"] }
+          }
+        },
+        {
+          "name": "Delete Audit",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/audits/{{auditId}}", "host": ["{{baseUrl}}"], "path": ["api", "audits", "{{auditId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👥 Users",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/users?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "role", "value": "auditor", "disabled": true },
+                { "key": "isActive", "value": "true", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Update User Role",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// First run 'Register New User' and copy the user _id into {{userId}}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"procurement_officer\",\n  \"isActive\": true,\n  \"department\": \"{{departmentId}}\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Deactivate User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActive\": false\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "users", "{{userId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🌐 Public Portal",
+      "item": [
+        {
+          "name": "List Public Records (no auth)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data && d.data.length > 0) {",
+                  "    pm.environment.set('publicRecordId', d.data[0]._id);",
+                  "    console.log('✅ publicRecordId saved from first result:', d.data[0]._id);",
+                  "    console.log('📋 Total public records:', d.pagination.total);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/public/records?page=1&limit=12",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "records"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "12" },
+                { "key": "q", "value": "highway", "disabled": true },
+                { "key": "tags", "value": "health", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Public Record (increments viewCount)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data.record._id) {",
+                  "    pm.environment.set('publicRecordId', d.data.record._id);",
+                  "    console.log('📊 View count:', d.data.record.viewCount);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/public/records/{{publicRecordId}}", "host": ["{{baseUrl}}"], "path": ["api", "public", "records", "{{publicRecordId}}"] }
+          }
+        },
+        {
+          "name": "Get Comments for Record",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/public/records/{{publicRecordId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "public", "records", "{{publicRecordId}}", "comments"] }
+          }
+        },
+        {
+          "name": "Submit Citizen Comment (no auth)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data._id) {",
+                  "    pm.environment.set('commentId', d.data._id);",
+                  "    console.log('✅ commentId saved (status: pending):', d.data._id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorName\": \"Concerned Citizen\",\n  \"content\": \"I live near the highway project area. The construction is ahead of schedule and the road quality looks significantly improved compared to last year. However, some drainage channels near km marker 42 still seem incomplete. Can the Ministry confirm the completion date?\",\n  \"authorEmail\": \"citizen@example.com\",\n  \"isAnonymous\": false,\n  \"isWhistleblower\": false\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/public/records/{{publicRecordId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "public", "records", "{{publicRecordId}}", "comments"] }
+          }
+        },
+        {
+          "name": "Submit Whistleblower Comment (no auth)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"authorName\": \"Anonymous Source\",\n  \"content\": \"I am a site supervisor on this project. Materials used in section 3 do not match the specifications in the contract. The asphalt grade is lower than what was invoiced. I have documentation but fear retaliation. Please investigate.\",\n  \"isAnonymous\": true,\n  \"isWhistleblower\": true\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/public/records/{{publicRecordId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "public", "records", "{{publicRecordId}}", "comments"] }
+          }
+        },
+        {
+          "name": "Approve Comment (admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/public/comments/{{commentId}}/moderate", "host": ["{{baseUrl}}"], "path": ["api", "public", "comments", "{{commentId}}", "moderate"] }
+          }
+        },
+        {
+          "name": "Reject & Flag Comment (admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"rejected\",\n  \"isFlagged\": true,\n  \"flagReason\": \"Spam — commercial advertisement unrelated to contract\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/public/comments/{{commentId}}/moderate", "host": ["{{baseUrl}}"], "path": ["api", "public", "comments", "{{commentId}}", "moderate"] }
+          }
+        },
+        {
+          "name": "💱 Get Supported Currencies (no auth)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/public/currencies",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "currencies"]
+            },
+            "description": "Returns all currencies supported by the Frankfurter exchange-rate API (European Central Bank data). Results are cached server-side for 24 hours. Use the currency codes returned here as the `from` and `to` parameters in the Convert endpoint."
+          }
+        },
+        {
+          "name": "💱 Convert Contract Value to Currency (no auth)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.success && d.data.conversion) {",
+                  "    const c = d.data.conversion;",
+                  "    console.log(`✅ ${c.originalAmount} ${c.from} = ${c.convertedAmount} ${c.to} (rate: ${c.rate}, date: ${c.rateDate})`);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/public/records/{{publicRecordId}}/convert?to=EUR&from=USD",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "records", "{{publicRecordId}}", "convert"],
+              "query": [
+                { "key": "to", "value": "EUR", "description": "Target currency code (required). See GET /api/public/currencies for supported codes." },
+                { "key": "from", "value": "USD", "description": "Source currency code (optional, defaults to USD)." }
+              ]
+            },
+            "description": "Fetches a public record and converts its contract value to the specified target currency using live exchange rates from the Frankfurter API (https://api.frankfurter.app).\n\nRequires `publicRecordId` to be set — run 'Get Public Record' first to auto-save it.\n\nExample currencies: EUR, GBP, JPY, AUD, CAD, CHF, INR, SGD"
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 Spending",
+      "item": [
+        {
+          "name": "Get Spending Summary",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/spending/summary?year=2024",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "spending", "summary"],
+              "query": [
+                { "key": "year", "value": "2024" },
+                { "key": "department", "value": "{{departmentId}}", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Spending Records",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/spending?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "spending"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Spending by Department",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/spending/department/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "spending", "department", "{{departmentId}}"] }
+          }
+        },
+        {
+          "name": "Refresh Spending Summary (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fiscalYear\": 2024\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/spending/refresh-summary", "host": ["{{baseUrl}}"], "path": ["api", "spending", "refresh-summary"] }
+          }
+        },
+        {
+          "name": "Refresh Summary — 2025",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fiscalYear\": 2025\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/spending/refresh-summary", "host": ["{{baseUrl}}"], "path": ["api", "spending", "refresh-summary"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛡️ RBAC / Error Demos",
+      "item": [
+        {
+          "name": "401 — No Token",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/contracts", "host": ["{{baseUrl}}"], "path": ["api", "contracts"] }
+          }
+        },
+        {
+          "name": "403 — Viewer tries to create contract",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Login as viewer first, then run this request"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contractNo\": \"CON-TEST-999\",\n  \"title\": \"Should be forbidden\",\n  \"vendor\": \"{{vendorId}}\",\n  \"department\": \"{{departmentId}}\",\n  \"contractValue\": 100000,\n  \"startDate\": \"2025-01-01\",\n  \"endDate\": \"2025-12-31\",\n  \"procurementMethod\": \"quotation\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts", "host": ["{{baseUrl}}"], "path": ["api", "contracts"] }
+          }
+        },
+        {
+          "name": "400 — Contract on Blacklisted Vendor",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contractNo\": \"CON-TEST-BL\",\n  \"title\": \"Should fail — blacklisted vendor\",\n  \"vendor\": \"{{blacklistedVendorId}}\",\n  \"department\": \"{{departmentId}}\",\n  \"contractValue\": 500000,\n  \"startDate\": \"2025-01-01\",\n  \"endDate\": \"2025-12-31\",\n  \"procurementMethod\": \"open_tender\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts", "host": ["{{baseUrl}}"], "path": ["api", "contracts"] }
+          }
+        },
+        {
+          "name": "400 — Validation Error (missing fields)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Missing required fields\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/contracts", "host": ["{{baseUrl}}"], "path": ["api", "contracts"] }
+          }
+        },
+        {
+          "name": "404 — Resource Not Found",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/contracts/000000000000000000000000", "host": ["{{baseUrl}}"], "path": ["api", "contracts", "000000000000000000000000"] }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "token", "value": "" },
+    { "key": "vendorId", "value": "" },
+    { "key": "contractId", "value": "" },
+    { "key": "departmentId", "value": "" },
+    { "key": "paymentId", "value": "" },
+    { "key": "auditId", "value": "" },
+    { "key": "findingId", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "docId", "value": "" },
+    { "key": "itemId", "value": "" },
+    { "key": "publicRecordId", "value": "" },
+    { "key": "commentId", "value": "" },
+    { "key": "blacklistedVendorId", "value": "" }
+  ]
+}

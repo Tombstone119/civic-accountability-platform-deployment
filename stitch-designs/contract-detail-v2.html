@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IT Infrastructure Upgrade (CON-2024-001) | Civic Accountability Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f7f9fb",
+                        "surface-bright": "#f7f9fb",
+                        "on-secondary-fixed": "#004841",
+                        "on-primary-container": "#002474",
+                        "secondary-fixed": "#89f5e7",
+                        "error-container": "#f97386",
+                        "surface-container-high": "#e3e9ed",
+                        "inverse-on-surface": "#9a9d9f",
+                        "inverse-primary": "#8fa7fe",
+                        "tertiary-container": "#edcfff",
+                        "on-surface": "#2c3437",
+                        "surface-variant": "#dce4e8",
+                        "tertiary-fixed-dim": "#dfc1f0",
+                        "error-dim": "#6b0221",
+                        "surface-tint": "#415aab",
+                        "primary-fixed-dim": "#829aef",
+                        "on-primary": "#faf8ff",
+                        "on-tertiary-fixed": "#473157",
+                        "primary-fixed": "#8fa7fe",
+                        "outline": "#747c80",
+                        "surface-container-low": "#f0f4f7",
+                        "secondary-fixed-dim": "#7ae7d8",
+                        "surface-container": "#eaeff2",
+                        "on-secondary-fixed-variant": "#00675e",
+                        "on-secondary": "#e2fff9",
+                        "on-surface-variant": "#596064",
+                        "on-background": "#2c3437",
+                        "on-primary-fixed-variant": "#0e2e7f",
+                        "error": "#a8364b",
+                        "secondary": "#006b62",
+                        "on-tertiary-container": "#5a446a",
+                        "on-error-container": "#6e0523",
+                        "surface": "#ffffff",
+                        "surface-dim": "#d4dbdf",
+                        "on-secondary-container": "#005c54",
+                        "on-primary-fixed": "#000c36",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#acb3b7",
+                        "surface-container-highest": "#dce4e8",
+                        "primary-dim": "#344e9e",
+                        "inverse-surface": "#0b0f10",
+                        "tertiary-dim": "#614a71",
+                        "tertiary": "#6e567e",
+                        "secondary-dim": "#005e56",
+                        "on-tertiary": "#fff6fd",
+                        "secondary-container": "#89f5e7",
+                        "on-tertiary-fixed-variant": "#644d75",
+                        "primary-container": "#8fa7fe",
+                        "on-error": "#fff7f7",
+                        "tertiary-fixed": "#edcfff",
+                        "primary": "#1e3a8a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="text-[#0f172a]">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center h-16 px-6 w-full fixed top-0 z-50 bg-[#1e3a8a] text-white shadow-sm font-['Inter'] text-sm">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="text-xl font-bold text-white tracking-tight">Civic Accountability Platform</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined cursor-pointer hover:bg-blue-800 p-2 rounded-full transition-colors duration-200">notifications</span>
+</div>
+<span class="material-symbols-outlined cursor-pointer hover:bg-blue-800 p-2 rounded-full transition-colors duration-200">help</span>
+<div class="flex items-center gap-3 pl-4 border-l border-blue-800">
+<div class="text-right hidden sm:block">
+<p class="font-semibold text-xs leading-none">John Admin</p>
+<p class="text-[10px] text-blue-200 uppercase tracking-wider">Super Administrator</p>
+</div>
+<img alt="Administrator avatar" class="w-8 h-8 rounded-full border-2 border-blue-400" data-alt="professional headshot of a middle-aged man in a dark suit with a neutral office background and soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASA2Z_goDFuZHlLnL89WaIGIdI3W8eqgXO3vjwssoMubRFsGaRhb8xhIb68UneEHI7doO-zC_hINKhuhm0GG-12J09tKotAwdESR8YWOqfADoWw8VdpI608OuCxA__3r2aoHOVCKpZUwB69B92JAq9BO1c1pDHhAHVpYf5ZZC_3t-AqZ9N_63i-uwUNXPmgaXbGrKSPf6eU3YBh46VS8d-BlCAUr1OoJBMJ9uWUfwe_47HqLcZ1GnRWl_QggshpIi7kdHmvAlhQd4"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-16 w-60 h-[calc(100vh-64px)] z-40 flex flex-col pt-4 bg-white border-r border-slate-200 transition-all duration-150 font-['Inter'] text-[14px]">
+<div class="px-6 mb-6">
+<p class="text-blue-900 font-bold uppercase tracking-widest text-[10px]">Civic Platform</p>
+<p class="text-slate-500 text-xs">Admin Console</p>
+</div>
+<div class="flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Overview</span>
+</a>
+<!-- ACTIVE TAB: Contracts -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded bg-blue-50 text-blue-900 border-l-4 border-blue-900 font-semibold" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">description</span>
+<span>Contracts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">storefront</span>
+<span>Vendors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+<span>Audits</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance</span>
+<span>Departments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">public</span>
+<span>Public Portal</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 hover:bg-slate-50 transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Administration</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-60 pt-20 px-8 pb-12 min-h-screen">
+<!-- Breadcrumb -->
+<nav class="flex mb-6 text-sm text-slate-500 font-medium">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="mx-2">/</span>
+<a class="hover:text-primary transition-colors" href="#">Contracts</a>
+<span class="mx-2">/</span>
+<span class="text-slate-900">CON-2024-001</span>
+</nav>
+<!-- Header Row -->
+<div class="flex justify-between items-start mb-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-4">
+<h1 class="text-[32px] font-bold text-[#0f172a] leading-tight">IT Infrastructure Upgrade</h1>
+<div class="flex gap-2">
+<span class="bg-[#eff6ff] text-[#2563eb] border border-blue-200 text-[11px] font-[600] px-2 py-0.5 rounded-md uppercase tracking-wider">Active</span>
+<span class="bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] text-[11px] font-[600] px-2 py-0.5 rounded-md uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                            Direct Award
+                        </span>
+</div>
+</div>
+<p class="text-sm text-[#94a3b8] font-medium tracking-wide">ID: CON-2024-001 • Created on Feb 12, 2024</p>
+</div>
+<!-- Risk Card -->
+<div class="bg-white border-2 border-[#ea580c] rounded-xl p-4 flex flex-col items-center justify-center min-w-[140px] shadow-sm">
+<span class="text-[10px] font-bold text-[#ea580c] uppercase tracking-widest mb-1">Risk Rating</span>
+<span class="text-3xl font-extrabold text-[#ea580c] mb-2">HIGH</span>
+<a class="text-xs font-semibold text-[#ea580c] underline hover:no-underline" href="#">View Audit</a>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Contract Details Card (Main) -->
+<div class="col-span-12 lg:col-span-8 bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6">Contract Overview</h3>
+<div class="grid grid-cols-2 gap-y-6 gap-x-8">
+<div>
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Contract No</p>
+<p class="text-sm font-semibold">CON-2024-001</p>
+</div>
+<div>
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Vendor</p>
+<a class="text-sm font-semibold text-blue-700 flex items-center gap-1 hover:underline" href="#">
+                            Tech Corp Ltd <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+<div>
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Department</p>
+<a class="text-sm font-semibold text-blue-700 flex items-center gap-1 hover:underline" href="#">
+                            Ministry of Health <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+<div>
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Created By</p>
+<p class="text-sm font-semibold">John Admin</p>
+</div>
+<div>
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Contract Value</p>
+<p class="text-xl font-bold text-blue-900">$250,000.00</p>
+</div>
+<div>
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Paid</p>
+<p class="text-xl font-bold text-slate-900">$125,000.00</p>
+</div>
+<div>
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Period</p>
+<p class="text-sm font-medium">Mar 1, 2024 – Feb 28, 2025</p>
+</div>
+<div>
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Procurement Method</p>
+<p class="text-sm font-medium">Sole Source / Direct Award</p>
+</div>
+<div class="col-span-2">
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Description</p>
+<p class="text-sm text-slate-600 leading-relaxed">
+                            Comprehensive upgrade of the core data center infrastructure for the Ministry of Health, including high-availability servers, redundant networking switches, and enterprise software licenses to support the new digital patient record system.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Payment Progress Card (Side) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Payment Disbursement</h3>
+<div class="mb-4">
+<div class="flex justify-between items-end mb-2">
+<p class="text-lg font-bold text-slate-900">50% <span class="font-normal text-sm text-slate-500">complete</span></p>
+<p class="text-sm font-semibold text-slate-700">$125,000 paid</p>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-3">
+<div class="bg-amber-500 h-3 rounded-full shadow-inner" style="width: 50%"></div>
+</div>
+<div class="flex justify-between mt-2">
+<p class="text-[11px] font-bold text-slate-400 uppercase">Target: $250,000.00</p>
+<p class="text-[11px] font-bold text-amber-600 uppercase">$125,000 remaining</p>
+</div>
+</div>
+</div>
+<!-- Small Action Panel -->
+<div class="bg-blue-900 rounded-xl p-6 text-white relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="text-lg font-bold mb-2">Audit Compliance</h4>
+<p class="text-blue-100 text-sm mb-4">Last reviewed by Internal Audit on July 2, 2024. No critical flags found.</p>
+<button class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors">Download Report</button>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]">verified_user</span>
+</div>
+</div>
+</div>
+<!-- Contract Line Items Card -->
+<div class="col-span-12 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+<div class="p-6 border-b border-slate-100 flex justify-between items-center">
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest">Contract Line Items</h3>
+<span class="text-[11px] font-medium text-slate-400">Showing 3 items</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-[#f1f5f9] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Description</th>
+<th class="px-4 py-4">Qty</th>
+<th class="px-4 py-4">Unit</th>
+<th class="px-4 py-4">Unit Price</th>
+<th class="px-4 py-4">Total Price</th>
+<th class="px-4 py-4">Market Price</th>
+<th class="px-4 py-4">Overpriced?</th>
+</tr>
+</thead>
+<tbody class="text-sm font-medium">
+<tr class="border-b border-slate-50 hover:bg-blue-50 transition-colors">
+<td class="px-6 py-4">Servers</td>
+<td class="px-4 py-4 text-slate-500">10</td>
+<td class="px-4 py-4 text-slate-500">units</td>
+<td class="px-4 py-4">$8,000</td>
+<td class="px-4 py-4 font-bold text-slate-900">$80,000</td>
+<td class="px-4 py-4 text-slate-400 italic font-normal">$7,500</td>
+<td class="px-4 py-4">
+<span class="bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] text-[10px] font-[700] px-2 py-0.5 rounded uppercase flex items-center w-fit gap-1">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                                        Yes
+                                    </span>
+</td>
+</tr>
+<tr class="bg-slate-50/50 border-b border-slate-50 hover:bg-blue-50 transition-colors">
+<td class="px-6 py-4">Network Switches</td>
+<td class="px-4 py-4 text-slate-500">20</td>
+<td class="px-4 py-4 text-slate-500">units</td>
+<td class="px-4 py-4">$1,500</td>
+<td class="px-4 py-4 font-bold text-slate-900">$30,000</td>
+<td class="px-4 py-4 text-slate-400 italic font-normal">$1,600</td>
+<td class="px-4 py-4 text-slate-400">—</td>
+</tr>
+<tr class="border-b border-slate-50 hover:bg-blue-50 transition-colors">
+<td class="px-6 py-4">Software Licenses</td>
+<td class="px-4 py-4 text-slate-500">50</td>
+<td class="px-4 py-4 text-slate-500">units</td>
+<td class="px-4 py-4">$500</td>
+<td class="px-4 py-4 font-bold text-slate-900">$25,000</td>
+<td class="px-4 py-4 text-slate-400 italic font-normal">$450</td>
+<td class="px-4 py-4">
+<span class="bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] text-[10px] font-[700] px-2 py-0.5 rounded uppercase flex items-center w-fit gap-1">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                                        Yes
+                                    </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Payment History Card -->
+<div class="col-span-12 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+<div class="p-6 border-b border-slate-100 flex justify-between items-center">
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest">Payment History</h3>
+<button class="flex items-center gap-2 bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+                        Add Payment
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-[#f1f5f9] text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Transaction ID</th>
+<th class="px-4 py-4">Amount</th>
+<th class="px-4 py-4">Payment Date</th>
+<th class="px-4 py-4">Status</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="text-sm font-medium">
+<tr class="border-b border-slate-50 hover:bg-blue-50 transition-colors">
+<td class="px-6 py-4 font-bold">PAY-001</td>
+<td class="px-4 py-4 text-blue-900 font-bold">$75,000.00</td>
+<td class="px-4 py-4 text-slate-500">Mar 1, 2024</td>
+<td class="px-4 py-4">
+<span class="bg-[#f0fdf4] text-[#16a34a] text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">Completed</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-blue-700"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<tr class="bg-slate-50/50 hover:bg-blue-50 transition-colors">
+<td class="px-6 py-4 font-bold">PAY-002</td>
+<td class="px-4 py-4 text-blue-900 font-bold">$50,000.00</td>
+<td class="px-4 py-4 text-slate-500">Jun 15, 2024</td>
+<td class="px-4 py-4">
+<span class="bg-[#eff6ff] text-[#2563eb] text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">Processing</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-blue-700"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Bottom Actions -->
+<div class="col-span-12 flex justify-between items-center py-6 mt-4 border-t border-slate-200">
+<button class="border border-red-200 text-red-600 hover:bg-red-50 px-6 py-2.5 rounded-lg text-sm font-bold transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">delete_forever</span>
+                    Delete Contract
+                </button>
+<div class="flex gap-4">
+<button class="border border-slate-200 text-slate-700 hover:bg-slate-50 px-6 py-2.5 rounded-lg text-sm font-bold transition-colors">
+                        Edit Contract
+                    </button>
+<button class="bg-[#0d9488] hover:bg-[#0f766e] text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-md shadow-teal-500/20 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">publish</span>
+                        Publish to Portal
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>
