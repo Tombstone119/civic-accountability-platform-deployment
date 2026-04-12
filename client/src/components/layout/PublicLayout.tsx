@@ -20,7 +20,7 @@ export default function PublicLayout() {
           >
             <ShieldCheck size={22} style={{ color: '#1e3a8a' }} />
             <span className="font-semibold" style={{ color: '#1e3a8a', fontSize: '16px' }}>
-              Civic Accountability Platform
+              VeriTrack
             </span>
           </Link>
           <Link

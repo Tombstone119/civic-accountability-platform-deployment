@@ -710,7 +710,7 @@ export default function PublicRecordDetailPage() {
           ))}
         </div>
         <p style={{ margin: 0, fontSize: '13px' }}>
-          © {new Date().getFullYear()} Civic Accountability Platform. All rights reserved.
+          © {new Date().getFullYear()} VeriTrack. All rights reserved.
         </p>
       </footer>
     </div>

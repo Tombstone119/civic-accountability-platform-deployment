@@ -20,7 +20,7 @@ export default function Header() {
       <div className="flex items-center gap-3">
         <ShieldCheck size={24} className="text-white" />
         <span className="text-white font-semibold text-lg tracking-tight">
-          Civic Accountability Platform
+          VeriTrack
         </span>
       </div>
 

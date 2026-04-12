@@ -289,7 +289,7 @@ export default function DashboardPage() {
 
       {/* Footer */}
       <footer style={{ padding: '32px 0 0', textAlign: 'center', color: C.faint, fontSize: '12px' }}>
-        © 2025 Civic Accountability Platform • Institutional Transparency Framework • v1.0.0
+        © 2025 VeriTrack • Institutional Transparency Framework • v1.0.0
       </footer>
     </div>
   );

@@ -70,7 +70,7 @@ export default function LoginPage() {
               <ShieldCheck size={32} style={{ color: '#1e3a8a' }} />
             </div>
             <h1 style={{ fontSize: '18px', fontWeight: 600, color: '#1e3a8a', margin: '0 0 4px 0' }}>
-              Civic Accountability Platform
+              VeriTrack
             </h1>
             <p style={{ fontSize: '14px', color: '#475569', margin: 0 }}>
               Sign in to your account
@@ -152,7 +152,7 @@ export default function LoginPage() {
         {/* Footer */}
         <footer style={{ marginTop: '16px', textAlign: 'center' }}>
           <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 16px 0' }}>
-            © 2025 Civic Accountability Platform · Government of Sri Lanka
+            © 2025 VeriTrack · Government of Sri Lanka
           </p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
             {['Privacy Policy', 'Accessibility', 'Terms of Service'].map(link => (

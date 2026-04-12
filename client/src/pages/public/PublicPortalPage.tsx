@@ -246,7 +246,7 @@ export default function PublicPortalPage() {
           Government Transparency
         </p>
         <h1 style={{ fontSize: '40px', fontWeight: 800, color: '#ffffff', margin: '0 0 12px', lineHeight: 1.2 }}>
-          Civic Accountability Platform
+          VeriTrack
         </h1>
         <p style={{ fontSize: '16px', color: '#bfdbfe', margin: '0 0 32px', maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.6 }}>
           Track public spending, audit outcomes, and government contracts. Built for citizens, journalists, and researchers.
@@ -529,7 +529,7 @@ export default function PublicPortalPage() {
       {/* ── Footer ───────────────────────────────────────────────────────── */}
       <div style={{ borderTop: `1px solid ${C.border}`, padding: '24px 0', textAlign: 'center' }}>
         <p style={{ fontSize: '12px', color: C.faint, margin: 0 }}>
-          © 2025 Civic Accountability Platform · Open Government Data · All information is published in the public interest
+          © 2025 VeriTrack · Open Government Data · All information is published in the public interest
         </p>
       </div>
     </div>
