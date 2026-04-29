@@ -175,7 +175,7 @@ export const vendorController = {
    * @route   POST /api/vendors/:id/documents
    * @desc    Add a compliance document to a vendor
    * @access  admin | procurement_officer
-   * @body    { documentType, documentNo?, issueDate?, expiryDate?, fileUrl? }
+   * @body    { documentType, documentNumber?, issueDate?, expiryDate?, fileUrl? }
    */
   addDocument: async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -227,24 +227,36 @@ export const vendorController = {
    * @desc    Stream the uploaded file for a vendor document from GridFS
    * @access  admin | procurement_officer | auditor | viewer
    */
-  downloadDocumentFile: async (req: Request, res: Response) => {
-    const { id: vendorId, docId } = req.params;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const doc = await VendorDocument.findOne({ _id: docId, vendor: vendorId } as any);
-    if (!doc || !doc.gridfsId) {
-      return res.status(404).json({ success: false, message: 'File not found' });
-    }
-    const bucket = getGridFSBucket();
-    const objectId = new mongoose.Types.ObjectId(doc.gridfsId);
-    res.set('Content-Type', doc.mimeType ?? 'application/octet-stream');
-    res.set('Content-Disposition', `inline; filename="${doc.originalName ?? 'file'}"`);
-    const downloadStream = bucket.openDownloadStream(objectId);
-    downloadStream.on('error', () => {
-      if (!res.headersSent) {
-        res.status(404).json({ success: false, message: 'File not found in storage' });
+  downloadDocumentFile: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id: vendorId, docId } = req.params;
+      const doc = await VendorDocument.findOne({ _id: docId, vendor: vendorId } as any);
+      if (!doc || !doc.gridfsId) {
+        return res.status(404).json({ success: false, message: 'File not found' });
       }
-    });
-    downloadStream.pipe(res);
+      let objectId: mongoose.Types.ObjectId;
+      try {
+        objectId = new mongoose.Types.ObjectId(doc.gridfsId);
+      } catch {
+        return res.status(500).json({ success: false, message: 'Invalid file reference' });
+      }
+      const bucket = getGridFSBucket();
+      res.set('Content-Type', doc.mimeType ?? 'application/octet-stream');
+      const safeName = encodeURIComponent(doc.originalName ?? 'file');
+      res.set(
+        'Content-Disposition',
+        `inline; filename="${doc.originalName ?? 'file'}"; filename*=UTF-8''${safeName}`
+      );
+      const downloadStream = bucket.openDownloadStream(objectId);
+      downloadStream.on('error', () => {
+        if (!res.headersSent) {
+          res.status(404).json({ success: false, message: 'File not found in storage' });
+        }
+      });
+      downloadStream.pipe(res);
+    } catch (error) {
+      next(error);
+    }
   },
 
   /**

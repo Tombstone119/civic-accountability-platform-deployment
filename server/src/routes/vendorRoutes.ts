@@ -80,7 +80,17 @@ router
 router
   .route('/:id/documents')
   .get(authMiddleware, requireOfficer, vendorController.getDocuments)
-  .post(authMiddleware, requireOfficer, upload.single('file'), vendorDocumentValidation, validateRequest, vendorController.addDocument);
+  .post(authMiddleware, requireOfficer, (req, res, next) => {
+    upload.single('file')(req, res, (err) => {
+      if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({ success: false, message: 'File too large (max 10MB)' });
+      }
+      if (err) {
+        return res.status(400).json({ success: false, message: err.message });
+      }
+      next();
+    });
+  }, vendorDocumentValidation, validateRequest, vendorController.addDocument);
 
 /**
  * PUT    /api/vendors/:id/documents/:docId  — update document (officer+)
