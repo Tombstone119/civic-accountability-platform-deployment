@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RefreshCw, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { publicService } from '../../services/publicService';
@@ -53,6 +53,7 @@ export default function SpendingSummaryPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const successTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const fetchSummaries = useCallback(async () => {
     setLoading(true);
@@ -69,14 +70,22 @@ export default function SpendingSummaryPage() {
 
   useEffect(() => { fetchSummaries(); }, [fetchSummaries]);
 
+  useEffect(() => {
+    return () => {
+      if (successTimerRef.current) clearTimeout(successTimerRef.current);
+    };
+  }, []);
+
   const handleRefresh = async () => {
     setRefreshing(true);
     setError('');
+    setSuccessMsg('');
     try {
       await publicService.refreshSpending();
       setSuccessMsg('Spending data refreshed successfully.');
-      setTimeout(() => setSuccessMsg(''), 4000);
-      fetchSummaries();
+      if (successTimerRef.current) clearTimeout(successTimerRef.current);
+      successTimerRef.current = setTimeout(() => setSuccessMsg(''), 4000);
+      await fetchSummaries();
     } catch {
       setError('Failed to refresh spending data.');
     } finally {
