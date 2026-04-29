@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { contractService } from '../services/contractService';
+import PDFDocument from 'pdfkit';
+import { ContractItem } from '../models/ContractItem';
+import { Payment } from '../models/Payment';
 
 const extractPagination = (req: Request) => ({
   page: parseInt(req.query.page as string, 10) || 1,
@@ -234,6 +237,129 @@ export const contractController = {
 
       const result = await contractService.getPayments(req.params.id, page, limit);
       sendPaginated(res, result);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  /**
+   * @route   GET /api/contracts/:id/report
+   * @desc    Generate and stream a PDF report for a contract
+   * @access  All authenticated roles
+   */
+  downloadReport: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const result = await contractService.getById(id);
+      const contract = result.contract as any;
+
+      const [items, payments] = await Promise.all([
+        ContractItem.find({ contract: id } as any).sort({ createdAt: 1 }),
+        Payment.find({ contract: id } as any).sort({ paymentDate: -1 }),
+      ]);
+
+      const contractNumber = contract.contractNumber ?? id;
+      const vendorName = typeof contract.vendor === 'object' ? contract.vendor?.name : 'N/A';
+      const deptName = typeof contract.department === 'object' ? contract.department?.name : 'N/A';
+      const fmt = (n: number) => `$${n.toLocaleString()}`;
+      const fmtDate = (d?: Date | string) => d ? new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
+
+      const doc = new PDFDocument({ margin: 50, size: 'A4' });
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="contract-${contractNumber}-report.pdf"`);
+      doc.pipe(res);
+
+      // Header
+      doc.fontSize(20).font('Helvetica-Bold').text('VeriTrack', { align: 'left' });
+      doc.fontSize(12).font('Helvetica').fillColor('#475569').text('Contract Report', { align: 'left' });
+      doc.fontSize(10).text(`Generated: ${fmtDate(new Date())}`, { align: 'left' });
+      doc.moveDown(1.5);
+
+      // Contract Summary
+      doc.fontSize(14).font('Helvetica-Bold').fillColor('#0f172a').text('Contract Summary');
+      doc.moveDown(0.5);
+
+      const rows: [string, string][] = [
+        ['Contract No.', contractNumber],
+        ['Title', contract.title ?? '—'],
+        ['Vendor', vendorName],
+        ['Department', deptName],
+        ['Procurement Method', (contract.procurementMethod ?? '').replace(/_/g, ' ')],
+        ['Status', contract.status ?? '—'],
+        ['Contract Value', fmt(contract.contractValue ?? 0)],
+        ['Total Paid', fmt(contract.totalPaid ?? 0)],
+        ['Remaining', fmt(Math.max(0, (contract.contractValue ?? 0) - (contract.totalPaid ?? 0)))],
+        ['Start Date', fmtDate(contract.startDate)],
+        ['End Date', fmtDate(contract.endDate)],
+      ];
+
+      doc.fontSize(10).font('Helvetica');
+      rows.forEach(([label, value]) => {
+        doc.font('Helvetica-Bold').fillColor('#475569').text(`${label}: `, { continued: true });
+        doc.font('Helvetica').fillColor('#0f172a').text(value);
+      });
+
+      doc.moveDown(1.5);
+
+      // Line Items
+      doc.fontSize(14).font('Helvetica-Bold').fillColor('#0f172a').text('Line Items');
+      doc.moveDown(0.5);
+
+      if (items.length === 0) {
+        doc.fontSize(10).font('Helvetica').fillColor('#94a3b8').text('No line items.');
+      } else {
+        const colX = [50, 220, 290, 360, 450];
+        const headers = ['Description', 'Qty', 'Unit', 'Unit Price', 'Total'];
+        doc.fontSize(9).font('Helvetica-Bold').fillColor('#475569');
+        headers.forEach((h, i) => doc.text(h, colX[i], doc.y, { width: colX[i + 1] ? colX[i + 1] - colX[i] - 4 : 90, continued: i < headers.length - 1 } as any));
+        doc.moveDown(0.5);
+
+        items.forEach((item: any) => {
+          const y = doc.y;
+          doc.fontSize(9).font('Helvetica').fillColor('#0f172a');
+          doc.text(item.description ?? '', colX[0], y, { width: 165 });
+          doc.text(String(item.quantity ?? ''), colX[1], y, { width: 65 });
+          doc.text(item.unit ?? '—', colX[2], y, { width: 65 });
+          doc.text(fmt(item.unitPrice ?? 0), colX[3], y, { width: 85 });
+          doc.text(fmt(item.totalPrice ?? 0), colX[4], y, { width: 90 });
+          doc.moveDown(0.6);
+        });
+      }
+
+      doc.moveDown(1.5);
+
+      // Payment History
+      doc.fontSize(14).font('Helvetica-Bold').fillColor('#0f172a').text('Payment History');
+      doc.moveDown(0.5);
+
+      if (payments.length === 0) {
+        doc.fontSize(10).font('Helvetica').fillColor('#94a3b8').text('No payments recorded.');
+      } else {
+        const colX = [50, 180, 280, 360, 450];
+        const headers = ['Ref No.', 'Amount', 'Date', 'Type', 'Status'];
+        doc.fontSize(9).font('Helvetica-Bold').fillColor('#475569');
+        headers.forEach((h, i) => doc.text(h, colX[i], doc.y, { width: colX[i + 1] ? colX[i + 1] - colX[i] - 4 : 90, continued: i < headers.length - 1 } as any));
+        doc.moveDown(0.5);
+
+        payments.forEach((p: any) => {
+          const y = doc.y;
+          doc.fontSize(9).font('Helvetica').fillColor('#0f172a');
+          doc.text(p.referenceNumber ?? p._id.toString().slice(-8).toUpperCase(), colX[0], y, { width: 125 });
+          doc.text(fmt(p.amount ?? 0), colX[1], y, { width: 95 });
+          doc.text(fmtDate(p.paymentDate), colX[2], y, { width: 75 });
+          doc.text((p.paymentType ?? '—').replace(/_/g, ' '), colX[3], y, { width: 85 });
+          doc.text(p.status ?? '—', colX[4], y, { width: 90 });
+          doc.moveDown(0.6);
+        });
+      }
+
+      // Footer
+      doc.moveDown(2);
+      doc.fontSize(9).font('Helvetica').fillColor('#94a3b8')
+        .text('Generated by VeriTrack — Confidential', { align: 'center' });
+
+      doc.end();
     } catch (error) {
       next(error);
     }

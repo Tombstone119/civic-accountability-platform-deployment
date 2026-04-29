@@ -30,6 +30,18 @@ router
     contractController.create
   );
 
+// ─── Report Download ──────────────────────────────────────────────────────────
+
+/**
+ * GET /api/contracts/:id/report  — stream PDF report (all authenticated roles)
+ */
+router.get(
+  '/:id/report',
+  authMiddleware,
+  requireAuthenticated,
+  contractController.downloadReport
+);
+
 /**
  * GET    /api/contracts/:id  — detail (all authenticated roles)
  * PUT    /api/contracts/:id  — update (officer+)
