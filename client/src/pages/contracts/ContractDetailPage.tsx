@@ -62,6 +62,19 @@ export default function ContractDetailPage() {
 
   const [publishing, setPublishing] = useState(false);
 
+  const [editDrawerOpen, setEditDrawerOpen] = useState(false);
+  const [editSaving, setEditSaving] = useState(false);
+  const [editError, setEditError] = useState('');
+  const [editForm, setEditForm] = useState<{
+    title: string;
+    description: string;
+    status: string;
+    procurementMethod: string;
+    startDate: string;
+    endDate: string;
+    contractValue: string;
+  }>({ title: '', description: '', status: '', procurementMethod: '', startDate: '', endDate: '', contractValue: '' });
+
   useEffect(() => {
     if (!id) return;
     const load = async () => {
@@ -135,6 +148,48 @@ export default function ContractDetailPage() {
       setPaymentError(msg ?? 'Failed to record payment.');
     } finally {
       setAddingPayment(false);
+    }
+  };
+
+  const handleEditOpen = () => {
+    if (!contract) return;
+    setEditForm({
+      title: contract.title,
+      description: contract.description ?? '',
+      status: contract.status,
+      procurementMethod: contract.procurementMethod,
+      startDate: contract.startDate?.slice(0, 10) ?? '',
+      endDate: contract.endDate?.slice(0, 10) ?? '',
+      contractValue: String(contract.contractValue),
+    });
+    setEditError('');
+    setEditDrawerOpen(true);
+  };
+
+  const handleEditSave = async () => {
+    if (!id) return;
+    setEditSaving(true);
+    setEditError('');
+    try {
+      const res = await contractService.update(id, {
+        title: editForm.title,
+        description: editForm.description || undefined,
+        status: editForm.status as Contract['status'],
+        procurementMethod: editForm.procurementMethod as Contract['procurementMethod'],
+        startDate: editForm.startDate,
+        endDate: editForm.endDate,
+        contractValue: parseFloat(editForm.contractValue),
+      });
+      if (res.success && res.data) {
+        setContract(res.data);
+        setEditDrawerOpen(false);
+        setActionMsg('Contract updated successfully.');
+      }
+    } catch (e: unknown) {
+      const msg = (e as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setEditError(msg ?? 'Failed to update contract.');
+    } finally {
+      setEditSaving(false);
     }
   };
 
@@ -495,7 +550,7 @@ export default function ContractDetailPage() {
           >
             Delete Contract
           </Button>
-          <Button variant="ghost" onClick={() => {/* edit modal future */}}>
+          <Button variant="ghost" onClick={handleEditOpen}>
             Edit Contract
           </Button>
           {!contract.isPublic && (
@@ -574,6 +629,74 @@ export default function ContractDetailPage() {
               onChange={e => setPayForm(f => ({ ...f, description: e.target.value }))}
               placeholder="Payment notes..."
             />
+          </div>
+        </div>
+      </Drawer>
+
+      {/* Edit Contract Drawer */}
+      <Drawer
+        open={editDrawerOpen}
+        onClose={() => { setEditDrawerOpen(false); setEditError(''); }}
+        title="Edit Contract"
+        width={520}
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setEditDrawerOpen(false)}>Cancel</Button>
+            <Button variant="primary" loading={editSaving} onClick={handleEditSave}>Save Changes</Button>
+          </>
+        }
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {editError && <Alert type="error" message={editError} onClose={() => setEditError('')} />}
+          <div>
+            <label style={labelStyle}>Title *</label>
+            <input style={inputStyle} value={editForm.title}
+              onChange={e => setEditForm(f => ({ ...f, title: e.target.value }))} />
+          </div>
+          <div>
+            <label style={labelStyle}>Description</label>
+            <textarea style={{ ...inputStyle, height: '80px', resize: 'vertical' }}
+              value={editForm.description}
+              onChange={e => setEditForm(f => ({ ...f, description: e.target.value }))} />
+          </div>
+          <div>
+            <label style={labelStyle}>Status</label>
+            <select style={inputStyle} value={editForm.status}
+              onChange={e => setEditForm(f => ({ ...f, status: e.target.value }))}>
+              <option value="draft">Draft</option>
+              <option value="active">Active</option>
+              <option value="completed">Completed</option>
+              <option value="under_review">Under Review</option>
+              <option value="terminated">Terminated</option>
+            </select>
+          </div>
+          <div>
+            <label style={labelStyle}>Procurement Method</label>
+            <select style={inputStyle} value={editForm.procurementMethod}
+              onChange={e => setEditForm(f => ({ ...f, procurementMethod: e.target.value }))}>
+              <option value="open_tender">Open Tender</option>
+              <option value="restricted_tender">Restricted Tender</option>
+              <option value="direct_award">Direct Award</option>
+              <option value="framework_agreement">Framework Agreement</option>
+              <option value="emergency">Emergency</option>
+            </select>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div>
+              <label style={labelStyle}>Start Date</label>
+              <input style={inputStyle} type="date" value={editForm.startDate}
+                onChange={e => setEditForm(f => ({ ...f, startDate: e.target.value }))} />
+            </div>
+            <div>
+              <label style={labelStyle}>End Date</label>
+              <input style={inputStyle} type="date" value={editForm.endDate}
+                onChange={e => setEditForm(f => ({ ...f, endDate: e.target.value }))} />
+            </div>
+          </div>
+          <div>
+            <label style={labelStyle}>Contract Value (USD)</label>
+            <input style={inputStyle} type="number" min="0" value={editForm.contractValue}
+              onChange={e => setEditForm(f => ({ ...f, contractValue: e.target.value }))} />
           </div>
         </div>
       </Drawer>
