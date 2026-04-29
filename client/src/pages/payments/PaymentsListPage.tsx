@@ -71,6 +71,10 @@ export default function PaymentsListPage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState('');
+  const [statusModalPayment, setStatusModalPayment] = useState<Payment | null>(null);
+  const [statusUpdating, setStatusUpdating] = useState(false);
+  const [statusUpdateError, setStatusUpdateError] = useState('');
+  const [newStatus, setNewStatus] = useState<PaymentStatus>('pending');
   const [form, setForm] = useState<NewPaymentForm>({
     contract: '', amount: '', paymentType: 'milestone',
     referenceNumber: '', description: '', paymentDate: '',
@@ -180,6 +184,22 @@ export default function PaymentsListPage() {
       setCreateError(msg ?? 'Failed to record payment.');
     } finally {
       setCreating(false);
+    }
+  };
+
+  const handleUpdateStatus = async () => {
+    if (!statusModalPayment) return;
+    setStatusUpdating(true);
+    setStatusUpdateError('');
+    try {
+      await paymentService.update(statusModalPayment._id, { status: newStatus });
+      setStatusModalPayment(null);
+      fetchPayments();
+    } catch (e: unknown) {
+      const msg = (e as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setStatusUpdateError(msg ?? 'Failed to update status.');
+    } finally {
+      setStatusUpdating(false);
     }
   };
 
@@ -309,7 +329,6 @@ export default function PaymentsListPage() {
                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>Ref No. <SortIcon k="referenceNumber" /></span>
                   </th>
                   <th style={thStyle()}>Contract</th>
-                  <th style={thStyle()}>Vendor</th>
                   <th style={{ ...thStyle(true), textAlign: 'right' }} onClick={() => handleSort('amount')}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'flex-end' }}>Amount <SortIcon k="amount" /></span>
                   </th>
@@ -319,6 +338,7 @@ export default function PaymentsListPage() {
                   <th style={thStyle()}>Method</th>
                   <th style={thStyle()}>Status</th>
                   <th style={thStyle()}>Processed By</th>
+                  {canWrite && <th style={thStyle()}>Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -336,7 +356,6 @@ export default function PaymentsListPage() {
                   </tr>
                 ) : payments.map((p, i) => {
                   const contract = typeof p.contract === 'object' ? p.contract as Contract : null;
-                  const vendor = contract && typeof contract.vendor === 'object' ? contract.vendor as Vendor : null;
                   const processedBy = typeof p.processedBy === 'object' ? p.processedBy as User : null;
                   const rowBg = i % 2 === 0 ? '#ffffff' : '#f8fafc';
 
@@ -364,7 +383,6 @@ export default function PaymentsListPage() {
                           <span style={{ color: '#94a3b8', fontSize: '13px' }}>—</span>
                         )}
                       </td>
-                      <td style={{ ...tdStyle, color: '#475569' }}>{vendor?.name ?? '—'}</td>
                       <td style={{ ...tdStyle, textAlign: 'right', fontWeight: 700, color: '#1e3a8a', fontVariantNumeric: 'tabular-nums' }}>
                         {fmtMoney(p.amount, p.currency)}
                       </td>
@@ -374,6 +392,16 @@ export default function PaymentsListPage() {
                       </td>
                       <td style={tdStyle}><StatusBadge status={p.status} /></td>
                       <td style={{ ...tdStyle, color: '#475569' }}>{processedBy?.name ?? '—'}</td>
+                      {canWrite && (
+                        <td style={tdStyle}>
+                          <button
+                            onClick={() => { setStatusModalPayment(p); setNewStatus(p.status); setStatusUpdateError(''); }}
+                            style={{ padding: '4px 10px', fontSize: '11px', fontWeight: 600, color: '#1e3a8a', background: '#eff3ff', border: '1px solid #c7d2fe', borderRadius: '4px', cursor: 'pointer' }}
+                          >
+                            Update Status
+                          </button>
+                        </td>
+                      )}
                     </tr>
                   );
                 })}
@@ -417,6 +445,40 @@ export default function PaymentsListPage() {
           </div>
         </div>
       </div>
+
+      {/* Update Status Modal */}
+      {statusModalPayment && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.4)' }}>
+          <div style={{ background: '#fff', borderRadius: '12px', padding: '32px', width: '380px', boxShadow: '0 8px 32px rgba(0,0,0,0.16)' }}>
+            <h3 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: 700, color: '#0f172a' }}>Update Payment Status</h3>
+            <p style={{ margin: '0 0 20px 0', fontSize: '13px', color: '#475569' }}>
+              Ref: <span style={{ fontFamily: 'monospace', fontWeight: 600 }}>{statusModalPayment.referenceNumber ?? statusModalPayment._id.slice(-8).toUpperCase()}</span>
+            </p>
+            {statusUpdateError && (
+              <div style={{ marginBottom: '12px' }}>
+                <Alert type="error" message={statusUpdateError} onClose={() => setStatusUpdateError('')} />
+              </div>
+            )}
+            <div style={{ marginBottom: '20px' }}>
+              <label style={labelStyle}>New Status</label>
+              <select style={inputStyle} value={newStatus} onChange={e => setNewStatus(e.target.value as PaymentStatus)}>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="completed">Completed</option>
+                <option value="failed">Failed</option>
+              </select>
+            </div>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button onClick={() => setStatusModalPayment(null)} style={{ flex: 1, height: '40px', border: '1px solid #e2e8f0', borderRadius: '6px', background: '#fff', cursor: 'pointer', fontSize: '14px', color: '#475569' }}>
+                Cancel
+              </button>
+              <button onClick={handleUpdateStatus} disabled={statusUpdating} style={{ flex: 1, height: '40px', border: 'none', borderRadius: '6px', background: '#1e3a8a', color: '#fff', cursor: statusUpdating ? 'not-allowed' : 'pointer', fontSize: '14px', fontWeight: 600, opacity: statusUpdating ? 0.8 : 1 }}>
+                {statusUpdating ? 'Saving…' : 'Update'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Record Payment Drawer */}
       <Drawer

@@ -24,7 +24,7 @@ router
 
 /**
  * GET    /api/payments/:id  — get payment detail (all authenticated)
- * PUT    /api/payments/:id  — update status / notes (admin only)
+ * PUT    /api/payments/:id  — update status / notes (officer+)
  * DELETE /api/payments/:id  — delete payment (admin only, blocked if completed)
  */
 router
@@ -33,7 +33,7 @@ router
   .put(
     writeRateLimiter,
     authMiddleware,
-    requireAdmin,
+    requireOfficer,
     paymentUpdateValidation,
     validateRequest,
     paymentController.update
