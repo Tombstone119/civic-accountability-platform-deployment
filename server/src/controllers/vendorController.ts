@@ -238,7 +238,7 @@ export const vendorController = {
       try {
         objectId = new mongoose.Types.ObjectId(doc.gridfsId);
       } catch {
-        return res.status(500).json({ success: false, message: 'Invalid file reference' });
+        return res.status(404).json({ success: false, message: 'Invalid file reference' });
       }
       const bucket = getGridFSBucket();
       res.set('Content-Type', doc.mimeType ?? 'application/octet-stream');
@@ -248,9 +248,11 @@ export const vendorController = {
         `inline; filename="${doc.originalName ?? 'file'}"; filename*=UTF-8''${safeName}`
       );
       const downloadStream = bucket.openDownloadStream(objectId);
-      downloadStream.on('error', () => {
+      downloadStream.on('error', (err) => {
         if (!res.headersSent) {
           res.status(404).json({ success: false, message: 'File not found in storage' });
+        } else {
+          downloadStream.destroy();
         }
       });
       downloadStream.pipe(res);
