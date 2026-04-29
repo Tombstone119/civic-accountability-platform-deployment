@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RefreshCw, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { publicService } from '../../services/publicService';
+import { useAuth } from '../../context/AuthContext';
 import type { SpendingSummary, Department } from '../../types';
 import RiskBadge from '../../components/ui/RiskBadge';
 import Button from '../../components/ui/Button';
@@ -45,6 +46,7 @@ const statCardStyle: React.CSSProperties = {
 
 export default function SpendingSummaryPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [summaries, setSummaries] = useState<SpendingSummary[]>([]);
   const [loading, setLoading] = useState(true);
@@ -125,15 +127,17 @@ export default function SpendingSummaryPage() {
             Aggregated financial data across all departments
           </p>
         </div>
-        <Button
-          variant="secondary"
-          size="md"
-          onClick={handleRefresh}
-          loading={refreshing}
-          icon={<RefreshCw size={14} />}
-        >
-          Refresh Data
-        </Button>
+        {user?.role === 'admin' && (
+          <Button
+            variant="secondary"
+            size="md"
+            onClick={handleRefresh}
+            loading={refreshing}
+            icon={<RefreshCw size={14} />}
+          >
+            Refresh Data
+          </Button>
+        )}
       </div>
 
       {/* Stat cards */}
