@@ -10,6 +10,10 @@ export interface IVendorDocument extends Document {
   verifiedBy?: Schema.Types.ObjectId;
   verifiedAt?: Date;
   fileUrl?: string;
+  gridfsId?: string;
+  originalName?: string;
+  mimeType?: string;
+  fileSize?: number;
   isExpired: boolean; // virtual
   createdAt: Date;
   updatedAt: Date;
@@ -26,6 +30,10 @@ const VendorDocumentSchema = new Schema<IVendorDocument>(
     verifiedBy:     { type: Schema.Types.ObjectId, ref: 'User' },
     verifiedAt:     { type: Date },
     fileUrl:        { type: String },
+    gridfsId:       { type: String },
+    originalName:   { type: String },
+    mimeType:       { type: String },
+    fileSize:       { type: Number },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
