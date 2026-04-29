@@ -8,7 +8,7 @@ import StatusBadge from '../../components/ui/StatusBadge';
 import Button from '../../components/ui/Button';
 import Drawer from '../../components/ui/Drawer';
 import Alert from '../../components/ui/Alert';
-import type { Payment, Contract, Vendor, User, PaymentStatus } from '../../types';
+import type { Payment, Contract, User, PaymentStatus } from '../../types';
 
 const fmtDate = (s?: string) => {
   if (!s) return '—';

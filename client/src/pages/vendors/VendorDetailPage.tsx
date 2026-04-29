@@ -106,7 +106,6 @@ export default function VendorDetailPage() {
 
   // Blacklist state
   const [blacklistSaving, setBlacklistSaving] = useState(false);
-  const [blacklistReason, setBlacklistReason] = useState('');
 
   // Delete confirmation
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -136,14 +135,10 @@ export default function VendorDetailPage() {
     if (!vendor || !id) return;
     const reason = window.prompt('Enter blacklist reason:');
     if (!reason) return;
-    setBlacklistReason(reason);
     setBlacklistSaving(true);
     try {
       const res = await vendorService.blacklistVendor(id, reason);
-      if (res.success && res.data) {
-        setVendor(res.data);
-        setBlacklistReason('');
-      }
+      if (res.success && res.data) setVendor(res.data);
     } catch {
       setOpError('Failed to blacklist vendor. Please try again.');
     } finally {
@@ -660,10 +655,11 @@ export default function VendorDetailPage() {
           {vendor.isBlacklisted ? (
             <button
               onClick={handleRemoveBlacklist}
+              disabled={blacklistSaving}
               style={{
                 display: 'flex', alignItems: 'center', gap: '8px',
                 padding: '10px 24px', border: '2px solid #16a34a', borderRadius: '8px',
-                background: 'transparent', color: '#16a34a', fontSize: '14px', fontWeight: 700, cursor: 'pointer',
+                background: 'transparent', color: '#16a34a', fontSize: '14px', fontWeight: 700, cursor: blacklistSaving ? 'not-allowed' : 'pointer', opacity: blacklistSaving ? 0.6 : 1,
               }}
               onMouseEnter={e => (e.currentTarget.style.background = '#f0fdf4')}
               onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
@@ -673,10 +669,11 @@ export default function VendorDetailPage() {
           ) : (
             <button
               onClick={handleBlacklist}
+              disabled={blacklistSaving}
               style={{
                 display: 'flex', alignItems: 'center', gap: '8px',
                 padding: '10px 24px', border: '2px solid #ea580c', borderRadius: '8px',
-                background: 'transparent', color: '#ea580c', fontSize: '14px', fontWeight: 700, cursor: 'pointer',
+                background: 'transparent', color: '#ea580c', fontSize: '14px', fontWeight: 700, cursor: blacklistSaving ? 'not-allowed' : 'pointer', opacity: blacklistSaving ? 0.6 : 1,
               }}
               onMouseEnter={e => (e.currentTarget.style.background = '#fff7ed')}
               onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
