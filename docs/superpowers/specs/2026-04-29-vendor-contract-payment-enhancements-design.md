@@ -123,7 +123,7 @@ After each action, re-fetch payments list and update `payments` state.
 - Exports `getGridFSBucket()` — lazily initializes a `mongoose.mongo.GridFSBucket` on the `uploads` bucket
 - Called after mongoose connection is established
 
-**New dependencies:** `multer`, `multer-gridfs-storage`, `@types/multer` on server.
+**New dependencies:** `multer`, `@types/multer` on server. No `multer-gridfs-storage` needed — we use `memoryStorage()` and upload the buffer directly via the GridFS bucket API.
 
 ---
 
@@ -231,7 +231,7 @@ Add three action buttons per row in the documents table:
 
 **Wave 2:**
 - No new env vars needed (GridFS uses existing `MONGO_URI`)
-- `multer` + `@types/multer` added to `server/package.json`
+- `multer` + `@types/multer` added to `server/package.json` (no `multer-gridfs-storage` needed)
 - MongoDB `uploads` bucket created automatically on first file upload
 
 ---
