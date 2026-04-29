@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AlertTriangle, MoreVertical, Download, Plus } from 'lucide-react';
+import { AlertTriangle, Download, Plus } from 'lucide-react';
 import { contractService } from '../../services/contractService';
 import { paymentService } from '../../services/paymentService';
 import { useAuth } from '../../context/AuthContext';
@@ -75,6 +75,15 @@ export default function ContractDetailPage() {
     endDate: string;
     contractValue: string;
   }>({ title: '', description: '', status: '', procurementMethod: '', startDate: '', endDate: '', contractValue: '' });
+
+  const [editPaymentDrawerOpen, setEditPaymentDrawerOpen] = useState(false);
+  const [editingPayment, setEditingPayment] = useState<Payment | null>(null);
+  const [editPaymentSaving, setEditPaymentSaving] = useState(false);
+  const [editPaymentError, setEditPaymentError] = useState('');
+  const [editPaymentForm, setEditPaymentForm] = useState<{ status: string; referenceNumber: string }>({
+    status: '', referenceNumber: '',
+  });
+  const [deletingPaymentId, setDeletingPaymentId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -203,6 +212,49 @@ export default function ContractDetailPage() {
       setActionErr('Failed to generate report. Please try again.');
     } finally {
       setDownloadingReport(false);
+    }
+  };
+
+  const handleEditPaymentOpen = (p: Payment) => {
+    setEditingPayment(p);
+    setEditPaymentForm({ status: p.status, referenceNumber: p.referenceNumber ?? '' });
+    setEditPaymentError('');
+    setEditPaymentDrawerOpen(true);
+  };
+
+  const handleEditPaymentSave = async () => {
+    if (!editingPayment) return;
+    setEditPaymentSaving(true);
+    setEditPaymentError('');
+    try {
+      await paymentService.update(editingPayment._id, {
+        status: editPaymentForm.status as Payment['status'],
+        referenceNumber: editPaymentForm.referenceNumber || undefined,
+      });
+      const res = await paymentService.list({ contract: id!, limit: 100 });
+      setPayments(res.data);
+      setEditPaymentDrawerOpen(false);
+      setActionMsg('Payment updated successfully.');
+    } catch (e: unknown) {
+      const msg = (e as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setEditPaymentError(msg ?? 'Failed to update payment.');
+    } finally {
+      setEditPaymentSaving(false);
+    }
+  };
+
+  const handleDeletePayment = async (paymentId: string) => {
+    if (!window.confirm('Delete this payment? This cannot be undone.')) return;
+    setDeletingPaymentId(paymentId);
+    try {
+      await paymentService.delete(paymentId);
+      setPayments(prev => prev.filter(p => p._id !== paymentId));
+      setActionMsg('Payment deleted.');
+    } catch (e: unknown) {
+      const msg = (e as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setActionErr(msg ?? 'Failed to delete payment.');
+    } finally {
+      setDeletingPaymentId(null);
     }
   };
 
@@ -453,9 +505,24 @@ export default function ContractDetailPage() {
                       <td style={{ ...tdStyle, color: '#475569' }}>{PAYMENT_TYPE_LABELS[p.paymentType] ?? p.paymentType}</td>
                       <td style={tdStyle}><StatusBadge status={p.status} /></td>
                       <td style={{ ...tdStyle, textAlign: 'center' }}>
-                        <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '4px' }}>
-                          <MoreVertical size={16} />
-                        </button>
+                        {canWrite && (
+                          <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                            <button
+                              onClick={() => handleEditPaymentOpen(p)}
+                              style={{ padding: '4px 8px', fontSize: '11px', fontWeight: 600, color: '#1e3a8a', background: '#eff3ff', border: '1px solid #c7d2fe', borderRadius: '4px', cursor: 'pointer' }}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeletePayment(p._id)}
+                              disabled={deletingPaymentId === p._id || p.status === 'completed'}
+                              title={p.status === 'completed' ? 'Completed payments cannot be deleted' : ''}
+                              style={{ padding: '4px 8px', fontSize: '11px', fontWeight: 600, color: '#dc2626', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '4px', cursor: (deletingPaymentId === p._id || p.status === 'completed') ? 'not-allowed' : 'pointer', opacity: (deletingPaymentId === p._id || p.status === 'completed') ? 0.5 : 1 }}
+                            >
+                              {deletingPaymentId === p._id ? '…' : 'Delete'}
+                            </button>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   );
@@ -713,6 +780,40 @@ export default function ContractDetailPage() {
             <label style={labelStyle}>Contract Value (USD)</label>
             <input style={inputStyle} type="number" min="0" value={editForm.contractValue}
               onChange={e => setEditForm(f => ({ ...f, contractValue: e.target.value }))} />
+          </div>
+        </div>
+      </Drawer>
+
+      {/* Edit Payment Drawer */}
+      <Drawer
+        open={editPaymentDrawerOpen}
+        onClose={() => { setEditPaymentDrawerOpen(false); setEditPaymentError(''); }}
+        title="Edit Payment"
+        width={420}
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setEditPaymentDrawerOpen(false)}>Cancel</Button>
+            <Button variant="primary" loading={editPaymentSaving} onClick={handleEditPaymentSave}>Save Changes</Button>
+          </>
+        }
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {editPaymentError && <Alert type="error" message={editPaymentError} onClose={() => setEditPaymentError('')} />}
+          <div>
+            <label style={labelStyle}>Status</label>
+            <select style={inputStyle} value={editPaymentForm.status}
+              onChange={e => setEditPaymentForm(f => ({ ...f, status: e.target.value }))}>
+              <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
+              <option value="completed">Completed</option>
+              <option value="failed">Failed</option>
+            </select>
+          </div>
+          <div>
+            <label style={labelStyle}>Reference Number</label>
+            <input style={inputStyle} value={editPaymentForm.referenceNumber}
+              onChange={e => setEditPaymentForm(f => ({ ...f, referenceNumber: e.target.value }))}
+              placeholder="REF-XXXX" />
           </div>
         </div>
       </Drawer>
