@@ -75,6 +75,7 @@ export default function VendorDetailPage() {
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [opError, setOpError] = useState('');
 
   // Edit drawer state
   const [showEditDrawer, setShowEditDrawer] = useState(false);
@@ -102,6 +103,10 @@ export default function VendorDetailPage() {
 
   // File input ref for reset after upload
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Blacklist state
+  const [blacklistSaving, setBlacklistSaving] = useState(false);
+  const [blacklistReason, setBlacklistReason] = useState('');
 
   // Delete confirmation
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -131,14 +136,32 @@ export default function VendorDetailPage() {
     if (!vendor || !id) return;
     const reason = window.prompt('Enter blacklist reason:');
     if (!reason) return;
-    const res = await vendorService.blacklistVendor(id, reason);
-    if (res.success && res.data) setVendor(res.data);
+    setBlacklistReason(reason);
+    setBlacklistSaving(true);
+    try {
+      const res = await vendorService.blacklistVendor(id, reason);
+      if (res.success && res.data) {
+        setVendor(res.data);
+        setBlacklistReason('');
+      }
+    } catch {
+      setOpError('Failed to blacklist vendor. Please try again.');
+    } finally {
+      setBlacklistSaving(false);
+    }
   };
 
   const handleRemoveBlacklist = async () => {
     if (!id) return;
-    const res = await vendorService.removeFromBlacklist(id);
-    if (res.success && res.data) setVendor(res.data);
+    setBlacklistSaving(true);
+    try {
+      const res = await vendorService.removeFromBlacklist(id);
+      if (res.success && res.data) setVendor(res.data);
+    } catch {
+      setOpError('Failed to remove vendor from blacklist. Please try again.');
+    } finally {
+      setBlacklistSaving(false);
+    }
   };
 
   const handleEdit = () => {
@@ -194,8 +217,9 @@ export default function VendorDetailPage() {
     } catch {
       setDocError('Upload failed. Please try again.');
       setUploadProgress(0);
+    } finally {
+      setDocSaving(false);
     }
-    setDocSaving(false);
   };
 
   const handleEditDoc = (doc: VendorDocument) => {
@@ -223,10 +247,11 @@ export default function VendorDetailPage() {
       } else {
         setEditDocError(res.message || 'Update failed.');
       }
-    } catch {
-      setEditDocError('Update failed. Please try again.');
+    } catch (err: unknown) {
+      setEditDocError(err instanceof Error ? err.message : 'Failed to update document');
+    } finally {
+      setEditDocSaving(false);
     }
-    setEditDocSaving(false);
   };
 
   const handleViewDoc = async (doc: VendorDocument) => {
@@ -237,7 +262,7 @@ export default function VendorDetailPage() {
       window.open(objectUrl, '_blank');
       setTimeout(() => window.URL.revokeObjectURL(objectUrl), 10_000);
     } catch {
-      setError('Could not load document file.');
+      setOpError('Could not load document file.');
     }
     setViewingDocId(null);
   };
@@ -251,7 +276,7 @@ export default function VendorDetailPage() {
         setDocuments(prev => prev.filter(d => d._id !== doc._id));
       }
     } catch {
-      setError('Failed to delete document. Please try again.');
+      setOpError('Failed to delete document. Please try again.');
     }
   };
 
@@ -442,6 +467,20 @@ export default function VendorDetailPage() {
             </button>
           )}
         </div>
+        {opError && (
+          <div style={{
+            margin: '12px 24px 0',
+            padding: '10px 14px', background: '#fef2f2', border: '1px solid #fecaca',
+            borderRadius: '6px', color: '#dc2626', fontSize: '13px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          }}>
+            <span>{opError}</span>
+            <button
+              onClick={() => setOpError('')}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: '#dc2626', marginLeft: '12px', lineHeight: 1 }}
+            >×</button>
+          </div>
+        )}
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
