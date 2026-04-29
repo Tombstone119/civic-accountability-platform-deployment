@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import multer from 'multer';
 import { vendorController } from '../controllers/vendorController';
 import { authMiddleware, requireAdmin, requireOfficer, requireAuthenticated } from '../middleware/authMiddleware';
@@ -80,7 +80,7 @@ router
 router
   .route('/:id/documents')
   .get(authMiddleware, requireOfficer, vendorController.getDocuments)
-  .post(authMiddleware, requireOfficer, (req, res, next) => {
+  .post(authMiddleware, requireOfficer, (req: Request, res: Response, next: NextFunction) => {
     upload.single('file')(req, res, (err) => {
       if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
         return res.status(400).json({ success: false, message: 'File too large (max 10MB)' });
