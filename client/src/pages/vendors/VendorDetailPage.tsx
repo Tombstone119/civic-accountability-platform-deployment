@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ChevronRight, Ban, CheckCircle, XCircle, AlertTriangle, Pencil, Trash2, Upload } from 'lucide-react';
 import { vendorService } from '../../services/vendorService';
@@ -80,6 +80,7 @@ export default function VendorDetailPage() {
   const [showEditDrawer, setShowEditDrawer] = useState(false);
   const [editForm, setEditForm] = useState<Partial<Vendor>>({});
   const [editSaving, setEditSaving] = useState(false);
+  const [editError, setEditError] = useState('');
 
   // Upload document drawer
   const [showDocDrawer, setShowDocDrawer] = useState(false);
@@ -98,6 +99,9 @@ export default function VendorDetailPage() {
 
   // View document
   const [viewingDocId, setViewingDocId] = useState<string | null>(null);
+
+  // File input ref for reset after upload
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Delete confirmation
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -140,15 +144,23 @@ export default function VendorDetailPage() {
   const handleEdit = () => {
     if (!vendor) return;
     setEditForm({ name: vendor.name, email: vendor.email, phone: vendor.phone, address: vendor.address, status: vendor.status });
+    setEditError('');
     setShowEditDrawer(true);
   };
 
   const handleEditSave = async () => {
     if (!id) return;
     setEditSaving(true);
-    const res = await vendorService.update(id, editForm);
-    if (res.success && res.data) { setVendor(res.data); setShowEditDrawer(false); }
-    setEditSaving(false);
+    setEditError('');
+    try {
+      const res = await vendorService.update(id, editForm);
+      if (res.success && res.data) { setVendor(res.data); setShowEditDrawer(false); }
+      else { setEditError(res.message || 'Update failed.'); }
+    } catch {
+      setEditError('Update failed. Please try again.');
+    } finally {
+      setEditSaving(false);
+    }
   };
 
   const handleDocUpload = async () => {
@@ -175,11 +187,13 @@ export default function VendorDetailPage() {
         setDocForm({});
         setDocFile(null);
         setUploadProgress(0);
+        if (fileInputRef.current) fileInputRef.current.value = '';
       } else {
         setDocError(res.message || 'Upload failed.');
       }
     } catch {
       setDocError('Upload failed. Please try again.');
+      setUploadProgress(0);
     }
     setDocSaving(false);
   };
@@ -221,8 +235,9 @@ export default function VendorDetailPage() {
     try {
       const objectUrl = await vendorService.viewDocumentFile(id, doc._id);
       window.open(objectUrl, '_blank');
+      setTimeout(() => window.URL.revokeObjectURL(objectUrl), 10_000);
     } catch {
-      // silently fail — browser will show nothing
+      setError('Could not load document file.');
     }
     setViewingDocId(null);
   };
@@ -236,16 +251,27 @@ export default function VendorDetailPage() {
         setDocuments(prev => prev.filter(d => d._id !== doc._id));
       }
     } catch {
-      // silently fail
+      setError('Failed to delete document. Please try again.');
     }
   };
 
   const handleDelete = async () => {
     if (!id) return;
     setDeleting(true);
-    const res = await vendorService.delete(id);
-    if (res.success) navigate('/vendors');
-    setDeleting(false);
+    try {
+      const res = await vendorService.delete(id);
+      if (res.success) {
+        navigate('/vendors');
+      } else {
+        setError(res.message || 'Failed to delete vendor.');
+        setShowDeleteModal(false);
+      }
+    } catch {
+      setError('Failed to delete vendor. Please try again.');
+      setShowDeleteModal(false);
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const activeDocCount = documents.filter(d => d.isVerified && !isExpired(d.expiryDate)).length;
@@ -648,6 +674,14 @@ export default function VendorDetailPage() {
               <button onClick={() => setShowEditDrawer(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', color: '#64748b' }}>×</button>
             </div>
             <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 }}>
+              {editError && (
+                <div style={{
+                  padding: '10px 14px', background: '#fef2f2', border: '1px solid #fecaca',
+                  borderRadius: '6px', color: '#dc2626', fontSize: '13px',
+                }}>
+                  {editError}
+                </div>
+              )}
               {([
                 { key: 'name', label: 'Name', type: 'text' },
                 { key: 'email', label: 'Email', type: 'email' },
@@ -742,6 +776,7 @@ export default function VendorDetailPage() {
               <div>
                 <label style={labelStyle}>File</label>
                 <input
+                  ref={fileInputRef}
                   type="file"
                   accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
                   onChange={e => setDocFile(e.target.files?.[0] ?? null)}
