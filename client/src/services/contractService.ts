@@ -32,4 +32,16 @@ export const contractService = {
 
   addItem: (id: string, data: Partial<ContractItem>) =>
     apiClient.post<ApiResponse<ContractItem>>(`/contracts/${id}/items`, data).then(r => r.data),
+
+  downloadReport: async (id: string): Promise<void> => {
+    const response = await apiClient.get(`/contracts/${id}/report`, { responseType: 'blob' });
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `contract-report-${id}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  },
 };

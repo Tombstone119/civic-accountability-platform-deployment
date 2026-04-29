@@ -61,6 +61,7 @@ export default function ContractDetailPage() {
   });
 
   const [publishing, setPublishing] = useState(false);
+  const [downloadingReport, setDownloadingReport] = useState(false);
 
   const [editDrawerOpen, setEditDrawerOpen] = useState(false);
   const [editSaving, setEditSaving] = useState(false);
@@ -190,6 +191,18 @@ export default function ContractDetailPage() {
       setEditError(msg ?? 'Failed to update contract.');
     } finally {
       setEditSaving(false);
+    }
+  };
+
+  const handleDownloadReport = async () => {
+    if (!id) return;
+    setDownloadingReport(true);
+    try {
+      await contractService.downloadReport(id);
+    } catch {
+      setActionErr('Failed to generate report. Please try again.');
+    } finally {
+      setDownloadingReport(false);
     }
   };
 
@@ -501,15 +514,18 @@ export default function ContractDetailPage() {
             <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#fff', margin: '0 0 8px 0' }}>Audit Compliance</h3>
             <p style={{ fontSize: '13px', color: '#93c5fd', margin: '0 0 16px 0' }}>Last reviewed: {fmtDate(contract.updatedAt)}</p>
             <button
+              onClick={handleDownloadReport}
+              disabled={downloadingReport}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.15)',
                 color: '#fff', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '8px', padding: '8px 14px',
-                fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+                fontSize: '13px', fontWeight: 600, cursor: downloadingReport ? 'not-allowed' : 'pointer',
+                opacity: downloadingReport ? 0.7 : 1,
               }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.25)')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
+              onMouseEnter={e => { if (!downloadingReport) e.currentTarget.style.background = 'rgba(255,255,255,0.25)'; }}
+              onMouseLeave={e => { if (!downloadingReport) e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; }}
             >
-              <Download size={14} /> Download Report
+              <Download size={14} /> {downloadingReport ? 'Generating…' : 'Download Report'}
             </button>
           </div>
 
