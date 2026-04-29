@@ -114,13 +114,13 @@ export default function VendorDetailPage() {
     if (!vendor || !id) return;
     const reason = window.prompt('Enter blacklist reason:');
     if (!reason) return;
-    const res = await vendorService.update(id, { isBlacklisted: true, status: 'blacklisted', blacklistReason: reason });
+    const res = await vendorService.blacklistVendor(id, reason);
     if (res.success && res.data) setVendor(res.data);
   };
 
   const handleRemoveBlacklist = async () => {
     if (!id) return;
-    const res = await vendorService.update(id, { isBlacklisted: false, status: 'active', blacklistReason: '' });
+    const res = await vendorService.removeFromBlacklist(id);
     if (res.success && res.data) setVendor(res.data);
   };
 

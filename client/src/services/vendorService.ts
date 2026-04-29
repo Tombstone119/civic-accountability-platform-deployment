@@ -25,6 +25,12 @@ export const vendorService = {
   delete: (id: string) =>
     apiClient.delete<ApiResponse<null>>(`/vendors/${id}`).then(r => r.data),
 
+  removeFromBlacklist: (id: string) =>
+    apiClient.delete<ApiResponse<Vendor>>(`/vendors/${id}/blacklist`).then(r => r.data),
+
+  blacklistVendor: (id: string, reason: string) =>
+    apiClient.post<ApiResponse<Vendor>>(`/vendors/${id}/blacklist`, { reason }).then(r => r.data),
+
   getDocuments: (id: string) =>
     apiClient.get<ApiResponse<VendorDocument[]>>(`/vendors/${id}/documents`).then(r => r.data),
 
