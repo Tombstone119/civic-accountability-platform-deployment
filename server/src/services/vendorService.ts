@@ -184,6 +184,10 @@ export const vendorService = {
       issueDate?: Date;
       expiryDate?: Date;
       fileUrl?: string;
+      gridfsId?: string;
+      originalName?: string;
+      mimeType?: string;
+      fileSize?: number;
     }
   ) => {
     const vendor = await Vendor.findById(vendorId);

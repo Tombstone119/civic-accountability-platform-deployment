@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
+import mongoose from 'mongoose';
 import { vendorService } from '../services/vendorService';
-// hello
+import { getGridFSBucket } from '../config/gridfs';
+import { VendorDocument } from '../models/VendorDocument';
 export const vendorController = {
   /**
    * @route   GET /api/vendors
@@ -177,7 +179,38 @@ export const vendorController = {
    */
   addDocument: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const doc = await vendorService.addDocument(req.params.id, req.body);
+      const vendorId = req.params.id;
+      const bodyData = req.body;
+
+      if (req.file) {
+        const bucket = getGridFSBucket();
+        const uploadStream = bucket.openUploadStream(req.file.originalname, {
+          metadata: { contentType: req.file.mimetype },
+        });
+        await new Promise<void>((resolve, reject) => {
+          uploadStream.on('finish', resolve);
+          uploadStream.on('error', reject);
+          uploadStream.end(req.file!.buffer);
+        });
+        const gridfsObjectId = uploadStream.id;
+
+        const doc = await vendorService.addDocument(vendorId, {
+          ...bodyData,
+          fileUrl: `gridfs:${gridfsObjectId}`,
+          gridfsId: gridfsObjectId.toString(),
+          originalName: req.file.originalname,
+          mimeType: req.file.mimetype,
+          fileSize: req.file.size,
+        });
+
+        return res.status(201).json({
+          success: true,
+          data: doc,
+          message: 'Document added successfully',
+        });
+      }
+
+      const doc = await vendorService.addDocument(vendorId, bodyData);
 
       res.status(201).json({
         success: true,
@@ -187,6 +220,31 @@ export const vendorController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  /**
+   * @route   GET /api/vendors/:id/documents/:docId/file
+   * @desc    Stream the uploaded file for a vendor document from GridFS
+   * @access  admin | procurement_officer | auditor | viewer
+   */
+  downloadDocumentFile: async (req: Request, res: Response) => {
+    const { id: vendorId, docId } = req.params;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const doc = await VendorDocument.findOne({ _id: docId, vendor: vendorId } as any);
+    if (!doc || !doc.gridfsId) {
+      return res.status(404).json({ success: false, message: 'File not found' });
+    }
+    const bucket = getGridFSBucket();
+    const objectId = new mongoose.Types.ObjectId(doc.gridfsId);
+    res.set('Content-Type', doc.mimeType ?? 'application/octet-stream');
+    res.set('Content-Disposition', `inline; filename="${doc.originalName ?? 'file'}"`);
+    const downloadStream = bucket.openDownloadStream(objectId);
+    downloadStream.on('error', () => {
+      if (!res.headersSent) {
+        res.status(404).json({ success: false, message: 'File not found in storage' });
+      }
+    });
+    downloadStream.pipe(res);
   },
 
   /**

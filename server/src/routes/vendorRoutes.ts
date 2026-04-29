@@ -1,16 +1,34 @@
 import { Router } from 'express';
+import multer from 'multer';
 import { vendorController } from '../controllers/vendorController';
 import { authMiddleware, requireAdmin, requireOfficer, requireAuthenticated } from '../middleware/authMiddleware';
-import { 
-  vendorValidation, 
-  vendorUpdateValidation, 
-  blacklistValidation, 
-  vendorDocumentValidation, 
-  vendorDocumentUpdateValidation, 
-  validateRequest 
+import {
+  vendorValidation,
+  vendorUpdateValidation,
+  blacklistValidation,
+  vendorDocumentValidation,
+  vendorDocumentUpdateValidation,
+  validateRequest
 } from '../middleware/validation';
 
 const router = Router();
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+  fileFilter: (_req, file, cb) => {
+    const allowed = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ];
+    if (allowed.includes(file.mimetype) || file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('File type not allowed'));
+    }
+  },
+});
 
 // ─── Vendor CRUD ──────────────────────────────────────────────────────────────
 /**
@@ -21,6 +39,17 @@ router
   .route('/')
   .get(authMiddleware, requireAuthenticated, vendorController.getAll)
   .post(authMiddleware, requireOfficer, vendorValidation, validateRequest, vendorController.create);
+
+/**
+ * GET /api/vendors/:id/documents/:docId/file — stream document file from GridFS
+ * Must be registered before /:id to avoid "documents" being captured as :id
+ */
+router.get(
+  '/:id/documents/:docId/file',
+  authMiddleware,
+  requireAuthenticated,
+  vendorController.downloadDocumentFile
+);
 
 /**
  * GET    /api/vendors/:id    — get single vendor (all authenticated roles)
@@ -51,7 +80,7 @@ router
 router
   .route('/:id/documents')
   .get(authMiddleware, requireOfficer, vendorController.getDocuments)
-  .post(authMiddleware, requireOfficer, vendorDocumentValidation, validateRequest, vendorController.addDocument);
+  .post(authMiddleware, requireOfficer, upload.single('file'), vendorDocumentValidation, validateRequest, vendorController.addDocument);
 
 /**
  * PUT    /api/vendors/:id/documents/:docId  — update document (officer+)
