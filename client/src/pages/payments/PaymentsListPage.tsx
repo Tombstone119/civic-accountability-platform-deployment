@@ -143,6 +143,18 @@ export default function PaymentsListPage() {
 
   useEffect(() => { fetchPayments(); }, [fetchPayments]);
 
+  useEffect(() => {
+    if (!statusModalPayment) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setStatusModalPayment(null);
+        setStatusUpdating(false);
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [statusModalPayment]);
+
   const handleSort = (key: string) => {
     if (sortKey === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc');
     else { setSortKey(key); setSortDir('asc'); }
@@ -344,13 +356,13 @@ export default function PaymentsListPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={8} style={{ ...tdStyle, textAlign: 'center', color: '#94a3b8', padding: '48px', border: 'none' }}>
+                    <td colSpan={canWrite ? 8 : 7} style={{ ...tdStyle, textAlign: 'center', color: '#94a3b8', padding: '48px', border: 'none' }}>
                       Loading...
                     </td>
                   </tr>
                 ) : payments.length === 0 ? (
                   <tr>
-                    <td colSpan={8} style={{ ...tdStyle, textAlign: 'center', color: '#94a3b8', padding: '48px', border: 'none' }}>
+                    <td colSpan={canWrite ? 8 : 7} style={{ ...tdStyle, textAlign: 'center', color: '#94a3b8', padding: '48px', border: 'none' }}>
                       No payment records found.
                     </td>
                   </tr>
@@ -448,9 +460,9 @@ export default function PaymentsListPage() {
 
       {/* Update Status Modal */}
       {statusModalPayment && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.4)' }}>
-          <div style={{ background: '#fff', borderRadius: '12px', padding: '32px', width: '380px', boxShadow: '0 8px 32px rgba(0,0,0,0.16)' }}>
-            <h3 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: 700, color: '#0f172a' }}>Update Payment Status</h3>
+        <div onClick={() => { setStatusModalPayment(null); setStatusUpdating(false); }} style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.4)' }}>
+          <div onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="status-modal-title" style={{ background: '#fff', borderRadius: '12px', padding: '32px', width: '380px', boxShadow: '0 8px 32px rgba(0,0,0,0.16)' }}>
+            <h3 id="status-modal-title" style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: 700, color: '#0f172a' }}>Update Payment Status</h3>
             <p style={{ margin: '0 0 20px 0', fontSize: '13px', color: '#475569' }}>
               Ref: <span style={{ fontFamily: 'monospace', fontWeight: 600 }}>{statusModalPayment.referenceNumber ?? statusModalPayment._id.slice(-8).toUpperCase()}</span>
             </p>
@@ -466,10 +478,11 @@ export default function PaymentsListPage() {
                 <option value="processing">Processing</option>
                 <option value="completed">Completed</option>
                 <option value="failed">Failed</option>
+                <option value="reversed">Reversed</option>
               </select>
             </div>
             <div style={{ display: 'flex', gap: '12px' }}>
-              <button onClick={() => setStatusModalPayment(null)} style={{ flex: 1, height: '40px', border: '1px solid #e2e8f0', borderRadius: '6px', background: '#fff', cursor: 'pointer', fontSize: '14px', color: '#475569' }}>
+              <button onClick={() => { setStatusModalPayment(null); setStatusUpdating(false); }} style={{ flex: 1, height: '40px', border: '1px solid #e2e8f0', borderRadius: '6px', background: '#fff', cursor: 'pointer', fontSize: '14px', color: '#475569' }}>
                 Cancel
               </button>
               <button onClick={handleUpdateStatus} disabled={statusUpdating} style={{ flex: 1, height: '40px', border: 'none', borderRadius: '6px', background: '#1e3a8a', color: '#fff', cursor: statusUpdating ? 'not-allowed' : 'pointer', fontSize: '14px', fontWeight: 600, opacity: statusUpdating ? 0.8 : 1 }}>
