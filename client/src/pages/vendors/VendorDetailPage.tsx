@@ -84,7 +84,20 @@ export default function VendorDetailPage() {
   // Upload document drawer
   const [showDocDrawer, setShowDocDrawer] = useState(false);
   const [docForm, setDocForm] = useState<Partial<VendorDocument>>({});
+  const [docFile, setDocFile] = useState<File | null>(null);
   const [docSaving, setDocSaving] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [docError, setDocError] = useState('');
+
+  // Edit document drawer
+  const [editDocDrawerOpen, setEditDocDrawerOpen] = useState(false);
+  const [editingDoc, setEditingDoc] = useState<VendorDocument | null>(null);
+  const [editDocForm, setEditDocForm] = useState<Record<string, unknown>>({});
+  const [editDocSaving, setEditDocSaving] = useState(false);
+  const [editDocError, setEditDocError] = useState('');
+
+  // View document
+  const [viewingDocId, setViewingDocId] = useState<string | null>(null);
 
   // Delete confirmation
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -140,14 +153,91 @@ export default function VendorDetailPage() {
 
   const handleDocUpload = async () => {
     if (!id) return;
+    setDocError('');
+    if (!docForm.documentType) { setDocError('Document type is required.'); return; }
+    if (!docForm.documentNumber) { setDocError('Document number is required.'); return; }
+    if (!docForm.issueDate) { setDocError('Issue date is required.'); return; }
+    if (!docForm.expiryDate) { setDocError('Expiry date is required.'); return; }
+    if (!docFile) { setDocError('Please select a file to upload.'); return; }
     setDocSaving(true);
-    const res = await vendorService.addDocument(id, docForm);
-    if (res.success && res.data) {
-      setDocuments(prev => [...prev, res.data!]);
-      setShowDocDrawer(false);
-      setDocForm({});
+    setUploadProgress(0);
+    try {
+      const formData = new FormData();
+      formData.append('documentType', docForm.documentType);
+      formData.append('documentNumber', docForm.documentNumber);
+      formData.append('issueDate', docForm.issueDate);
+      formData.append('expiryDate', docForm.expiryDate);
+      formData.append('file', docFile);
+      const res = await vendorService.uploadDocument(id, formData, setUploadProgress);
+      if (res.success && res.data) {
+        setDocuments(prev => [res.data!, ...prev]);
+        setShowDocDrawer(false);
+        setDocForm({});
+        setDocFile(null);
+        setUploadProgress(0);
+      } else {
+        setDocError(res.message || 'Upload failed.');
+      }
+    } catch {
+      setDocError('Upload failed. Please try again.');
     }
     setDocSaving(false);
+  };
+
+  const handleEditDoc = (doc: VendorDocument) => {
+    setEditingDoc(doc);
+    setEditDocForm({
+      documentNumber: doc.documentNumber,
+      issueDate: doc.issueDate?.slice(0, 10) ?? '',
+      expiryDate: doc.expiryDate?.slice(0, 10) ?? '',
+      isVerified: doc.isVerified,
+    });
+    setEditDocError('');
+    setEditDocDrawerOpen(true);
+  };
+
+  const handleEditDocSave = async () => {
+    if (!id || !editingDoc) return;
+    setEditDocSaving(true);
+    setEditDocError('');
+    try {
+      const res = await vendorService.updateDocument(id, editingDoc._id, editDocForm);
+      if (res.success && res.data) {
+        setDocuments(prev => prev.map(d => d._id === editingDoc._id ? res.data! : d));
+        setEditDocDrawerOpen(false);
+        setEditingDoc(null);
+      } else {
+        setEditDocError(res.message || 'Update failed.');
+      }
+    } catch {
+      setEditDocError('Update failed. Please try again.');
+    }
+    setEditDocSaving(false);
+  };
+
+  const handleViewDoc = async (doc: VendorDocument) => {
+    if (!id) return;
+    setViewingDocId(doc._id);
+    try {
+      const objectUrl = await vendorService.viewDocumentFile(id, doc._id);
+      window.open(objectUrl, '_blank');
+    } catch {
+      // silently fail — browser will show nothing
+    }
+    setViewingDocId(null);
+  };
+
+  const handleDeleteDoc = async (doc: VendorDocument) => {
+    if (!id) return;
+    if (!window.confirm('Are you sure you want to delete this document?')) return;
+    try {
+      const res = await vendorService.deleteDocument(id, doc._id);
+      if (res.success) {
+        setDocuments(prev => prev.filter(d => d._id !== doc._id));
+      }
+    } catch {
+      // silently fail
+    }
   };
 
   const handleDelete = async () => {
@@ -330,7 +420,7 @@ export default function VendorDetailPage() {
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ background: '#f1f5f9' }}>
-                {['Document Type', 'Doc No.', 'Issue Date', 'Expiry Date', 'Verified', 'Status'].map((h, i) => (
+                {['Document Type', 'Doc No.', 'Issue Date', 'Expiry Date', 'Verified', 'Status', 'Actions'].map((h, i) => (
                   <th key={h} style={{
                     padding: '10px 24px', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase',
                     letterSpacing: '0.04em', color: '#475569', textAlign: i >= 4 ? 'center' : 'left',
@@ -342,12 +432,13 @@ export default function VendorDetailPage() {
             <tbody>
               {documents.length === 0 ? (
                 <tr>
-                  <td colSpan={6} style={{ padding: '48px 24px', textAlign: 'center', color: '#94a3b8', fontSize: '14px' }}>
+                  <td colSpan={7} style={{ padding: '48px 24px', textAlign: 'center', color: '#94a3b8', fontSize: '14px' }}>
                     No documents uploaded.
                   </td>
                 </tr>
               ) : documents.map((doc, i) => {
                 const expired = isExpired(doc.expiryDate);
+                const isViewing = viewingDocId === doc._id;
                 return (
                   <tr key={doc._id} style={{ backgroundColor: i % 2 === 0 ? '#fff' : '#f8fafc' }}>
                     <td style={{ padding: '14px 24px', fontSize: '14px', fontWeight: 600, color: '#374151', borderBottom: '1px solid #f1f5f9' }}>
@@ -369,6 +460,45 @@ export default function VendorDetailPage() {
                     </td>
                     <td style={{ padding: '14px 24px', textAlign: 'center', borderBottom: '1px solid #f1f5f9' }}>
                       <DocStatusBadge expired={expired} verified={doc.isVerified} />
+                    </td>
+                    <td style={{ padding: '14px 16px', textAlign: 'center', borderBottom: '1px solid #f1f5f9' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                        <button
+                          onClick={() => handleViewDoc(doc)}
+                          disabled={isViewing}
+                          style={{
+                            padding: '4px 10px', border: '1px solid #93c5fd', borderRadius: '4px',
+                            background: '#eff6ff', color: '#1d4ed8', fontSize: '11px', fontWeight: 600,
+                            cursor: isViewing ? 'not-allowed' : 'pointer', opacity: isViewing ? 0.7 : 1,
+                          }}
+                        >
+                          {isViewing ? '...' : 'View'}
+                        </button>
+                        {canEdit && (
+                          <button
+                            onClick={() => handleEditDoc(doc)}
+                            style={{
+                              padding: '4px 10px', border: '1px solid #e2e8f0', borderRadius: '4px',
+                              background: '#f8fafc', color: '#475569', fontSize: '11px', fontWeight: 600,
+                              cursor: 'pointer',
+                            }}
+                          >
+                            Edit
+                          </button>
+                        )}
+                        {user?.role === 'admin' && (
+                          <button
+                            onClick={() => handleDeleteDoc(doc)}
+                            style={{
+                              padding: '4px 10px', border: '1px solid #fecaca', borderRadius: '4px',
+                              background: '#fef2f2', color: '#dc2626', fontSize: '11px', fontWeight: 600,
+                              cursor: 'pointer',
+                            }}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 );
@@ -562,16 +692,24 @@ export default function VendorDetailPage() {
       {/* Upload Document Drawer */}
       {showDocDrawer && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex' }}>
-          <div style={{ flex: 1, background: 'rgba(0,0,0,0.4)' }} onClick={() => setShowDocDrawer(false)} />
+          <div style={{ flex: 1, background: 'rgba(0,0,0,0.4)' }} onClick={() => { if (!docSaving) setShowDocDrawer(false); }} />
           <div style={{
             width: '480px', background: '#fff', height: '100%', overflowY: 'auto',
             boxShadow: '-4px 0 24px rgba(0,0,0,0.12)', display: 'flex', flexDirection: 'column',
           }}>
             <div style={{ padding: '24px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#0f172a' }}>Upload Document</h3>
-              <button onClick={() => setShowDocDrawer(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', color: '#64748b' }}>×</button>
+              <button onClick={() => { if (!docSaving) setShowDocDrawer(false); }} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', color: '#64748b' }}>×</button>
             </div>
             <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 }}>
+              {docError && (
+                <div style={{
+                  padding: '10px 14px', background: '#fef2f2', border: '1px solid #fecaca',
+                  borderRadius: '6px', color: '#dc2626', fontSize: '13px',
+                }}>
+                  {docError}
+                </div>
+              )}
               <div>
                 <label style={labelStyle}>Document Type</label>
                 <select
@@ -601,17 +739,114 @@ export default function VendorDetailPage() {
                   onChange={e => setDocForm(p => ({ ...p, expiryDate: e.target.value }))}
                   style={inputStyle} />
               </div>
+              <div>
+                <label style={labelStyle}>File</label>
+                <input
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                  onChange={e => setDocFile(e.target.files?.[0] ?? null)}
+                  style={{
+                    width: '100%', padding: '6px 0', fontSize: '13px', color: '#0f172a',
+                    cursor: 'pointer', boxSizing: 'border-box',
+                  }}
+                />
+                {docFile && (
+                  <p style={{ margin: '6px 0 0 0', fontSize: '12px', color: '#475569' }}>
+                    Selected: {docFile.name} ({(docFile.size / 1024).toFixed(1)} KB)
+                  </p>
+                )}
+              </div>
+              {uploadProgress > 0 && uploadProgress < 100 && (
+                <p style={{ margin: 0, fontSize: '13px', color: '#1e3a8a', fontWeight: 500 }}>
+                  Uploading: {uploadProgress}%
+                </p>
+              )}
             </div>
             <div style={{ padding: '24px', borderTop: '1px solid #e2e8f0', display: 'flex', gap: '12px' }}>
-              <button onClick={() => setShowDocDrawer(false)} style={{
+              <button onClick={() => { if (!docSaving) { setShowDocDrawer(false); setDocError(''); setUploadProgress(0); } }} style={{
                 flex: 1, height: '40px', border: '1px solid #e2e8f0', borderRadius: '6px',
-                background: '#fff', cursor: 'pointer', fontSize: '14px', color: '#475569',
+                background: '#fff', cursor: docSaving ? 'not-allowed' : 'pointer', fontSize: '14px', color: '#475569',
               }}>Cancel</button>
               <button onClick={handleDocUpload} disabled={docSaving} style={{
                 flex: 1, height: '40px', border: 'none', borderRadius: '6px',
                 background: '#1e3a8a', color: '#fff', cursor: docSaving ? 'not-allowed' : 'pointer',
                 fontSize: '14px', fontWeight: 600, opacity: docSaving ? 0.8 : 1,
-              }}>{docSaving ? 'Uploading…' : 'Upload'}</button>
+              }}>{docSaving ? `Uploading… ${uploadProgress > 0 ? uploadProgress + '%' : ''}` : 'Upload'}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Document Drawer */}
+      {editDocDrawerOpen && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 50, display: 'flex' }}>
+          <div style={{ flex: 1, background: 'rgba(0,0,0,0.4)' }} onClick={() => { if (!editDocSaving) setEditDocDrawerOpen(false); }} />
+          <div style={{
+            width: '480px', background: '#fff', height: '100%', overflowY: 'auto',
+            boxShadow: '-4px 0 24px rgba(0,0,0,0.12)', display: 'flex', flexDirection: 'column',
+          }}>
+            <div style={{ padding: '24px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#0f172a' }}>Edit Document</h3>
+              <button onClick={() => { if (!editDocSaving) setEditDocDrawerOpen(false); }} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px', color: '#64748b' }}>×</button>
+            </div>
+            <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 }}>
+              {editDocError && (
+                <div style={{
+                  padding: '10px 14px', background: '#fef2f2', border: '1px solid #fecaca',
+                  borderRadius: '6px', color: '#dc2626', fontSize: '13px',
+                }}>
+                  {editDocError}
+                </div>
+              )}
+              <div>
+                <label style={labelStyle}>Document Number</label>
+                <input
+                  type="text"
+                  style={inputStyle}
+                  value={String(editDocForm.documentNumber ?? '')}
+                  onChange={e => setEditDocForm(f => ({ ...f, documentNumber: e.target.value }))}
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Issue Date</label>
+                <input
+                  type="date"
+                  style={inputStyle}
+                  value={String(editDocForm.issueDate ?? '')}
+                  onChange={e => setEditDocForm(f => ({ ...f, issueDate: e.target.value }))}
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Expiry Date</label>
+                <input
+                  type="date"
+                  style={inputStyle}
+                  value={String(editDocForm.expiryDate ?? '')}
+                  onChange={e => setEditDocForm(f => ({ ...f, expiryDate: e.target.value }))}
+                />
+              </div>
+              {user?.role === 'admin' && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input
+                    type="checkbox"
+                    id="editDocVerified"
+                    checked={Boolean(editDocForm.isVerified)}
+                    onChange={e => setEditDocForm(f => ({ ...f, isVerified: e.target.checked }))}
+                  />
+                  <label htmlFor="editDocVerified" style={{ fontSize: '14px', color: '#0f172a' }}>Mark as Verified</label>
+                </div>
+              )}
+            </div>
+            <div style={{ padding: '24px', borderTop: '1px solid #e2e8f0', display: 'flex', gap: '12px' }}>
+              <button onClick={() => { if (!editDocSaving) setEditDocDrawerOpen(false); }} style={{
+                flex: 1, height: '40px', border: '1px solid #e2e8f0', borderRadius: '6px',
+                background: '#fff', cursor: editDocSaving ? 'not-allowed' : 'pointer', fontSize: '14px', color: '#475569',
+              }}>Cancel</button>
+              <button onClick={handleEditDocSave} disabled={editDocSaving} style={{
+                flex: 1, height: '40px', border: 'none', borderRadius: '6px',
+                background: '#1e3a8a', color: '#fff', cursor: editDocSaving ? 'not-allowed' : 'pointer',
+                fontSize: '14px', fontWeight: 600, opacity: editDocSaving ? 0.8 : 1,
+              }}>{editDocSaving ? 'Saving…' : 'Save Changes'}</button>
             </div>
           </div>
         </div>

@@ -90,6 +90,10 @@ export interface VendorDocument {
   expiryDate: string;
   isVerified: boolean;
   fileUrl?: string;
+  gridfsId?: string;
+  originalName?: string;
+  mimeType?: string;
+  fileSize?: number;
   createdAt: string;
 }
 
